@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { calculate, isReadyToCalculate, validateInput } from "@/lib/calculator/calculate";
+import { calculate, calculateExtended, isReadyToCalculate, validateInput } from "@/lib/calculator/calculate";
 import { defaultInput, defaultMitarbeiterFor } from "@/lib/calculator/branche";
 
 describe("calculator", () => {
@@ -50,5 +50,65 @@ describe("calculator", () => {
     const r = calculate(i);
     expect(r.fehlermeldung).toBe("");
     expect(r.breakEven.gesamtumsatz.jahr).toBeGreaterThan(0);
+  });
+
+  it("matches original payroll behavior for high salaries by capping only social security in personnel costs", () => {
+    const i = defaultInput("dienstleistung");
+    i.umsatz = 300000;
+    i.aufwand = 60000;
+    i.stunden = 1800;
+    i.mitarbeiter1 = {
+      ...defaultMitarbeiterFor("dienstleistung", true),
+      bruttogehaltProMonat: 9000,
+      verkaufbareStunden: 0,
+      stundensatz: 0,
+    };
+
+    const r = calculate(i);
+
+    expect(r.fehlermeldung).toBe("");
+    expect(r.breakEven.mitarbeiter[0].bruttoInklLohnnebenkosten.jahr).toBeCloseTo(157316.81, 2);
+    expect(r.breakEven.mitarbeiter[0].bruttoInklLohnnebenkosten.monat).toBeCloseTo(13109.73, 2);
+  });
+
+  it("matches original bonus subsidy annual-to-monthly rounding order", () => {
+    const i = defaultInput("dienstleistung");
+    i.gruendungsjahr = 2024;
+    i.umsatz = 90000;
+    i.aufwand = 20000;
+    i.stunden = 1200;
+    i.mitarbeiter1 = {
+      ...defaultMitarbeiterFor("dienstleistung", true),
+      bruttogehaltProMonat: 2200,
+      verkaufbareStunden: 0,
+      stundensatz: 0,
+      foerderungBonus: true,
+    };
+
+    const r = calculate(i);
+
+    expect(r.breakEven.mitarbeiter[0].foerderung.jahr).toBeCloseTo(4575.78, 2);
+    expect(r.breakEven.mitarbeiter[0].foerderung.monat).toBeCloseTo(381.32, 2);
+  });
+
+  it("keeps original situation visible while calculateExtended applies desired profit to break-even", () => {
+    const i = defaultInput("gewerbe");
+    i.umsatz = 140000;
+    i.aufwand = 35000;
+    i.wareneinsatz = 28000;
+    i.stunden = 1200;
+    i.mitarbeiter1 = {
+      ...defaultMitarbeiterFor("gewerbe", true),
+      bruttogehaltProMonat: 2000,
+      verkaufbareStunden: 70,
+      stundensatz: 95,
+    };
+
+    const r = calculateExtended(i, 60000);
+
+    expect(r.ausgangssituation.umsatz.jahr).toBe(140000);
+    expect(r.ausgangssituation.wareneinsatz.jahr).toBe(28000);
+    expect(r.ausgangssituation.gewinn.jahr).toBe(77000);
+    expect(r.breakEven.gewinn.jahr).toBe(60000);
   });
 });
