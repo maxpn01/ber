@@ -1,14 +1,22 @@
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { HelpIcon } from "@/components/HelpIcon";
+import { useState } from "react";
 import { AllgemeinCard } from "@/components/calculator/AllgemeinCard";
 import { ErzielbarerGewinnSlider } from "@/components/calculator/ErzielbarerGewinnSlider";
 import { MitarbeiterCard } from "@/components/calculator/MitarbeiterCard";
 import { SubsidyCard } from "@/components/calculator/SubsidyCard";
 import { ResultPanel } from "@/components/calculator/ResultPanel";
+import Summary from "./Summary";
 import { tStr } from "@/lib/text";
 
 const Calculator = () => {
+  const [showSummary, setShowSummary] = useState(false);
+
+  if (showSummary) {
+    return <Summary onBack={() => setShowSummary(false)} />;
+  }
+
   return (
     <div className="flex min-h-screen flex-col bg-background">
       <Header />
@@ -33,7 +41,7 @@ const Calculator = () => {
               <SubsidyCard kind="startup" /> */}
             </div>
             <div className="lg:sticky lg:top-6 lg:self-start">
-              <ResultPanel />
+              <ResultPanel onShowSummary={() => setShowSummary(true)} />
             </div>
           </div>
         </div>

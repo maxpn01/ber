@@ -1,4 +1,3 @@
-import { useNavigate } from "react-router-dom";
 import { ArrowLeft, Printer } from "lucide-react";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
@@ -21,9 +20,12 @@ const brancheLabelKey = (b: Branche): TextKey => {
   return map[b];
 };
 
-const Summary = () => {
+interface Props {
+  onBack: () => void;
+}
+
+const Summary = ({ onBack }: Props) => {
   const { input, result } = useCalculator();
-  const nav = useNavigate();
   const b = input.branche;
   const showWE = showsWareneinsatz(b);
   const showStunden = showsStunden(b);
@@ -35,8 +37,8 @@ const Summary = () => {
         <Header />
         <main className="mx-auto w-full max-w-3xl flex-1 px-4 py-12 text-center">
           <h1 className="mb-4 text-2xl font-bold">{tStr("summaryTitle")}</h1>
-          <p className="mb-6 text-muted-foreground">{result?.fehlermeldung || "—"}</p>
-          <Button onClick={() => nav("/")} variant="outline">
+          <p className="mb-6 text-muted-foreground">Noch keine Berechnung verfügbar.</p>
+          <Button onClick={onBack} variant="outline">
             <ArrowLeft className="mr-2 h-4 w-4" />
             {tStr("zurueck")}
           </Button>
@@ -51,7 +53,7 @@ const Summary = () => {
       <Header />
       <main className="mx-auto w-full max-w-4xl flex-1 px-4 py-6 sm:px-6">
         <div className="no-print mb-4 flex items-center justify-between">
-          <Button variant="outline" onClick={() => nav("/")}>
+          <Button variant="outline" onClick={onBack}>
             <ArrowLeft className="mr-2 h-4 w-4" />
             {tStr("zurueck")}
           </Button>
