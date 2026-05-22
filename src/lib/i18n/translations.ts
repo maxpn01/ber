@@ -7,8 +7,6 @@ export const translations = {
     appShortDesc:
       "Berechnen Sie Ihre Gewinnschwelle inklusive der Kosten für neue Mitarbeiter:innen.",
     languageLabel: "Sprache",
-    themeLight: "Helles Design",
-    themeDark: "Dunkles Design",
 
     // Start page
     startTitle: "Break-Even-Rechner",
@@ -151,8 +149,6 @@ export const translations = {
     appShortDesc:
       "Calculate your break-even point including the cost of hiring new employees.",
     languageLabel: "Language",
-    themeLight: "Light theme",
-    themeDark: "Dark theme",
 
     startTitle: "Break-Even Calculator",
     startSubtitle: "Austrian Federal Economic Chamber",

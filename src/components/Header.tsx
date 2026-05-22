@@ -1,13 +1,11 @@
-import { Globe, Moon, Sun } from "lucide-react";
+import { Globe } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { useI18n } from "@/lib/i18n/I18nProvider";
-import { useTheme } from "@/lib/theme/ThemeProvider";
 import { WkoLogo } from "./WkoLogo";
 
 export const Header = () => {
   const { lang, setLang, tStr } = useI18n();
-  const { theme, toggle } = useTheme();
   return (
     <header className="no-print w-full border-b border-border bg-background">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 sm:px-6">
@@ -24,14 +22,6 @@ export const Header = () => {
           >
             <Globe className="h-4 w-4" />
             <span className="font-medium uppercase">{lang}</span>
-          </Button>
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={toggle}
-            aria-label={theme === "dark" ? tStr("themeLight") : tStr("themeDark")}
-          >
-            {theme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
           </Button>
         </div>
       </div>
