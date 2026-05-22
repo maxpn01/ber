@@ -9,26 +9,44 @@ The React calculation logic is implemented in TypeScript and tested against a re
 Install dependencies:
 
 ```bash
-npm install
+bun install
 ```
 
 Run the development server:
 
 ```bash
-npm run dev
+bun run dev
 ```
 
 Run tests:
 
 ```bash
-npm test -- --run
+bun run test
 ```
 
 Build for production:
 
 ```bash
-npm run build
+bun run build
 ```
+
+## Docker
+
+The Docker setup builds the Vite/React app with Bun and serves the compiled static files with nginx.
+
+Build the image:
+
+```bash
+docker build -t break-even-calculator .
+```
+
+Run the container:
+
+```bash
+docker run --rm -p 8080:80 break-even-calculator
+```
+
+Then open `http://localhost:8080`.
 
 ## Important Files
 
