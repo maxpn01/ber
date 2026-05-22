@@ -5,14 +5,13 @@ import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { useCalculator } from "@/lib/calculator/CalculatorContext";
-import { useI18n } from "@/lib/i18n/I18nProvider";
 import { formatMoney, formatNumber } from "@/lib/format";
 import { showsProvision, showsStunden, showsWareneinsatz } from "@/lib/calculator/branche";
-import type { TranslationKey } from "@/lib/i18n/translations";
+import { tStr, type TextKey } from "@/lib/text";
 import type { Branche } from "@/lib/calculator/types";
 
-const brancheLabelKey = (b: Branche): TranslationKey => {
-  const map: Record<Branche, TranslationKey> = {
+const brancheLabelKey = (b: Branche): TextKey => {
+  const map: Record<Branche, TextKey> = {
     dienstleistung: "branche_dienstleistung",
     gastronomie: "branche_gastronomie",
     handel: "branche_handel",
@@ -24,7 +23,6 @@ const brancheLabelKey = (b: Branche): TranslationKey => {
 
 const Summary = () => {
   const { input, result } = useCalculator();
-  const { tStr } = useI18n();
   const nav = useNavigate();
   const b = input.branche;
   const showWE = showsWareneinsatz(b);

@@ -6,10 +6,9 @@ import { ErzielbarerGewinnSlider } from "@/components/calculator/ErzielbarerGewi
 import { MitarbeiterCard } from "@/components/calculator/MitarbeiterCard";
 import { SubsidyCard } from "@/components/calculator/SubsidyCard";
 import { ResultPanel } from "@/components/calculator/ResultPanel";
-import { useI18n } from "@/lib/i18n/I18nProvider";
+import { tStr } from "@/lib/text";
 
 const Calculator = () => {
-  const { tStr } = useI18n();
   return (
     <div className="flex min-h-screen flex-col bg-background">
       <Header />

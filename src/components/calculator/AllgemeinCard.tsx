@@ -5,8 +5,7 @@ import { NumberInput } from "@/components/NumberInput";
 import { useCalculator } from "@/lib/calculator/CalculatorContext";
 import { showsProvision, showsStunden, showsWareneinsatz, branchen } from "@/lib/calculator/branche";
 import type { Branche } from "@/lib/calculator/types";
-import { useI18n } from "@/lib/i18n/I18nProvider";
-import type { TranslationKey } from "@/lib/i18n/translations";
+import { tStr, type TextKey } from "@/lib/text";
 import {
   Select,
   SelectContent,
@@ -15,8 +14,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-const brancheLabelKey = (b: Branche): TranslationKey => {
-  const map: Record<Branche, TranslationKey> = {
+const brancheLabelKey = (b: Branche): TextKey => {
+  const map: Record<Branche, TextKey> = {
     dienstleistung: "branche_dienstleistung",
     gastronomie: "branche_gastronomie",
     handel: "branche_handel",
@@ -28,7 +27,6 @@ const brancheLabelKey = (b: Branche): TranslationKey => {
 
 export const AllgemeinCard = () => {
   const { input, patchInput, setBranche, validationError } = useCalculator();
-  const { tStr } = useI18n();
   const b = input.branche;
 
   const errFor = (k: string) => (validationError && validationError.key === k ? validationError.msg : null);

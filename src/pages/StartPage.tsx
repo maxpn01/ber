@@ -2,10 +2,9 @@ import { useNavigate } from "react-router-dom";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
-import { useI18n } from "@/lib/i18n/I18nProvider";
+import { tStr } from "@/lib/text";
 
 const StartPage = () => {
-  const { tStr } = useI18n();
   const nav = useNavigate();
   return (
     <div className="flex min-h-screen flex-col bg-background">
@@ -15,6 +14,9 @@ const StartPage = () => {
         <h1 className="mb-4 text-4xl font-bold sm:text-5xl">{tStr("startTitle")}</h1>
         <p className="mb-8 max-w-xl text-base text-muted-foreground sm:text-lg">
           {tStr("startDescription")}
+        </p>
+        <p className="mb-8 max-w-xl text-sm text-muted-foreground">
+          <strong>{tStr("startHintTitle")}</strong> {tStr("startHint")}
         </p>
         <Button
           size="lg"

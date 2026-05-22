@@ -1,4 +1,4 @@
-// All numbers are formatted in de-AT regardless of UI language (WKO standard).
+// All numbers are formatted in de-AT (WKO standard).
 const nfMoney = new Intl.NumberFormat("de-AT", {
   minimumFractionDigits: 2,
   maximumFractionDigits: 2,

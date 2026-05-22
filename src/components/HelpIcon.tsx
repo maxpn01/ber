@@ -14,7 +14,7 @@ export const HelpIcon = ({ text, className, variant = "dark" }: Props) => (
       <TooltipTrigger asChild>
         <button
           type="button"
-          aria-label="Info"
+          aria-label="Hilfe"
           className={cn(
             "inline-flex h-4 w-4 items-center justify-center rounded-full text-white",
             variant === "dark" ? "bg-foreground/80" : "bg-wko-red",

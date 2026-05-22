@@ -15,12 +15,11 @@ import { NumberInput } from "@/components/NumberInput";
 import { useCalculator, type MitarbeiterIndex } from "@/lib/calculator/CalculatorContext";
 import { dienstverhaeltnisse, showsUmsatzsteigerung, showsVerkaufbareStunden } from "@/lib/calculator/branche";
 import type { Dienstverhaeltnis } from "@/lib/calculator/types";
-import { useI18n } from "@/lib/i18n/I18nProvider";
-import type { TranslationKey } from "@/lib/i18n/translations";
+import { tStr, type TextKey } from "@/lib/text";
 import { cn } from "@/lib/utils";
 
-const dvLabelKey = (d: Dienstverhaeltnis): TranslationKey => {
-  const map: Record<Dienstverhaeltnis, TranslationKey> = {
+const dvLabelKey = (d: Dienstverhaeltnis): TextKey => {
+  const map: Record<Dienstverhaeltnis, TextKey> = {
     angestellter: "dv_angestellter",
     arbeiter: "dv_arbeiter",
     geringfuegig: "dv_geringfuegig",
@@ -36,7 +35,6 @@ interface Props {
 
 export const MitarbeiterCard = ({ index }: Props) => {
   const { input, patchMitarbeiter, toggleMitarbeiter, resetMitarbeiter, deleteMitarbeiter } = useCalculator();
-  const { tStr } = useI18n();
   const m = [input.mitarbeiter1, input.mitarbeiter2, input.mitarbeiter3, input.mitarbeiter4][index];
   const b = input.branche;
 
@@ -52,7 +50,7 @@ export const MitarbeiterCard = ({ index }: Props) => {
         <Switch
           checked={m.active}
           onCheckedChange={(c) => toggleMitarbeiter(index, c)}
-          aria-label={`Toggle ${tStr("datenMitarbeiter")} ${index + 1}`}
+          aria-label={`${tStr("datenMitarbeiter")} ${index + 1} ein- oder ausblenden`}
           className={cn(m.active && "data-[state=checked]:bg-toggle-on")}
         />
       </div>

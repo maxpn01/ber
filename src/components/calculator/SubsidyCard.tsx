@@ -10,8 +10,7 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { useCalculator, type MitarbeiterIndex } from "@/lib/calculator/CalculatorContext";
-import { useI18n } from "@/lib/i18n/I18nProvider";
-import type { TranslationKey } from "@/lib/i18n/translations";
+import { tList, tStr, type TextKey, type TextListKey } from "@/lib/text";
 import { cn } from "@/lib/utils";
 import { JAHR } from "@/lib/calculator/constants";
 
@@ -21,17 +20,17 @@ interface Props {
   kind: Kind;
 }
 
-const TITLE_KEY: Record<Kind, TranslationKey> = {
+const TITLE_KEY: Record<Kind, TextKey> = {
   epu: "foerderungEpu",
   bonus: "foerderungBonus",
   startup: "foerderungStartUp",
 };
-const HINT_KEY: Record<Kind, TranslationKey> = {
+const HINT_KEY: Record<Kind, TextKey> = {
   epu: "hinweisEpu",
   bonus: "hinweisBonus",
   startup: "hinweisStartUp",
 };
-const COND_KEY: Record<Kind, TranslationKey> = {
+const COND_KEY: Record<Kind, TextListKey> = {
   epu: "epuConditions",
   bonus: "bonusConditions",
   startup: "startUpConditions",
@@ -39,7 +38,6 @@ const COND_KEY: Record<Kind, TranslationKey> = {
 
 export const SubsidyCard = ({ kind }: Props) => {
   const { input, patchMitarbeiter, showStartUpUnavailable, setShowStartUpUnavailable } = useCalculator();
-  const { tStr, tList } = useI18n();
   const all = [input.mitarbeiter1, input.mitarbeiter2, input.mitarbeiter3, input.mitarbeiter4];
 
   const isAnyOn = all.some((m) =>

@@ -3,15 +3,14 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { useCalculator } from "@/lib/calculator/CalculatorContext";
-import { useI18n } from "@/lib/i18n/I18nProvider";
 import { formatMoney, formatNumber } from "@/lib/format";
 import { showsProvision, showsStunden, showsWareneinsatz } from "@/lib/calculator/branche";
 import { HelpIcon } from "@/components/HelpIcon";
+import { tStr } from "@/lib/text";
 import { cn } from "@/lib/utils";
 
 export const ResultPanel = () => {
   const { input, result, activeMitarbeiterCount } = useCalculator();
-  const { tStr } = useI18n();
   const nav = useNavigate();
   const [detailsOpen, setDetailsOpen] = useState(false);
 
