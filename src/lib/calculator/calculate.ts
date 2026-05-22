@@ -49,15 +49,33 @@ function calcLohnnebenkosten(
 }
 
 function svPauschalierungsgrenzeExceeded(allMitarbeiter: InputMitarbeiter[]): boolean {
-  const ger = allMitarbeiter.filter(
-    (m) => m.beschaeftigungsform === "geringfuegig" && m.bruttogehaltProMonat > 0,
-  );
-  if (ger.length <= 1) return false;
-  const total = ger.reduce(
-    (s, m) => s + Math.min(m.bruttogehaltProMonat, SV_GERINGFUEGIGKEITSGRENZE),
-    0,
-  );
-  return total > SV_PAUSCHALIERUNGSGRENZE;
+  let count = 0;
+  let total = 0;
+
+  // Mirrors the original C# else-if chain exactly, including its effective
+  // behavior of considering only the first marginal employee it encounters.
+  if (allMitarbeiter[0].beschaeftigungsform === "geringfuegig") {
+    count++;
+    total += Math.min(allMitarbeiter[0].bruttogehaltProMonat, SV_GERINGFUEGIGKEITSGRENZE);
+  } else if (allMitarbeiter[1].beschaeftigungsform === "geringfuegig") {
+    count++;
+    total += Math.min(allMitarbeiter[1].bruttogehaltProMonat, SV_GERINGFUEGIGKEITSGRENZE);
+  } else if (allMitarbeiter[2].beschaeftigungsform === "geringfuegig") {
+    count++;
+    total += Math.min(allMitarbeiter[2].bruttogehaltProMonat, SV_GERINGFUEGIGKEITSGRENZE);
+  } else if (allMitarbeiter[3].beschaeftigungsform === "geringfuegig") {
+    count++;
+    total += Math.min(allMitarbeiter[3].bruttogehaltProMonat, SV_GERINGFUEGIGKEITSGRENZE);
+  }
+
+  return count > 1 && total > SV_PAUSCHALIERUNGSGRENZE;
+}
+
+function foerderungText(m: InputMitarbeiter): string {
+  if (m.foerderung) return "EPU Lohnnebenkostenförderung";
+  if (m.foerderungBonus) return "Beschäftigungsbonus";
+  if (m.foerderungStartUp) return "aws Förderung für innovative Start-Ups";
+  return "Förderung";
 }
 
 function calcMitarbeiter(
@@ -109,15 +127,15 @@ function calcMitarbeiter(
     sv_satz_SZ = 20.48;
   }
 
-  const brutto_inkl_lnn_ohne_kap =
+  const brutto_inkl_lnn_jahr =
     brutto_jahr +
-    calcLohnnebenkosten(brutto_monat, monate, sonderzahlung, sv_satz, sv_satz_SZ) +
+    calcLohnnebenkosten(brutto_monat, monate, sonderzahlung, sv_satz, sv_satz_SZ, sv_max) +
     calcLohnnebenkosten(brutto_monat, monate, sonderzahlung, KOMM_ST, KOMM_ST) +
     calcLohnnebenkosten(brutto_monat, monate, sonderzahlung, DB_ZUM_FLAF, DB_ZUM_FLAF) +
     calcLohnnebenkosten(brutto_monat, monate, sonderzahlung, DZ_ZUM_DB, DZ_ZUM_DB) +
     calcLohnnebenkosten(brutto_monat, monate, sonderzahlung, BV, BV);
 
-  const brutto_inkl_lnn_jahr =
+  const foerderungBasis =
     brutto_jahr +
     calcLohnnebenkosten(brutto_monat, monate, sonderzahlung, sv_satz, sv_satz_SZ, sv_max) +
     calcLohnnebenkosten(brutto_monat, monate, sonderzahlung, KOMM_ST, KOMM_ST, sv_max) +
@@ -129,25 +147,22 @@ function calcMitarbeiter(
 
   let foerderung_jahr = 0;
   let foerderung_monat = 0;
-  let foerderungText = "Förderung";
+  const label = foerderungText(m);
   const foerderungCount = [m.foerderung, m.foerderungBonus, m.foerderungStartUp].filter(Boolean)
     .length;
 
   if ((typ === "angestellter" || typ === "arbeiter") && foerderungCount === 1) {
     if (m.foerderung) {
-      foerderungText = "EPU Lohnnebenkostenförderung";
       foerderung_monat = round2((Math.min(brutto_monat, sv_max) * FOERDERUNG_SATZ) / 100);
       foerderung_jahr = foerderung_monat * monate;
     } else if (m.foerderungBonus && monate >= 6) {
-      foerderungText = "Beschäftigungsbonus";
-      foerderung_jahr = Math.max(((brutto_inkl_lnn_ohne_kap - brutto_jahr) * 50) / 100, 0);
-      foerderung_monat = monate > 0 ? foerderung_jahr / monate : 0;
+      foerderung_jahr = round2(Math.max(((foerderungBasis - brutto_jahr) * 50) / 100, 0));
+      foerderung_monat = monate > 0 ? round2(foerderung_jahr / monate) : 0;
     } else if (m.foerderungStartUp && monate >= 3) {
       const unternehmensjahr = JAHR - input.gruendungsjahr + 1;
       if (input.gruendungsjahr === 0 || unternehmensjahr <= 5) {
-        foerderungText = "aws Förderung für innovative Start-Ups";
-        foerderung_jahr = Math.max(brutto_inkl_lnn_ohne_kap - brutto_jahr, 0);
-        foerderung_monat = monate > 0 ? foerderung_jahr / monate : 0;
+        foerderung_jahr = round2(Math.max(foerderungBasis - brutto_jahr, 0));
+        foerderung_monat = monate > 0 ? round2(foerderung_jahr / monate) : 0;
       }
     }
   }
@@ -166,7 +181,7 @@ function calcMitarbeiter(
       monat: round2(brutto_inkl_lnn_monat),
       jahr: round2(brutto_inkl_lnn_jahr),
     },
-    foerderungText,
+    foerderungText: label,
     foerderung: { monat: round2(foerderung_monat), jahr: round2(foerderung_jahr) },
     arbeitsstunden: { monat: round2(arbeitsstunden_monat), jahr: round2(arbeitsstunden_jahr) },
   };
@@ -255,6 +270,10 @@ function computeShared(input: InputModel): CalcShared {
 }
 
 export function calculate(input: InputModel): OutputModel {
+  return calculateWithShared(input);
+}
+
+function calculateWithShared(input: InputModel, shared: CalcShared = computeShared(input)): OutputModel {
   const b = input.branche;
   const all = [input.mitarbeiter1, input.mitarbeiter2, input.mitarbeiter3, input.mitarbeiter4];
 
@@ -267,7 +286,7 @@ export function calculate(input: InputModel): OutputModel {
     b === "gastronomie" || b === "handel" || b === "gewerbe" ? input.wareneinsatz : 0;
   const ausgGewinn_jahr = ausgUmsatz_jahr - ausgAufwand_jahr - ausgWareneinsatz_jahr;
 
-  const { wareneinsatzAnteil, stundensatz } = computeShared(input);
+  const { wareneinsatzAnteil, stundensatz } = shared;
 
   const mResults = all.map((m) => calcMitarbeiter(input, m, b, all));
 
@@ -399,9 +418,9 @@ export function calculate(input: InputModel): OutputModel {
 }
 
 export function calculateExtended(input: InputModel, erzielbarerGewinn: number): OutputModel {
-  // Recompute base inputs to satisfy desired profit, then run calculate().
   const b = input.branche;
-  const { wareneinsatzAnteil, stundensatz } = computeShared(input);
+  const shared = computeShared(input);
+  const { wareneinsatzAnteil, stundensatz } = shared;
   const newAufwand = input.aufwand;
   let newUmsatz = newAufwand + erzielbarerGewinn;
 
@@ -427,7 +446,16 @@ export function calculateExtended(input: InputModel, erzielbarerGewinn: number):
     erzielbarerGewinn,
   };
 
-  return calculate(overridden);
+  const result = calculateWithShared(overridden, shared);
+  const original = calculate(input);
+
+  // The original C# returns the desired-profit scenario in the break-even and
+  // top-level calculated values, then restores the displayed Ausgangssituation
+  // back to the user's original inputs at the end of the second pass.
+  return {
+    ...result,
+    ausgangssituation: original.ausgangssituation,
+  };
 }
 
 function errorOutput(msg: string, b: Branche): OutputModel {
