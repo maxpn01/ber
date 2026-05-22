@@ -1,6 +1,6 @@
 import { createContext, Dispatch, ReactNode, SetStateAction, useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { defaultInput, defaultMitarbeiterFor } from "@/lib/calculator/branche";
-import { calculate, calculateExtended, isReadyToCalculate, validateInput, ValidationError } from "@/lib/calculator/calculate";
+import { calculate, calculateExtended, isReadyToCalculate } from "@/lib/calculator/calculate";
 import { Branche, InputMitarbeiter, InputModel, OutputModel } from "@/lib/calculator/types";
 
 export type MitarbeiterIndex = 0 | 1 | 2 | 3;
@@ -9,7 +9,6 @@ interface CalcCtx {
   input: InputModel;
   setInput: Dispatch<SetStateAction<InputModel>>;
   result: OutputModel | null;
-  validationError: ValidationError | null;
   sliderValue: number;
   setSliderValue: (v: number) => void;
   firstCalcDone: boolean;
@@ -39,15 +38,12 @@ export const CalculatorProvider = ({ children }: { children: ReactNode }) => {
   const [firstCalcDone, setFirstCalcDone] = useState(false);
   const [showStartUpUnavailable, setShowStartUpUnavailable] = useState(false);
 
-  // Compute validation + result reactively (synchronously is fine; calc is cheap)
-  const { result, validationError } = useMemo(() => {
+  // Compute result reactively (synchronously is fine; calc is cheap)
+  const result = useMemo(() => {
     if (!isReadyToCalculate(input)) {
-      return { result: null, validationError: validateInput(input) };
+      return null;
     }
-    const err = validateInput(input);
-    if (err) return { result: null, validationError: err };
-    const r = sliderValue > 0 ? calculateExtended(input, sliderValue) : calculate(input);
-    return { result: r, validationError: null };
+    return sliderValue > 0 ? calculateExtended(input, sliderValue) : calculate(input);
   }, [input, sliderValue]);
 
   useEffect(() => {
@@ -146,7 +142,6 @@ export const CalculatorProvider = ({ children }: { children: ReactNode }) => {
       input,
       setInput,
       result,
-      validationError,
       sliderValue,
       setSliderValue,
       firstCalcDone,
@@ -163,7 +158,6 @@ export const CalculatorProvider = ({ children }: { children: ReactNode }) => {
     [
       input,
       result,
-      validationError,
       sliderValue,
       setSliderValue,
       firstCalcDone,

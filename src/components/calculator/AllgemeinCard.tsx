@@ -1,4 +1,3 @@
-import { AlertCircle } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { HelpIcon } from "@/components/HelpIcon";
 import { NumberInput } from "@/components/NumberInput";
@@ -26,10 +25,8 @@ const brancheLabelKey = (b: Branche): TextKey => {
 };
 
 export const AllgemeinCard = () => {
-  const { input, patchInput, setBranche, validationError } = useCalculator();
+  const { input, patchInput, setBranche } = useCalculator();
   const b = input.branche;
-
-  const errFor = (k: string) => (validationError && validationError.key === k ? validationError.msg : null);
 
   return (
     <Card className="border-border bg-card p-6">
@@ -42,7 +39,7 @@ export const AllgemeinCard = () => {
           <HelpIcon text={tStr("branche")} />
         </label>
         <Select value={b} onValueChange={(v) => setBranche(v as Branche)}>
-          <SelectTrigger className="bg-muted border-transparent">
+          <SelectTrigger className="border-transparent bg-muted focus:ring-0 focus:ring-offset-0">
             <SelectValue />
           </SelectTrigger>
           <SelectContent>
@@ -58,73 +55,57 @@ export const AllgemeinCard = () => {
       <div className="border-t border-dashed border-border pt-4" />
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-        <Field
-          label={tStr("umsatz")}
-          help={tStr("umsatz")}
-          err={errFor("umsatz") || errFor("umsatzVsAbzug")}
-        >
+        <Field label={tStr("umsatz")} help={tStr("umsatz")}>
           <NumberInput
             value={input.umsatz}
             onChange={(v) => patchInput({ umsatz: v })}
-            invalid={!!(errFor("umsatz") || errFor("umsatzVsAbzug"))}
             ariaLabel={tStr("umsatz")}
+            className="focus-visible:ring-0 focus-visible:ring-offset-0"
           />
         </Field>
 
-        <Field label={tStr("aufwand")} help={tStr("aufwand")} err={errFor("aufwand")}>
+        <Field label={tStr("aufwand")} help={tStr("aufwand")}>
           <NumberInput
             value={input.aufwand}
             onChange={(v) => patchInput({ aufwand: v })}
-            invalid={!!errFor("aufwand")}
             ariaLabel={tStr("aufwand")}
+            className="focus-visible:ring-0 focus-visible:ring-offset-0"
           />
         </Field>
 
         {showsStunden(b) && (
-          <Field
-            label={tStr("verrechneteStunden")}
-            help={tStr("verrechneteStunden")}
-            err={errFor("stunden")}
-          >
+          <Field label={tStr("verrechneteStunden")} help={tStr("verrechneteStunden")}>
             <NumberInput
               value={input.stunden}
               onChange={(v) => patchInput({ stunden: v })}
               variant="integer"
-              invalid={!!errFor("stunden")}
               ariaLabel={tStr("verrechneteStunden")}
               suffix="h"
+              className="focus-visible:ring-0 focus-visible:ring-offset-0"
             />
           </Field>
         )}
 
         {showsWareneinsatz(b) && (
-          <Field
-            label={tStr("wareneinsatz")}
-            help={tStr("wareneinsatz")}
-            err={errFor("wareneinsatz") || errFor("umsatzVsAbzug")}
-          >
+          <Field label={tStr("wareneinsatz")} help={tStr("wareneinsatz")}>
             <NumberInput
               value={input.wareneinsatz}
               onChange={(v) => patchInput({ wareneinsatz: v })}
-              invalid={!!(errFor("wareneinsatz") || errFor("umsatzVsAbzug"))}
               ariaLabel={tStr("wareneinsatz")}
+              className="focus-visible:ring-0 focus-visible:ring-offset-0"
             />
           </Field>
         )}
 
         {showsProvision(b) && (
-          <Field
-            label={tStr("provisionPct")}
-            help={tStr("provisionPct")}
-            err={errFor("provision")}
-          >
+          <Field label={tStr("provisionPct")} help={tStr("provisionPct")}>
             <NumberInput
               value={input.provision}
               onChange={(v) => patchInput({ provision: v })}
               variant="decimal"
               suffix="%"
-              invalid={!!errFor("provision")}
               ariaLabel={tStr("provisionPct")}
+              className="focus-visible:ring-0 focus-visible:ring-offset-0"
             />
           </Field>
         )}
@@ -136,12 +117,10 @@ export const AllgemeinCard = () => {
 const Field = ({
   label,
   help,
-  err,
   children,
 }: {
   label: string;
   help: string;
-  err?: string | null;
   children: React.ReactNode;
 }) => (
   <div className="flex flex-col">
@@ -150,11 +129,5 @@ const Field = ({
       <HelpIcon text={help} />
     </label>
     {children}
-    {err && (
-      <div className="mt-1 flex items-start gap-1 text-xs text-destructive">
-        <AlertCircle className="mt-0.5 h-3.5 w-3.5 shrink-0" />
-        <span>{err}</span>
-      </div>
-    )}
   </div>
 );
