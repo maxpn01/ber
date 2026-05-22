@@ -4,16 +4,6 @@ export const text = {
   appShortDesc:
     "Mit dem Break-Even-Rechner können Ein-Personen-Unternehmer mittels weniger Eingaben sehr einfach ausrechnen, mit welchen Kosten für die Einstellung der ersten 4 Mitarbeiter zu rechnen ist.",
 
-  // Start page
-  startTitle: "Was kosten Ihre ersten Mitarbeiter?",
-  startSubtitle: "Break-Even-Rechner",
-  startDescription:
-    "Mit diesem Tool können Ein-Personen-Unternehmer sehr einfach berechnen, mit welchen Kosten sie im Zuge der Einstellung der ersten Mitarbeiter rechnen müssen. Das Berechnungstool bietet dabei verschiedene alternative Beschäftigungsformen an und ist für einzelne Branchen optimiert.",
-  startHintTitle: "Bitte beachten Sie folgende Hinweise:",
-  startHint:
-    "Sämtliche Beträge sind als Nettobeträge, d.h. ohne Umsatzsteuer einzugeben, wenn Sie umsatzsteuerpflichtig sind. Sofern Sie unter die Kleinunternehmerregelung fallen, geben Sie die Umsätze ohne Umsatzsteuer, die Aufwände inkl. Vorsteuer an.",
-  startCta: "Berechnung starten",
-
   // Sections
   allgemein: "Stammdaten",
   branche: "Branche",

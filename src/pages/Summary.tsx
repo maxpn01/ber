@@ -36,7 +36,7 @@ const Summary = () => {
         <main className="mx-auto w-full max-w-3xl flex-1 px-4 py-12 text-center">
           <h1 className="mb-4 text-2xl font-bold">{tStr("summaryTitle")}</h1>
           <p className="mb-6 text-muted-foreground">{result?.fehlermeldung || "—"}</p>
-          <Button onClick={() => nav("/rechner")} variant="outline">
+          <Button onClick={() => nav("/")} variant="outline">
             <ArrowLeft className="mr-2 h-4 w-4" />
             {tStr("zurueck")}
           </Button>
@@ -51,7 +51,7 @@ const Summary = () => {
       <Header />
       <main className="mx-auto w-full max-w-4xl flex-1 px-4 py-6 sm:px-6">
         <div className="no-print mb-4 flex items-center justify-between">
-          <Button variant="outline" onClick={() => nav("/rechner")}>
+          <Button variant="outline" onClick={() => nav("/")}>
             <ArrowLeft className="mr-2 h-4 w-4" />
             {tStr("zurueck")}
           </Button>
