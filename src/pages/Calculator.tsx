@@ -29,8 +29,9 @@ const Calculator = () => {
               <MitarbeiterCard index={2} />
               <MitarbeiterCard index={3} />
               <SubsidyCard kind="epu" />
-              <SubsidyCard kind="bonus" />
-              <SubsidyCard kind="startup" />
+              {/* INTENTIONALLY HIDDEN IN THE ORIGINAL CODE */}
+              {/* <SubsidyCard kind="bonus" />
+              <SubsidyCard kind="startup" /> */}
             </div>
             <div className="lg:sticky lg:top-6 lg:self-start">
               <ResultPanel />
