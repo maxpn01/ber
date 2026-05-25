@@ -41,6 +41,22 @@ describe("calculator", () => {
     expect(r.breakEven.breakEvenUmsatz.jahr).toBe(50000);
   });
 
+  it("keeps default dienstleistung employee out of potential until sales inputs are set", () => {
+    const i = defaultInput("dienstleistung");
+    i.umsatz = 222;
+    i.aufwand = 111;
+    i.stunden = 2;
+    i.mitarbeiter1 = defaultMitarbeiterFor("dienstleistung", true);
+
+    const r = calculate(i);
+
+    expect(r.fehlermeldung).toBe("");
+    expect(r.potenzial.umsatzpotenzialMitarbeiter.jahr).toBe(222);
+    expect(r.potenzial.stundenMitarbeiter.jahr).toBe(2);
+    expect(r.potenzial.umsatzpotenzialBreakEven.jahr).toBeCloseTo(40173.56, 2);
+    expect(r.potenzial.stundenBreakEven.jahr).toBe(362);
+  });
+
   it("includes Mitarbeiter1 personalkosten when active (gewerbe)", () => {
     const i = defaultInput("gewerbe");
     i.umsatz = 100000;

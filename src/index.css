@@ -58,16 +58,16 @@
     --popover-foreground: 0 0% 13%;
 
     /* WKO Brand red */
-    --primary: 4 83% 53%;            /* #ea3122 */
+    --primary: 4 83% 53%; /* #ea3122 */
     --primary-foreground: 0 0% 100%;
 
     --secondary: 0 0% 95%;
     --secondary-foreground: 0 0% 20%;
 
-    --muted: 0 0% 95%;               /* #f1f1f1 input bg */
+    --muted: 0 0% 95%; /* #f1f1f1 input bg */
     --muted-foreground: 0 0% 40%;
 
-    --accent: 0 0% 88%;               /* #e0e0e0 section bg */
+    --accent: 0 0% 88%; /* #e0e0e0 section bg */
     --accent-foreground: 0 0% 13%;
 
     --destructive: 4 83% 53%;
@@ -80,28 +80,28 @@
     --radius: 0.625rem;
 
     /* WKO custom semantic tokens */
-    --wko-red: 4 83% 53%;            /* #ea3122 */
+    --wko-red: 4 83% 53%; /* #ea3122 */
     --wko-red-dark: 4 83% 45%;
-    --wko-gray-dark: 0 0% 40%;       /* #666 */
-    --wko-gray-mid: 0 0% 52%;        /* #848484 */
-    --wko-gray-light: 0 0% 95%;      /* #f1f1f1 */
+    --wko-gray-dark: 0 0% 40%; /* #666 */
+    --wko-gray-mid: 0 0% 52%; /* #848484 */
+    --wko-gray-light: 0 0% 95%; /* #f1f1f1 */
     --wko-section-bg: 0 0% 96%;
 
     /* Result panel — peach */
-    --result-bg: 25 78% 92%;          /* light peach */
+    --result-bg: 25 78% 92%; /* light peach */
     --result-bg-strong: 25 75% 88%;
     --result-foreground: 0 0% 13%;
 
-    /* Slider — green */
-    --slider-bg: 142 38% 45%;         /* #3a9d6a-ish */
+    /* Slider / toggle blue */
+    --slider-bg: 198 100% 17%; /* #003C56 */
     --slider-foreground: 0 0% 100%;
 
     /* Subsidy accent — purple */
-    --subsidy-accent: 256 50% 55%;    /* purple */
+    --subsidy-accent: 256 50% 55%; /* purple */
     --subsidy-accent-soft: 256 60% 96%;
 
-    /* Toggle on (green) */
-    --toggle-on: 142 50% 45%;
+    /* Toggle on */
+    --toggle-on: 198 100% 17%; /* #003C56 */
 
     /* Sidebar (kept for shadcn, unused) */
     --sidebar-background: 0 0% 98%;
@@ -120,17 +120,37 @@
     @apply border-border;
   }
 
-  html, body {
+  html,
+  body {
     @apply bg-background text-foreground;
-    font-family: "DIN Pro", "DINPro", -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+    font-family:
+      "DIN Pro",
+      "DINPro",
+      -apple-system,
+      BlinkMacSystemFont,
+      "Segoe UI",
+      "Helvetica Neue",
+      Arial,
+      sans-serif;
   }
 }
 
 /* Print styles — only the summary block is shown */
 @media print {
-  .no-print { display: none !important; }
-  .print-only { display: block !important; }
-  body { background: #fff !important; color: #000 !important; }
-  .page-break { page-break-before: always; }
+  .no-print {
+    display: none !important;
+  }
+  .print-only {
+    display: block !important;
+  }
+  body {
+    background: #fff !important;
+    color: #000 !important;
+  }
+  .page-break {
+    page-break-before: always;
+  }
 }
-.print-only { display: none; }
+.print-only {
+  display: none;
+}

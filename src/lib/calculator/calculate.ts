@@ -42,13 +42,17 @@ function calcLohnnebenkosten(
     lnn = round2((Math.min(brutto, maxBasis) * satz) / 100);
     lnn13 = round2((Math.min(sonderzahlung, maxBasis * 2) * satzSZ) / 100);
     lnn14 = round2(
-      (Math.min(sonderzahlung, Math.max(maxBasis * 2 - sonderzahlung, 0)) * satzSZ) / 100,
+      (Math.min(sonderzahlung, Math.max(maxBasis * 2 - sonderzahlung, 0)) *
+        satzSZ) /
+        100,
     );
   }
   return lnn * monate + lnn13 + lnn14;
 }
 
-function svPauschalierungsgrenzeExceeded(allMitarbeiter: InputMitarbeiter[]): boolean {
+function svPauschalierungsgrenzeExceeded(
+  allMitarbeiter: InputMitarbeiter[],
+): boolean {
   let count = 0;
   let total = 0;
 
@@ -56,16 +60,28 @@ function svPauschalierungsgrenzeExceeded(allMitarbeiter: InputMitarbeiter[]): bo
   // behavior of considering only the first marginal employee it encounters.
   if (allMitarbeiter[0].beschaeftigungsform === "geringfuegig") {
     count++;
-    total += Math.min(allMitarbeiter[0].bruttogehaltProMonat, SV_GERINGFUEGIGKEITSGRENZE);
+    total += Math.min(
+      allMitarbeiter[0].bruttogehaltProMonat,
+      SV_GERINGFUEGIGKEITSGRENZE,
+    );
   } else if (allMitarbeiter[1].beschaeftigungsform === "geringfuegig") {
     count++;
-    total += Math.min(allMitarbeiter[1].bruttogehaltProMonat, SV_GERINGFUEGIGKEITSGRENZE);
+    total += Math.min(
+      allMitarbeiter[1].bruttogehaltProMonat,
+      SV_GERINGFUEGIGKEITSGRENZE,
+    );
   } else if (allMitarbeiter[2].beschaeftigungsform === "geringfuegig") {
     count++;
-    total += Math.min(allMitarbeiter[2].bruttogehaltProMonat, SV_GERINGFUEGIGKEITSGRENZE);
+    total += Math.min(
+      allMitarbeiter[2].bruttogehaltProMonat,
+      SV_GERINGFUEGIGKEITSGRENZE,
+    );
   } else if (allMitarbeiter[3].beschaeftigungsform === "geringfuegig") {
     count++;
-    total += Math.min(allMitarbeiter[3].bruttogehaltProMonat, SV_GERINGFUEGIGKEITSGRENZE);
+    total += Math.min(
+      allMitarbeiter[3].bruttogehaltProMonat,
+      SV_GERINGFUEGIGKEITSGRENZE,
+    );
   }
 
   return count > 1 && total > SV_PAUSCHALIERUNGSGRENZE;
@@ -129,18 +145,65 @@ function calcMitarbeiter(
 
   const brutto_inkl_lnn_jahr =
     brutto_jahr +
-    calcLohnnebenkosten(brutto_monat, monate, sonderzahlung, sv_satz, sv_satz_SZ, sv_max) +
+    calcLohnnebenkosten(
+      brutto_monat,
+      monate,
+      sonderzahlung,
+      sv_satz,
+      sv_satz_SZ,
+      sv_max,
+    ) +
     calcLohnnebenkosten(brutto_monat, monate, sonderzahlung, KOMM_ST, KOMM_ST) +
-    calcLohnnebenkosten(brutto_monat, monate, sonderzahlung, DB_ZUM_FLAF, DB_ZUM_FLAF) +
-    calcLohnnebenkosten(brutto_monat, monate, sonderzahlung, DZ_ZUM_DB, DZ_ZUM_DB) +
+    calcLohnnebenkosten(
+      brutto_monat,
+      monate,
+      sonderzahlung,
+      DB_ZUM_FLAF,
+      DB_ZUM_FLAF,
+    ) +
+    calcLohnnebenkosten(
+      brutto_monat,
+      monate,
+      sonderzahlung,
+      DZ_ZUM_DB,
+      DZ_ZUM_DB,
+    ) +
     calcLohnnebenkosten(brutto_monat, monate, sonderzahlung, BV, BV);
 
   const foerderungBasis =
     brutto_jahr +
-    calcLohnnebenkosten(brutto_monat, monate, sonderzahlung, sv_satz, sv_satz_SZ, sv_max) +
-    calcLohnnebenkosten(brutto_monat, monate, sonderzahlung, KOMM_ST, KOMM_ST, sv_max) +
-    calcLohnnebenkosten(brutto_monat, monate, sonderzahlung, DB_ZUM_FLAF, DB_ZUM_FLAF, sv_max) +
-    calcLohnnebenkosten(brutto_monat, monate, sonderzahlung, DZ_ZUM_DB, DZ_ZUM_DB, sv_max) +
+    calcLohnnebenkosten(
+      brutto_monat,
+      monate,
+      sonderzahlung,
+      sv_satz,
+      sv_satz_SZ,
+      sv_max,
+    ) +
+    calcLohnnebenkosten(
+      brutto_monat,
+      monate,
+      sonderzahlung,
+      KOMM_ST,
+      KOMM_ST,
+      sv_max,
+    ) +
+    calcLohnnebenkosten(
+      brutto_monat,
+      monate,
+      sonderzahlung,
+      DB_ZUM_FLAF,
+      DB_ZUM_FLAF,
+      sv_max,
+    ) +
+    calcLohnnebenkosten(
+      brutto_monat,
+      monate,
+      sonderzahlung,
+      DZ_ZUM_DB,
+      DZ_ZUM_DB,
+      sv_max,
+    ) +
     calcLohnnebenkosten(brutto_monat, monate, sonderzahlung, BV, BV, sv_max);
 
   const brutto_inkl_lnn_monat = monate > 0 ? brutto_inkl_lnn_jahr / monate : 0;
@@ -148,15 +211,22 @@ function calcMitarbeiter(
   let foerderung_jahr = 0;
   let foerderung_monat = 0;
   const label = foerderungText(m);
-  const foerderungCount = [m.foerderung, m.foerderungBonus, m.foerderungStartUp].filter(Boolean)
-    .length;
+  const foerderungCount = [
+    m.foerderung,
+    m.foerderungBonus,
+    m.foerderungStartUp,
+  ].filter(Boolean).length;
 
   if ((typ === "angestellter" || typ === "arbeiter") && foerderungCount === 1) {
     if (m.foerderung) {
-      foerderung_monat = round2((Math.min(brutto_monat, sv_max) * FOERDERUNG_SATZ) / 100);
+      foerderung_monat = round2(
+        (Math.min(brutto_monat, sv_max) * FOERDERUNG_SATZ) / 100,
+      );
       foerderung_jahr = foerderung_monat * monate;
     } else if (m.foerderungBonus && monate >= 6) {
-      foerderung_jahr = round2(Math.max(((foerderungBasis - brutto_jahr) * 50) / 100, 0));
+      foerderung_jahr = round2(
+        Math.max(((foerderungBasis - brutto_jahr) * 50) / 100, 0),
+      );
       foerderung_monat = monate > 0 ? round2(foerderung_jahr / monate) : 0;
     } else if (m.foerderungStartUp && monate >= 3) {
       const unternehmensjahr = JAHR - input.gruendungsjahr + 1;
@@ -171,7 +241,9 @@ function calcMitarbeiter(
   let arbeitsstunden_jahr = 0;
   if (branche === "dienstleistung" || branche === "gewerbe") {
     const kf = typ === "dienstvertrag" ? 1.0 : KUERZUNGSFAKTOR;
-    arbeitsstunden_monat = round2(m.anzahlWochenstunden * WOCHEN_PRO_MONAT * kf);
+    arbeitsstunden_monat = round2(
+      m.anzahlWochenstunden * WOCHEN_PRO_MONAT * kf,
+    );
     arbeitsstunden_jahr = round2(arbeitsstunden_monat * monate);
   }
 
@@ -182,8 +254,14 @@ function calcMitarbeiter(
       jahr: round2(brutto_inkl_lnn_jahr),
     },
     foerderungText: label,
-    foerderung: { monat: round2(foerderung_monat), jahr: round2(foerderung_jahr) },
-    arbeitsstunden: { monat: round2(arbeitsstunden_monat), jahr: round2(arbeitsstunden_jahr) },
+    foerderung: {
+      monat: round2(foerderung_monat),
+      jahr: round2(foerderung_jahr),
+    },
+    arbeitsstunden: {
+      monat: round2(arbeitsstunden_monat),
+      jahr: round2(arbeitsstunden_jahr),
+    },
   };
 }
 
@@ -209,17 +287,34 @@ export function validateInput(input: InputModel): ValidationError | null {
   if (input.umsatz <= 0)
     return { key: "umsatz", msg: "Der Umsatz muss größer als Null (0) sein!" };
   if (input.aufwand < 0)
-    return { key: "aufwand", msg: "Der Aufwand darf nicht kleiner als Null (0) sein!" };
+    return {
+      key: "aufwand",
+      msg: "Der Aufwand darf nicht kleiner als Null (0) sein!",
+    };
   if ((b === "dienstleistung" || b === "gewerbe") && input.stunden < 0)
-    return { key: "stunden", msg: "Die Stunden dürfen nicht kleiner als Null (0) sein!" };
-  if ((b === "gastronomie" || b === "handel" || b === "gewerbe") && input.wareneinsatz < 0)
-    return { key: "wareneinsatz", msg: "Der Wareneinsatz darf nicht kleiner als Null (0) sein!" };
+    return {
+      key: "stunden",
+      msg: "Die Stunden dürfen nicht kleiner als Null (0) sein!",
+    };
+  if (
+    (b === "gastronomie" || b === "handel" || b === "gewerbe") &&
+    input.wareneinsatz < 0
+  )
+    return {
+      key: "wareneinsatz",
+      msg: "Der Wareneinsatz darf nicht kleiner als Null (0) sein!",
+    };
   if (b === "provision" && input.provision <= 0)
-    return { key: "provision", msg: "Die Provision in % muss größer als Null (0) sein!" };
+    return {
+      key: "provision",
+      msg: "Die Provision in % muss größer als Null (0) sein!",
+    };
 
   const abzuege =
     input.aufwand +
-    (b === "gastronomie" || b === "handel" || b === "gewerbe" ? input.wareneinsatz : 0);
+    (b === "gastronomie" || b === "handel" || b === "gewerbe"
+      ? input.wareneinsatz
+      : 0);
   if (input.umsatz - abzuege <= 0) {
     return {
       key: "umsatzVsAbzug",
@@ -241,8 +336,12 @@ export function isReadyToCalculate(input: InputModel): boolean {
   const b = input.branche;
   if (!b) return false;
   if (input.umsatz <= 0 || input.aufwand < 0) return false;
-  if ((b === "dienstleistung" || b === "gewerbe") && input.stunden <= 0) return false;
-  if ((b === "gastronomie" || b === "handel" || b === "gewerbe") && input.wareneinsatz < 0)
+  if ((b === "dienstleistung" || b === "gewerbe") && input.stunden <= 0)
+    return false;
+  if (
+    (b === "gastronomie" || b === "handel" || b === "gewerbe") &&
+    input.wareneinsatz < 0
+  )
     return false;
   if (b === "provision" && input.provision <= 0) return false;
   return true;
@@ -256,14 +355,18 @@ interface CalcShared {
 function computeShared(input: InputModel): CalcShared {
   const b = input.branche;
   let wareneinsatzAnteil = 0;
-  if ((b === "gastronomie" || b === "handel" || b === "gewerbe") && input.umsatz !== 0) {
+  if (
+    (b === "gastronomie" || b === "handel" || b === "gewerbe") &&
+    input.umsatz !== 0
+  ) {
     wareneinsatzAnteil = round6(input.wareneinsatz / input.umsatz);
     if (wareneinsatzAnteil >= 1) wareneinsatzAnteil = 0;
   }
   let stundensatz = 0;
   if ((b === "dienstleistung" || b === "gewerbe") && input.stunden !== 0) {
     let grundlage = input.umsatz;
-    if (b === "gewerbe") grundlage = Math.max(input.umsatz - input.wareneinsatz, 0);
+    if (b === "gewerbe")
+      grundlage = Math.max(input.umsatz - input.wareneinsatz, 0);
     stundensatz = round4(grundlage / input.stunden);
   }
   return { wareneinsatzAnteil, stundensatz };
@@ -273,9 +376,17 @@ export function calculate(input: InputModel): OutputModel {
   return calculateWithShared(input);
 }
 
-function calculateWithShared(input: InputModel, shared: CalcShared = computeShared(input)): OutputModel {
+function calculateWithShared(
+  input: InputModel,
+  shared: CalcShared = computeShared(input),
+): OutputModel {
   const b = input.branche;
-  const all = [input.mitarbeiter1, input.mitarbeiter2, input.mitarbeiter3, input.mitarbeiter4];
+  const all = [
+    input.mitarbeiter1,
+    input.mitarbeiter2,
+    input.mitarbeiter3,
+    input.mitarbeiter4,
+  ];
 
   const err = validateInput(input);
   if (err) return errorOutput(err.msg, b);
@@ -283,8 +394,11 @@ function calculateWithShared(input: InputModel, shared: CalcShared = computeShar
   const ausgUmsatz_jahr = input.umsatz;
   const ausgAufwand_jahr = input.aufwand;
   const ausgWareneinsatz_jahr =
-    b === "gastronomie" || b === "handel" || b === "gewerbe" ? input.wareneinsatz : 0;
-  const ausgGewinn_jahr = ausgUmsatz_jahr - ausgAufwand_jahr - ausgWareneinsatz_jahr;
+    b === "gastronomie" || b === "handel" || b === "gewerbe"
+      ? input.wareneinsatz
+      : 0;
+  const ausgGewinn_jahr =
+    ausgUmsatz_jahr - ausgAufwand_jahr - ausgWareneinsatz_jahr;
 
   const { wareneinsatzAnteil, stundensatz } = shared;
 
@@ -294,13 +408,17 @@ function calculateWithShared(input: InputModel, shared: CalcShared = computeShar
     (s, m) => s + m.bruttoInklLohnnebenkosten.jahr,
     0,
   );
-  const foerderungenGesamt_jahr = mResults.reduce((s, m) => s + m.foerderung.jahr, 0);
+  const foerderungenGesamt_jahr = mResults.reduce(
+    (s, m) => s + m.foerderung.jahr,
+    0,
+  );
 
   let beAufwand_jahr = ausgAufwand_jahr;
   all.forEach((m) => {
     if (m.bruttogehaltProMonat > 0) {
       beAufwand_jahr +=
-        m.zusatzkostenJaehrlich + m.zusatzkostenMonatlich * m.anzahlBeschaeftigungsmonate;
+        m.zusatzkostenJaehrlich +
+        m.zusatzkostenMonatlich * m.anzahlBeschaeftigungsmonate;
     }
   });
 
@@ -308,7 +426,10 @@ function calculateWithShared(input: InputModel, shared: CalcShared = computeShar
   const beWareneinsatz_start = ausgWareneinsatz_jahr;
 
   let beUmsatz_jahr =
-    beAufwand_jahr + personalkosten_jahr + beGewinn_jahr - foerderungenGesamt_jahr;
+    beAufwand_jahr +
+    personalkosten_jahr +
+    beGewinn_jahr -
+    foerderungenGesamt_jahr;
 
   let beWareneinsatz_jahr = beWareneinsatz_start;
   if (
@@ -322,22 +443,35 @@ function calculateWithShared(input: InputModel, shared: CalcShared = computeShar
   }
 
   const gesamtumsatz_jahr =
-    b === "provision" && input.provision !== 0 ? (beUmsatz_jahr * 100) / input.provision : 0;
+    b === "provision" && input.provision !== 0
+      ? (beUmsatz_jahr * 100) / input.provision
+      : 0;
 
   let potenzialUmsatz_jahr = 0;
   let potenzialStunden_jahr = 0;
   if (b === "dienstleistung" || b === "gewerbe") {
     potenzialUmsatz_jahr = all.reduce((s, m, i) => {
-      return s + mResults[i].arbeitsstunden.jahr * (m.verkaufbareStunden / 100) * m.stundensatz;
+      return (
+        s +
+        mResults[i].arbeitsstunden.jahr *
+          (m.verkaufbareStunden / 100) *
+          m.stundensatz
+      );
     }, input.umsatz);
 
     if (input.wareneinsatz !== 0) {
-      const hasV = all.some((m) => m.verkaufbareStunden !== 0 && m.stundensatz !== 0);
-      if (hasV) potenzialUmsatz_jahr += beWareneinsatz_jahr - ausgWareneinsatz_jahr;
+      const hasV = all.some(
+        (m) => m.verkaufbareStunden !== 0 && m.stundensatz !== 0,
+      );
+      if (hasV)
+        potenzialUmsatz_jahr += beWareneinsatz_jahr - ausgWareneinsatz_jahr;
     }
 
     potenzialStunden_jahr = all.reduce((s, m, i) => {
-      return s + round0(mResults[i].arbeitsstunden.jahr * (m.verkaufbareStunden / 100));
+      return (
+        s +
+        round0(mResults[i].arbeitsstunden.jahr * (m.verkaufbareStunden / 100))
+      );
     }, round0(input.stunden));
   } else if (b === "gastronomie" || b === "handel" || b === "provision") {
     potenzialUmsatz_jahr = all.reduce((s, m) => {
@@ -348,20 +482,29 @@ function calculateWithShared(input: InputModel, shared: CalcShared = computeShar
   const potenzialBreakEven_jahr = beUmsatz_jahr;
 
   let stundenBreakEven_jahr = 0;
-  if ((b === "dienstleistung" || b === "gewerbe") && input.stunden !== 0 && stundensatz !== 0) {
-    const hasAnyV = all.some((m) => m.verkaufbareStunden !== 0 && m.stundensatz !== 0);
+  if (
+    (b === "dienstleistung" || b === "gewerbe") &&
+    input.stunden !== 0 &&
+    stundensatz !== 0
+  ) {
+    const hasAnyV = all.some(
+      (m) => m.verkaufbareStunden !== 0 && m.stundensatz !== 0,
+    );
     stundenBreakEven_jahr = round0(beUmsatz_jahr / stundensatz);
 
     if (hasAnyV) {
       const baseStunden = round0(
-        (input.umsatz + (beWareneinsatz_jahr - ausgWareneinsatz_jahr)) / stundensatz,
+        (input.umsatz + (beWareneinsatz_jahr - ausgWareneinsatz_jahr)) /
+          stundensatz,
       );
       stundenBreakEven_jahr = baseStunden;
       all.forEach((m, i) => {
         const mr = mResults[i];
         const zusatz =
-          m.zusatzkostenJaehrlich + m.zusatzkostenMonatlich * m.anzahlBeschaeftigungsmonate;
-        const netto = mr.bruttoInklLohnnebenkosten.jahr - mr.foerderung.jahr + zusatz;
+          m.zusatzkostenJaehrlich +
+          m.zusatzkostenMonatlich * m.anzahlBeschaeftigungsmonate;
+        const netto =
+          mr.bruttoInklLohnnebenkosten.jahr - mr.foerderung.jahr + zusatz;
         if (m.verkaufbareStunden !== 0 && m.stundensatz !== 0) {
           stundenBreakEven_jahr += round0(netto / m.stundensatz);
         } else {
@@ -370,9 +513,17 @@ function calculateWithShared(input: InputModel, shared: CalcShared = computeShar
       });
       potenzialStunden_jahr =
         all.reduce(
-          (s, m, i) => s + round0(mResults[i].arbeitsstunden.jahr * (m.verkaufbareStunden / 100)),
+          (s, m, i) =>
+            s +
+            round0(
+              mResults[i].arbeitsstunden.jahr * (m.verkaufbareStunden / 100),
+            ),
           0,
-        ) + round0((input.umsatz + (beWareneinsatz_jahr - ausgWareneinsatz_jahr)) / stundensatz);
+        ) +
+        round0(
+          (input.umsatz + (beWareneinsatz_jahr - ausgWareneinsatz_jahr)) /
+            stundensatz,
+        );
     }
   }
 
@@ -380,29 +531,54 @@ function calculateWithShared(input: InputModel, shared: CalcShared = computeShar
     fehlermeldung: "",
     ausgangssituation: {
       umsatzText: b === "provision" ? "Provisionsumsatz" : "Umsatz",
-      umsatz: { monat: round2(ausgUmsatz_jahr / 12), jahr: round2(ausgUmsatz_jahr) },
+      umsatz: {
+        monat: round2(ausgUmsatz_jahr / 12),
+        jahr: round2(ausgUmsatz_jahr),
+      },
       wareneinsatz: {
         monat: round2(ausgWareneinsatz_jahr / 12),
         jahr: round2(ausgWareneinsatz_jahr),
       },
-      aufwand: { monat: round2(ausgAufwand_jahr / 12), jahr: round2(ausgAufwand_jahr) },
-      gewinn: { monat: round2(ausgGewinn_jahr / 12), jahr: round2(ausgGewinn_jahr) },
+      aufwand: {
+        monat: round2(ausgAufwand_jahr / 12),
+        jahr: round2(ausgAufwand_jahr),
+      },
+      gewinn: {
+        monat: round2(ausgGewinn_jahr / 12),
+        jahr: round2(ausgGewinn_jahr),
+      },
     },
     potenzial: {
-      umsatzpotenzialMitarbeiter: { monat: 0, jahr: round2(potenzialUmsatz_jahr) },
-      umsatzpotenzialBreakEven: { monat: 0, jahr: round2(potenzialBreakEven_jahr) },
+      umsatzpotenzialMitarbeiter: {
+        monat: 0,
+        jahr: round2(potenzialUmsatz_jahr),
+      },
+      umsatzpotenzialBreakEven: {
+        monat: 0,
+        jahr: round2(potenzialBreakEven_jahr),
+      },
       stundenMitarbeiter: { monat: 0, jahr: round0(potenzialStunden_jahr) },
       stundenBreakEven: { monat: 0, jahr: round0(stundenBreakEven_jahr) },
     },
     breakEven: {
-      gesamtumsatz: { monat: round2(gesamtumsatz_jahr / 12), jahr: round2(gesamtumsatz_jahr) },
-      breakEvenUmsatzText: b === "provision" ? "Break-Even-Provisionsumsatz" : "Break-Even-Umsatz",
-      breakEvenUmsatz: { monat: round2(beUmsatz_jahr / 12), jahr: round2(beUmsatz_jahr) },
+      gesamtumsatz: {
+        monat: round2(gesamtumsatz_jahr / 12),
+        jahr: round2(gesamtumsatz_jahr),
+      },
+      breakEvenUmsatzText:
+        b === "provision" ? "Break-Even-Provisionsumsatz" : "Break-Even-Umsatz",
+      breakEvenUmsatz: {
+        monat: round2(beUmsatz_jahr / 12),
+        jahr: round2(beUmsatz_jahr),
+      },
       wareneinsatz: {
         monat: round2(beWareneinsatz_jahr / 12),
         jahr: round2(beWareneinsatz_jahr),
       },
-      aufwand: { monat: round2(beAufwand_jahr / 12), jahr: round2(beAufwand_jahr) },
+      aufwand: {
+        monat: round2(beAufwand_jahr / 12),
+        jahr: round2(beAufwand_jahr),
+      },
       personalkosten: {
         monat: round2(personalkosten_jahr / 12),
         jahr: round2(personalkosten_jahr),
@@ -411,13 +587,19 @@ function calculateWithShared(input: InputModel, shared: CalcShared = computeShar
         monat: round2(foerderungenGesamt_jahr / 12),
         jahr: round2(foerderungenGesamt_jahr),
       },
-      gewinn: { monat: round2(beGewinn_jahr / 12), jahr: round2(beGewinn_jahr) },
+      gewinn: {
+        monat: round2(beGewinn_jahr / 12),
+        jahr: round2(beGewinn_jahr),
+      },
       mitarbeiter: mResults,
     },
   };
 }
 
-export function calculateExtended(input: InputModel, erzielbarerGewinn: number): OutputModel {
+export function calculateExtended(
+  input: InputModel,
+  erzielbarerGewinn: number,
+): OutputModel {
   const b = input.branche;
   const shared = computeShared(input);
   const { wareneinsatzAnteil, stundensatz } = shared;
@@ -436,7 +618,9 @@ export function calculateExtended(input: InputModel, erzielbarerGewinn: number):
 
   const newWareneinsatz = round2(newUmsatz * wareneinsatzAnteil);
   const newStunden =
-    stundensatz !== 0 ? round0(Math.max(newUmsatz - newWareneinsatz, 0) / stundensatz) : 0;
+    stundensatz !== 0
+      ? round0(Math.max(newUmsatz - newWareneinsatz, 0) / stundensatz)
+      : 0;
 
   const overridden: InputModel = {
     ...input,
@@ -476,7 +660,8 @@ function errorOutput(msg: string, b: Branche): OutputModel {
     },
     breakEven: {
       gesamtumsatz: { monat: 0, jahr: 0 },
-      breakEvenUmsatzText: b === "provision" ? "Break-Even-Provisionsumsatz" : "Break-Even-Umsatz",
+      breakEvenUmsatzText:
+        b === "provision" ? "Break-Even-Provisionsumsatz" : "Break-Even-Umsatz",
       breakEvenUmsatz: { monat: 0, jahr: 0 },
       wareneinsatz: { monat: 0, jahr: 0 },
       aufwand: { monat: 0, jahr: 0 },

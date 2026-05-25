@@ -5,36 +5,42 @@ import { tStr } from "@/lib/text";
 import { cn } from "@/lib/utils";
 
 export const ErzielbarerGewinnSlider = () => {
-  const { sliderValue, setSliderValue, firstCalcDone } = useCalculator();
-  const enabled = firstCalcDone;
+  const { result, sliderValue, setSliderValue, hasValidResult } = useCalculator();
+  const enabled = hasValidResult;
+  const displayedValue =
+    sliderValue > 0 ? sliderValue : result?.ausgangssituation.gewinn.jahr ?? 0;
 
   return (
     <div
       className={cn(
-        "rounded-lg p-6 transition-opacity",
-        enabled ? "bg-slider text-slider-foreground" : "bg-slider/40 text-slider-foreground/70",
+        "rounded-sm bg-[#003C56] px-4 pb-8 pt-5 text-slider-foreground",
+        !enabled && "bg-[#003C56]/70 text-slider-foreground/75",
       )}
     >
-      <div className="mb-1 text-sm">{tStr("erzielbarerGewinn")}</div>
-      <div className="mb-4 text-2xl font-semibold">{formatMoney(sliderValue)}</div>
+      <div className="mb-1 text-xs font-medium">
+        {tStr("erzielbarerGewinn")}
+      </div>
+      <div className="mb-5 text-xl font-medium">{formatMoney(displayedValue)}</div>
       <SliderPrimitive.Root
         className="relative flex w-full touch-none select-none items-center"
-        value={[sliderValue]}
+        value={[displayedValue]}
         min={0}
         max={1000000}
         step={100}
         disabled={!enabled}
         onValueChange={(v) => setSliderValue(v[0])}
       >
-        <SliderPrimitive.Track className="relative h-1.5 w-full grow overflow-hidden rounded-full bg-white/30">
-          <SliderPrimitive.Range className="absolute h-full bg-white" />
+        <SliderPrimitive.Track className={cn("relative h-0.5 w-full grow overflow-hidden rounded-full", enabled ? "bg-white/80" : "bg-white/35")}>
+          <SliderPrimitive.Range className={cn("absolute h-full", enabled ? "bg-white" : "bg-transparent")} />
         </SliderPrimitive.Track>
         <SliderPrimitive.Thumb
-          className="block h-5 w-5 rounded-full bg-white shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60 disabled:opacity-60"
+          className={cn(
+            "z-10 block h-4 w-4 rounded-full bg-white shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60",
+            !enabled && "cursor-not-allowed shadow-none",
+          )}
           aria-label={tStr("erzielbarerGewinn")}
         />
       </SliderPrimitive.Root>
-      {!enabled && <div className="mt-3 text-xs opacity-90">{tStr("sliderLocked")}</div>}
     </div>
   );
 };

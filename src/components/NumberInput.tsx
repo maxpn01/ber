@@ -54,13 +54,22 @@ export const NumberInput = ({
         onFocus={(e) => {
           setFocused(true);
           // show raw editable representation
-          const raw = value === 0 ? "" : value.toLocaleString("de-AT", { maximumFractionDigits: 4 }).replace(/\./g, "");
-          setText(raw.replace(",", ","));
-          requestAnimationFrame(() => e.target.select());
+          const raw =
+            value === 0
+              ? ""
+              : value
+                  .toLocaleString("de-AT", { maximumFractionDigits: 4 })
+                  .replace(/\./g, "");
+          const editable = raw.replace(",", ",");
+          e.currentTarget.value = editable;
+          setText(editable);
+          e.currentTarget.setSelectionRange(0, editable.length);
         }}
-        onChange={(e) => setText(e.target.value)}
-        onBlur={() => {
-          const parsed = parseDeNumber(text);
+        onChange={(e) => {
+          setText(e.target.value);
+        }}
+        onBlur={(e) => {
+          const parsed = parseDeNumber(e.currentTarget.value);
           onChange(parsed);
           setFocused(false);
           setText(format(parsed));

@@ -5,7 +5,7 @@ export const text = {
     "Mit dem Break-Even-Rechner können Ein-Personen-Unternehmer mittels weniger Eingaben sehr einfach ausrechnen, mit welchen Kosten für die Einstellung der ersten 4 Mitarbeiter zu rechnen ist.",
 
   // Sections
-  allgemein: "Stammdaten",
+  allgemein: "Allgemein",
   branche: "Branche",
   umsatz: "Umsatz",
   aufwand: "Aufwand",
@@ -34,7 +34,8 @@ export const text = {
   foerderungBonus: "Beschäftigungsbonus",
   foerderungStartUp: "aws Förderung für innovative Start-Ups",
   fuerMitarbeiter: "für Mitarbeiter",
-  voraussetzungenTitel: "Anspruch ist gegeben, wenn nachstehende Voraussetzungen erfüllt sind:",
+  voraussetzungenTitel:
+    "Anspruch ist gegeben, wenn nachstehende Voraussetzungen erfüllt sind:",
   hinweisLabel: "Hinweis:",
   hinweisEpu:
     "Die Förderung beträgt ein Viertel des laufenden Bruttoentgelts und wird für die Dauer von einem Jahr gewährt.",
@@ -157,7 +158,9 @@ export type TextKey = {
 }[keyof typeof text];
 
 export type TextListKey = {
-  [K in keyof typeof text]: (typeof text)[K] extends readonly string[] ? K : never;
+  [K in keyof typeof text]: (typeof text)[K] extends readonly string[]
+    ? K
+    : never;
 }[keyof typeof text];
 
 export const tStr = (key: TextKey): string => text[key];

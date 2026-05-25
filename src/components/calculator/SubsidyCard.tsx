@@ -129,7 +129,7 @@ export const SubsidyCard = ({ kind }: Props) => {
                 if (firstEligible !== undefined) setKindFor(firstEligible, true);
               }
             }}
-            className={cn(cardOn && "data-[state=checked]:bg-subsidy")}
+            className={cn(cardOn && "data-[state=checked]:bg-toggle-on")}
             aria-label={tStr(TITLE_KEY[kind])}
           />
         </div>
@@ -153,7 +153,7 @@ export const SubsidyCard = ({ kind }: Props) => {
                       checked={isChecked}
                       disabled={!isEligible}
                       onCheckedChange={(c) => setKindFor(i, !!c)}
-                      className="data-[state=checked]:bg-subsidy data-[state=checked]:border-subsidy"
+                      className="data-[state=checked]:border-toggle-on data-[state=checked]:bg-toggle-on"
                     />
                     <span>{tStr("fuerMitarbeiter")} {i + 1}</span>
                   </label>

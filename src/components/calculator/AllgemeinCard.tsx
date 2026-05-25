@@ -2,7 +2,12 @@ import { Card } from "@/components/ui/card";
 import { HelpIcon } from "@/components/HelpIcon";
 import { NumberInput } from "@/components/NumberInput";
 import { useCalculator } from "@/lib/calculator/CalculatorContext";
-import { showsProvision, showsStunden, showsWareneinsatz, branchen } from "@/lib/calculator/branche";
+import {
+  showsProvision,
+  showsStunden,
+  showsWareneinsatz,
+  branchen,
+} from "@/lib/calculator/branche";
 import type { Branche } from "@/lib/calculator/types";
 import { tStr, type TextKey } from "@/lib/text";
 import {
@@ -29,17 +34,20 @@ export const AllgemeinCard = () => {
   const b = input.branche;
 
   return (
-    <Card className="border-border bg-card p-6">
-      <h2 className="mb-4 text-xl font-semibold">{tStr("allgemein")}</h2>
-      <div className="border-t border-dashed border-border pt-4" />
+    <Card className="border-border bg-card p-4">
+      <h2 className="mb-2 text-lg font-medium">{tStr("allgemein")}</h2>
+      <div className="border-t border-dashed border-border pt-4 text-[#A2A4A9]" />
 
       <div className="mb-4">
-        <label className="mb-1.5 flex items-center gap-1.5 text-sm font-medium">
+        <label className="mb-1.5 flex items-center gap-1.5 text-xs font-medium">
           {tStr("branche")}
           <HelpIcon text={tStr("branche")} />
         </label>
         <Select value={b} onValueChange={(v) => setBranche(v as Branche)}>
-          <SelectTrigger aria-label={tStr("branche")} className="border-transparent bg-muted">
+          <SelectTrigger
+            aria-label={tStr("branche")}
+            className="border-transparent bg-muted"
+          >
             <SelectValue />
           </SelectTrigger>
           <SelectContent>
@@ -72,7 +80,10 @@ export const AllgemeinCard = () => {
         </Field>
 
         {showsStunden(b) && (
-          <Field label={tStr("verrechneteStunden")} help={tStr("verrechneteStunden")}>
+          <Field
+            label={tStr("verrechneteStunden")}
+            help={tStr("verrechneteStunden")}
+          >
             <NumberInput
               value={input.stunden}
               onChange={(v) => patchInput({ stunden: v })}
@@ -119,7 +130,7 @@ const Field = ({
   children: React.ReactNode;
 }) => (
   <div className="flex flex-col">
-    <label className="mb-1.5 flex min-h-[2.5rem] items-start gap-1.5 text-sm font-medium leading-tight">
+    <label className="mb-1.5 flex min-h-[2.5rem] items-start gap-1.5 text-xs font-medium leading-tight">
       <span className="flex-1">{label}</span>
       <HelpIcon text={help} />
     </label>

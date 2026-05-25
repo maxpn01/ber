@@ -13,8 +13,13 @@ import { tStr } from "@/lib/text";
 import { cn } from "@/lib/utils";
 
 export const ResultPanel = () => {
-  const { input, result, activeMitarbeiterCount, firstCalcDone } =
-    useCalculator();
+  const {
+    input,
+    result,
+    activeMitarbeiterCount,
+    inputComplete,
+    hasCalculatedOnce,
+  } = useCalculator();
   const [detailsOpen, setDetailsOpen] = useState(false);
 
   const b = input.branche;
@@ -24,7 +29,7 @@ export const ResultPanel = () => {
 
   const empty = !result || !!result.fehlermeldung;
 
-  if (!firstCalcDone && empty) {
+  if (!hasCalculatedOnce && !inputComplete) {
     return (
       <div className="h-full min-h-[520px] rounded-lg bg-result p-4 text-result-foreground">
         <div className="rounded bg-card p-4 shadow-sm">
