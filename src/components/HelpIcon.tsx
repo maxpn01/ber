@@ -1,32 +1,48 @@
-import { Info } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 interface Props {
   text: string;
   className?: string;
-  variant?: "dark" | "red";
+  iconSrc?: string;
 }
 
-export const HelpIcon = ({ text, className, variant = "dark" }: Props) => (
-  <TooltipProvider delayDuration={150}>
-    <Tooltip>
-      <TooltipTrigger asChild>
-        <button
-          type="button"
-          aria-label="Hilfe"
-          className={cn(
-            "inline-flex h-4 w-4 items-center justify-center rounded-full text-white",
-            variant === "dark" ? "bg-foreground/80" : "bg-wko-red",
-            className,
-          )}
-        >
-          <Info className="h-3 w-3" />
-        </button>
-      </TooltipTrigger>
-      <TooltipContent side="top" className="max-w-xs text-sm">
-        {text}
-      </TooltipContent>
-    </Tooltip>
-  </TooltipProvider>
-);
+export const HelpIcon = ({
+  text,
+  className,
+  iconSrc = "/tooltip_icon.svg",
+}: Props) => {
+  const isTitleIcon = iconSrc === "/title_tooltip_icon.svg";
+
+  return (
+    <TooltipProvider delayDuration={150}>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <button
+            type="button"
+            aria-label="Hilfe"
+            className={cn(
+              "inline-flex items-center justify-center rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
+              isTitleIcon ? "mt-1 h-[26px] w-[26px]" : "h-6 w-6",
+              className,
+            )}
+          >
+            <img
+              src={iconSrc}
+              alt=""
+              className={isTitleIcon ? "h-full w-full" : "h-[12px] w-[12px]"}
+            />
+          </button>
+        </TooltipTrigger>
+        <TooltipContent side="top" className="max-w-xs text-sm">
+          {text}
+        </TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
+  );
+};

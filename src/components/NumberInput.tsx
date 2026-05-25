@@ -48,6 +48,7 @@ export const NumberInput = ({
       <Input
         id={id}
         aria-label={ariaLabel}
+        aria-invalid={invalid || undefined}
         value={text}
         disabled={disabled}
         onFocus={(e) => {

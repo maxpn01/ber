@@ -39,7 +39,7 @@ export const AllgemeinCard = () => {
           <HelpIcon text={tStr("branche")} />
         </label>
         <Select value={b} onValueChange={(v) => setBranche(v as Branche)}>
-          <SelectTrigger className="border-transparent bg-muted focus:ring-0 focus:ring-offset-0">
+          <SelectTrigger aria-label={tStr("branche")} className="border-transparent bg-muted">
             <SelectValue />
           </SelectTrigger>
           <SelectContent>
@@ -60,7 +60,6 @@ export const AllgemeinCard = () => {
             value={input.umsatz}
             onChange={(v) => patchInput({ umsatz: v })}
             ariaLabel={tStr("umsatz")}
-            className="focus-visible:ring-0 focus-visible:ring-offset-0"
           />
         </Field>
 
@@ -69,7 +68,6 @@ export const AllgemeinCard = () => {
             value={input.aufwand}
             onChange={(v) => patchInput({ aufwand: v })}
             ariaLabel={tStr("aufwand")}
-            className="focus-visible:ring-0 focus-visible:ring-offset-0"
           />
         </Field>
 
@@ -81,7 +79,6 @@ export const AllgemeinCard = () => {
               variant="integer"
               ariaLabel={tStr("verrechneteStunden")}
               suffix="h"
-              className="focus-visible:ring-0 focus-visible:ring-offset-0"
             />
           </Field>
         )}
@@ -92,7 +89,6 @@ export const AllgemeinCard = () => {
               value={input.wareneinsatz}
               onChange={(v) => patchInput({ wareneinsatz: v })}
               ariaLabel={tStr("wareneinsatz")}
-              className="focus-visible:ring-0 focus-visible:ring-offset-0"
             />
           </Field>
         )}
@@ -105,7 +101,6 @@ export const AllgemeinCard = () => {
               variant="decimal"
               suffix="%"
               ariaLabel={tStr("provisionPct")}
-              className="focus-visible:ring-0 focus-visible:ring-offset-0"
             />
           </Field>
         )}

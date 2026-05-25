@@ -1,5 +1,5 @@
 import { createContext, Dispatch, ReactNode, SetStateAction, useCallback, useContext, useEffect, useMemo, useState } from "react";
-import { defaultInput, defaultMitarbeiterFor } from "@/lib/calculator/branche";
+import { defaultLandingInput, defaultMitarbeiterFor } from "@/lib/calculator/branche";
 import { calculate, calculateExtended, isReadyToCalculate } from "@/lib/calculator/calculate";
 import { Branche, InputMitarbeiter, InputModel, OutputModel } from "@/lib/calculator/types";
 
@@ -33,7 +33,7 @@ const MITARBEITER_KEYS: ReadonlyArray<keyof InputModel> = [
 ];
 
 export const CalculatorProvider = ({ children }: { children: ReactNode }) => {
-  const [input, setInput] = useState<InputModel>(() => defaultInput("dienstleistung"));
+  const [input, setInput] = useState<InputModel>(() => defaultLandingInput());
   const [sliderValue, setSliderValueState] = useState(0);
   const [firstCalcDone, setFirstCalcDone] = useState(false);
   const [showStartUpUnavailable, setShowStartUpUnavailable] = useState(false);

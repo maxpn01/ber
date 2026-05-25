@@ -68,7 +68,10 @@ export const MitarbeiterCard = ({ index }: Props) => {
                 patchMitarbeiter(index, { beschaeftigungsform: v as Dienstverhaeltnis })
               }
             >
-              <SelectTrigger className="bg-muted border-transparent">
+              <SelectTrigger
+                aria-label={`${tStr("datenMitarbeiter")} ${index + 1}: ${tStr("beschaeftigungsform")}`}
+                className="bg-muted border-transparent"
+              >
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
@@ -89,6 +92,7 @@ export const MitarbeiterCard = ({ index }: Props) => {
             <NumberInput
               value={m.bruttogehaltProMonat}
               onChange={(v) => patchMitarbeiter(index, { bruttogehaltProMonat: v })}
+              ariaLabel={`${tStr("datenMitarbeiter")} ${index + 1}: ${tStr("bruttogehalt")}`}
             />
           </div>
 
@@ -102,6 +106,7 @@ export const MitarbeiterCard = ({ index }: Props) => {
                 value={m.anzahlWochenstunden}
                 variant="decimal"
                 onChange={(v) => patchMitarbeiter(index, { anzahlWochenstunden: v })}
+                ariaLabel={`${tStr("datenMitarbeiter")} ${index + 1}: ${tStr("wochenstunden")}`}
               />
             </div>
             <div>
@@ -112,6 +117,7 @@ export const MitarbeiterCard = ({ index }: Props) => {
               <NumberInput
                 value={m.anzahlBeschaeftigungsmonate}
                 variant="integer"
+                ariaLabel={`${tStr("datenMitarbeiter")} ${index + 1}: ${tStr("beschaeftigungsmonate")}`}
                 onChange={(v) =>
                   patchMitarbeiter(index, {
                     anzahlBeschaeftigungsmonate: Math.max(1, Math.min(12, Math.round(v))),
@@ -130,6 +136,7 @@ export const MitarbeiterCard = ({ index }: Props) => {
               <NumberInput
                 value={m.zusatzkostenMonatlich}
                 onChange={(v) => patchMitarbeiter(index, { zusatzkostenMonatlich: v })}
+                ariaLabel={`${tStr("datenMitarbeiter")} ${index + 1}: ${tStr("zusatzkostenMonatlich")}`}
               />
             </div>
             <div>
@@ -140,6 +147,7 @@ export const MitarbeiterCard = ({ index }: Props) => {
               <NumberInput
                 value={m.zusatzkostenJaehrlich}
                 onChange={(v) => patchMitarbeiter(index, { zusatzkostenJaehrlich: v })}
+                ariaLabel={`${tStr("datenMitarbeiter")} ${index + 1}: ${tStr("zusatzkostenJaehrlich")}`}
               />
             </div>
           </div>
@@ -155,6 +163,7 @@ export const MitarbeiterCard = ({ index }: Props) => {
                     variant="integer"
                     suffix="%"
                     onChange={(v) => patchMitarbeiter(index, { verkaufbareStunden: v })}
+                    ariaLabel={`${tStr("datenMitarbeiter")} ${index + 1}: ${tStr("verkaufbareStundenPct")}`}
                   />
                 </div>
                 <div>
@@ -162,6 +171,7 @@ export const MitarbeiterCard = ({ index }: Props) => {
                   <NumberInput
                     value={m.stundensatz}
                     onChange={(v) => patchMitarbeiter(index, { stundensatz: v })}
+                    ariaLabel={`${tStr("datenMitarbeiter")} ${index + 1}: ${tStr("stundensatz")}`}
                   />
                 </div>
               </div>
@@ -176,6 +186,7 @@ export const MitarbeiterCard = ({ index }: Props) => {
                 variant="integer"
                 suffix="%"
                 onChange={(v) => patchMitarbeiter(index, { umsatzsteigerung: v })}
+                ariaLabel={`${tStr("datenMitarbeiter")} ${index + 1}: ${tStr("umsatzsteigerung")}`}
               />
             </div>
           )}

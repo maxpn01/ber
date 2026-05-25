@@ -98,3 +98,11 @@ export function defaultInput(branche: Branche = "dienstleistung"): InputModel {
     mitarbeiter4: defaultMitarbeiterFor(branche, false),
   };
 }
+
+export function defaultLandingInput(): InputModel {
+  const branche: Branche = "dienstleistung";
+  return {
+    ...defaultInput(branche),
+    mitarbeiter1: defaultMitarbeiterFor(branche, true),
+  };
+}

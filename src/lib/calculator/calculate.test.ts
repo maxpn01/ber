@@ -1,8 +1,21 @@
 import { describe, expect, it } from "vitest";
 import { calculate, calculateExtended, isReadyToCalculate, validateInput } from "@/lib/calculator/calculate";
-import { defaultInput, defaultMitarbeiterFor } from "@/lib/calculator/branche";
+import { defaultInput, defaultLandingInput, defaultMitarbeiterFor } from "@/lib/calculator/branche";
 
 describe("calculator", () => {
+  it("pre-populates first calculator landing defaults", () => {
+    const i = defaultLandingInput();
+
+    expect(i.branche).toBe("dienstleistung");
+    expect(i.mitarbeiter1).toMatchObject({
+      active: true,
+      beschaeftigungsform: "angestellter",
+      bruttogehaltProMonat: 2200,
+      anzahlWochenstunden: 38.5,
+      anzahlBeschaeftigungsmonate: 12,
+    });
+  });
+
   it("isReadyToCalculate is false for empty input", () => {
     expect(isReadyToCalculate(defaultInput("dienstleistung"))).toBe(false);
   });

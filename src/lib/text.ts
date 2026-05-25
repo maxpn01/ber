@@ -76,6 +76,12 @@ export const text = {
   ],
 
   // Results
+  landingInfoTitle: "Was kosten Ihre Ersten Mitarbeiter?",
+  landingInfoIntro:
+    "Mit diesem Tool können Ein-Personen-Unternehmer sehr einfach berechnen, mit welchen Kosten sie im Zuge der Einstellung der ersten Mitarbeiter rechnen müssen. Das Berechnungstool bietet dabei verschiedene alternative Beschäftigungsformen an und ist für einzelne Branchen optimiert.",
+  landingInfoNoticeTitle: "Bitte beachten Sie folgende Hinweise:",
+  landingInfoNotice:
+    "Sämtliche Beträge sind als Nettobeträge, d.h. ohne Umsatzsteuer einzugeben, wenn Sie umsatzsteuerpflichtig sind. Sofern Sie unter die Kleinunternehmerregelung fallen, geben Sie die Umsätze ohne Umsatzsteuer, die Aufwände inkl. Vorsteuer an.",
   potenzialTitle: "Potenzial inkl. neuer Mitarbeiter",
   potenzialInkl: "inkl. zusätzlicher Mitarbeiter",
   breakEven: "Break Even",
@@ -124,6 +130,12 @@ export const text = {
   barrierefreiheit: "Barrierefreiheit",
   datenschutz: "Datenschutzerklärung",
   cookies: "Cookie-Einstellungen",
+  cookieModalTitle: "Cookie-Einstellungen",
+  cookieModalDescription:
+    "Hier können Sie Ihre Cookie-Einstellungen für den Break-Even-Rechner verwalten.",
+  cookieModalRequired: "Technisch notwendige Cookies sind immer aktiv.",
+  cookieModalAccept: "Alle akzeptieren",
+  cookieModalSave: "Auswahl speichern",
 
   // Branche labels
   branche_dienstleistung: "Dienstleistung",

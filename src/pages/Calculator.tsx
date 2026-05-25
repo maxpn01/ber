@@ -1,33 +1,28 @@
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { HelpIcon } from "@/components/HelpIcon";
-import { useState } from "react";
 import { AllgemeinCard } from "@/components/calculator/AllgemeinCard";
 import { ErzielbarerGewinnSlider } from "@/components/calculator/ErzielbarerGewinnSlider";
 import { MitarbeiterCard } from "@/components/calculator/MitarbeiterCard";
 import { SubsidyCard } from "@/components/calculator/SubsidyCard";
 import { ResultPanel } from "@/components/calculator/ResultPanel";
-import Summary from "./Summary";
 import { tStr } from "@/lib/text";
 
 const Calculator = () => {
-  const [showSummary, setShowSummary] = useState(false);
-
-  if (showSummary) {
-    return <Summary onBack={() => setShowSummary(false)} />;
-  }
-
   return (
     <div className="flex min-h-screen flex-col bg-background">
       <Header />
-      <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-6 sm:px-6">
-        <h1 className="mb-6 flex items-center gap-2 text-2xl font-bold">
+      <main className="mx-auto w-full max-w-[1250px] flex-1 px-4 py-3 sm:px-6">
+        <h1 className="mb-10 flex items-center gap-2 text-xl font-medium">
           {tStr("appTitle")}
-          <HelpIcon text={tStr("appShortDesc")} />
+          <HelpIcon
+            text={tStr("appShortDesc")}
+            iconSrc="/title_tooltip_icon.svg"
+          />
         </h1>
 
         <div className="rounded-xl bg-wko-section p-4 sm:p-6">
-          <div className="grid grid-cols-1 gap-6 lg:grid-cols-[1fr_minmax(0,1fr)]">
+          <div className="grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(420px,540px)] xl:grid-cols-[minmax(0,1fr)_540px]">
             <div className="space-y-4">
               <AllgemeinCard />
               <ErzielbarerGewinnSlider />
@@ -40,8 +35,8 @@ const Calculator = () => {
               {/* <SubsidyCard kind="bonus" />
               <SubsidyCard kind="startup" /> */}
             </div>
-            <div className="lg:sticky lg:top-6 lg:self-start">
-              <ResultPanel onShowSummary={() => setShowSummary(true)} />
+            <div className="h-full lg:sticky lg:top-6 lg:self-stretch">
+              <ResultPanel />
             </div>
           </div>
         </div>
