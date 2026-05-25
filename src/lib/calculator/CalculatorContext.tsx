@@ -24,6 +24,10 @@ import {
   InputModel,
   OutputModel,
 } from "@/lib/calculator/types";
+import {
+  hasMitarbeiterInput,
+  isMitarbeiterBasicComplete,
+} from "@/lib/calculator/mitarbeiterStatus";
 
 export type MitarbeiterIndex = 0 | 1 | 2 | 3;
 
@@ -43,7 +47,8 @@ interface CalcCtx {
     i: MitarbeiterIndex,
     patch: Partial<InputMitarbeiter>,
   ) => void;
-  toggleMitarbeiter: (i: MitarbeiterIndex, active: boolean) => void;
+  openMitarbeiterIndex: MitarbeiterIndex | null;
+  toggleMitarbeiterOpen: (i: MitarbeiterIndex) => void;
   resetMitarbeiter: (i: MitarbeiterIndex) => void;
   deleteMitarbeiter: (i: MitarbeiterIndex) => void;
   activeMitarbeiterCount: number;
@@ -65,6 +70,8 @@ export const CalculatorProvider = ({ children }: { children: ReactNode }) => {
   const [sliderValue, setSliderValueState] = useState(0);
   const [hasCalculatedOnce, setHasCalculatedOnce] = useState(false);
   const [showStartUpUnavailable, setShowStartUpUnavailable] = useState(false);
+  const [openMitarbeiterIndex, setOpenMitarbeiterIndex] =
+    useState<MitarbeiterIndex | null>(0);
   const inputComplete = useMemo(() => isReadyToCalculate(input), [input]);
 
   // Compute result reactively (synchronously is fine; calc is cheap)
@@ -92,9 +99,9 @@ export const CalculatorProvider = ({ children }: { children: ReactNode }) => {
 
   const setBranche = useCallback((b: Branche) => {
     setInput((prev) => {
-      // Reset employees defaults but preserve activation state.
+      // Reset employee defaults for the new branch only where employee data is present.
       const buildM = (m: InputMitarbeiter): InputMitarbeiter => {
-        if (!m.active) return defaultMitarbeiterFor(b, false);
+        if (!hasMitarbeiterInput(m)) return defaultMitarbeiterFor(b, false);
         const d = defaultMitarbeiterFor(b, true);
         return { ...d, active: true };
       };
@@ -124,7 +131,10 @@ export const CalculatorProvider = ({ children }: { children: ReactNode }) => {
         | "mitarbeiter4";
       setInput((prev) => ({
         ...prev,
-        [key]: { ...(prev[key] as InputMitarbeiter), ...patch },
+        [key]: (() => {
+          const next = { ...(prev[key] as InputMitarbeiter), ...patch };
+          return { ...next, active: isMitarbeiterBasicComplete(next) };
+        })(),
         erzielbarerGewinn: 0,
       }));
       setSliderValueState(0);
@@ -132,34 +142,9 @@ export const CalculatorProvider = ({ children }: { children: ReactNode }) => {
     [],
   );
 
-  const toggleMitarbeiter = useCallback(
-    (i: MitarbeiterIndex, active: boolean) => {
-      const key = MITARBEITER_KEYS[i] as
-        | "mitarbeiter1"
-        | "mitarbeiter2"
-        | "mitarbeiter3"
-        | "mitarbeiter4";
-      setInput((prev) => {
-        if (active) {
-          const current = prev[key] as InputMitarbeiter;
-          // If has data already, just activate; else fill with defaults
-          const filled =
-            current.bruttogehaltProMonat > 0
-              ? { ...current, active: true }
-              : { ...defaultMitarbeiterFor(prev.branche, true), active: true };
-          return { ...prev, [key]: filled, erzielbarerGewinn: 0 };
-        } else {
-          return {
-            ...prev,
-            [key]: defaultMitarbeiterFor(prev.branche, false),
-            erzielbarerGewinn: 0,
-          };
-        }
-      });
-      setSliderValueState(0);
-    },
-    [],
-  );
+  const toggleMitarbeiterOpen = useCallback((i: MitarbeiterIndex) => {
+    setOpenMitarbeiterIndex((prev) => (prev === i ? null : i));
+  }, []);
 
   const resetMitarbeiter = useCallback((i: MitarbeiterIndex) => {
     const key = MITARBEITER_KEYS[i] as
@@ -176,8 +161,21 @@ export const CalculatorProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   const deleteMitarbeiter = useCallback(
-    (i: MitarbeiterIndex) => toggleMitarbeiter(i, false),
-    [toggleMitarbeiter],
+    (i: MitarbeiterIndex) => {
+      const key = MITARBEITER_KEYS[i] as
+        | "mitarbeiter1"
+        | "mitarbeiter2"
+        | "mitarbeiter3"
+        | "mitarbeiter4";
+      setInput((prev) => ({
+        ...prev,
+        [key]: defaultMitarbeiterFor(prev.branche, false),
+        erzielbarerGewinn: 0,
+      }));
+      setSliderValueState(0);
+      setOpenMitarbeiterIndex((prev) => (prev === i ? null : prev));
+    },
+    [],
   );
 
   const setSliderValue = useCallback((v: number) => {
@@ -190,7 +188,7 @@ export const CalculatorProvider = ({ children }: { children: ReactNode }) => {
     input.mitarbeiter2,
     input.mitarbeiter3,
     input.mitarbeiter4,
-  ].filter((m) => m.active && m.bruttogehaltProMonat > 0).length;
+  ].filter(isMitarbeiterBasicComplete).length;
 
   const value = useMemo<CalcCtx>(
     () => ({
@@ -206,7 +204,8 @@ export const CalculatorProvider = ({ children }: { children: ReactNode }) => {
       patchInput,
       setBranche,
       patchMitarbeiter,
-      toggleMitarbeiter,
+      openMitarbeiterIndex,
+      toggleMitarbeiterOpen,
       resetMitarbeiter,
       deleteMitarbeiter,
       activeMitarbeiterCount,
@@ -225,7 +224,8 @@ export const CalculatorProvider = ({ children }: { children: ReactNode }) => {
       patchInput,
       setBranche,
       patchMitarbeiter,
-      toggleMitarbeiter,
+      openMitarbeiterIndex,
+      toggleMitarbeiterOpen,
       resetMitarbeiter,
       deleteMitarbeiter,
       activeMitarbeiterCount,

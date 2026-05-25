@@ -1,8 +1,7 @@
-import { Trash2 } from "lucide-react";
+import { CheckCircle2, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Switch } from "@/components/ui/switch";
-import { CheckCircle2 } from "lucide-react";
 import {
   Select,
   SelectContent,
@@ -14,6 +13,10 @@ import { HelpIcon } from "@/components/HelpIcon";
 import { NumberInput } from "@/components/NumberInput";
 import { useCalculator, type MitarbeiterIndex } from "@/lib/calculator/CalculatorContext";
 import { dienstverhaeltnisse, showsUmsatzsteigerung, showsVerkaufbareStunden } from "@/lib/calculator/branche";
+import {
+  isMitarbeiterAdvancedComplete,
+  isMitarbeiterBasicComplete,
+} from "@/lib/calculator/mitarbeiterStatus";
 import type { Dienstverhaeltnis } from "@/lib/calculator/types";
 import { tStr, type TextKey } from "@/lib/text";
 import { cn } from "@/lib/utils";
@@ -34,28 +37,49 @@ interface Props {
 }
 
 export const MitarbeiterCard = ({ index }: Props) => {
-  const { input, patchMitarbeiter, toggleMitarbeiter, resetMitarbeiter, deleteMitarbeiter } = useCalculator();
+  const {
+    input,
+    patchMitarbeiter,
+    openMitarbeiterIndex,
+    toggleMitarbeiterOpen,
+    resetMitarbeiter,
+    deleteMitarbeiter,
+  } = useCalculator();
   const m = [input.mitarbeiter1, input.mitarbeiter2, input.mitarbeiter3, input.mitarbeiter4][index];
   const b = input.branche;
 
-  const isFilled = m.active && m.bruttogehaltProMonat > 0;
+  const isOpen = openMitarbeiterIndex === index;
+  const isIncluded = isMitarbeiterBasicComplete(m);
+  const isFilled = isMitarbeiterAdvancedComplete(m, b);
 
   return (
     <Card className="border-border bg-card p-5">
-      <div className="flex items-center justify-between">
-        <h3 className="flex items-center gap-2 text-lg font-semibold">
-          {tStr("datenMitarbeiter")} {index + 1}
-          {isFilled && <CheckCircle2 className="h-4 w-4 text-toggle-on" aria-hidden />}
-        </h3>
+      <div className="flex items-center justify-between gap-3">
+        <button
+          type="button"
+          className="flex min-w-0 flex-1 items-center gap-2 text-left text-lg font-semibold"
+          onClick={() => toggleMitarbeiterOpen(index)}
+          aria-expanded={isOpen}
+        >
+          <span className="truncate">
+            {tStr("datenMitarbeiter")} {index + 1}
+          </span>
+          {isFilled && <CheckCircle2 className="h-4 w-4 shrink-0 text-toggle-on" aria-hidden />}
+        </button>
         <Switch
-          checked={m.active}
-          onCheckedChange={(c) => toggleMitarbeiter(index, c)}
-          aria-label={`${tStr("datenMitarbeiter")} ${index + 1} ein- oder ausblenden`}
-          className={cn(m.active && "data-[state=checked]:bg-toggle-on")}
+          checked={isIncluded}
+          aria-readonly="true"
+          tabIndex={-1}
+          onClick={() => toggleMitarbeiterOpen(index)}
+          aria-label={`${tStr("datenMitarbeiter")} ${index + 1} öffnen oder schließen`}
+          className={cn(
+            "cursor-pointer",
+            isIncluded && "data-[state=checked]:bg-toggle-on",
+          )}
         />
       </div>
 
-      {m.active && (
+      {isOpen && (
         <div className="mt-4 space-y-4 border-t border-dashed border-border pt-4">
           <div>
             <label className="mb-1.5 flex items-center gap-1.5 text-sm font-medium">

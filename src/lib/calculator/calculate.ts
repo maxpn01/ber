@@ -19,6 +19,7 @@ import {
   MitarbeiterResult,
   OutputModel,
 } from "./types";
+import { isMitarbeiterBasicComplete } from "./mitarbeiterStatus";
 
 const round0 = (v: number) => Math.round(v);
 const round2 = (v: number) => Math.round(v * 100) / 100;
@@ -55,33 +56,26 @@ function svPauschalierungsgrenzeExceeded(
 ): boolean {
   let count = 0;
   let total = 0;
+  const cappedBrutto = (m: InputMitarbeiter) =>
+    Math.min(
+      isMitarbeiterBasicComplete(m) ? m.bruttogehaltProMonat : 0,
+      SV_GERINGFUEGIGKEITSGRENZE,
+    );
 
   // Mirrors the original C# else-if chain exactly, including its effective
   // behavior of considering only the first marginal employee it encounters.
   if (allMitarbeiter[0].beschaeftigungsform === "geringfuegig") {
     count++;
-    total += Math.min(
-      allMitarbeiter[0].bruttogehaltProMonat,
-      SV_GERINGFUEGIGKEITSGRENZE,
-    );
+    total += cappedBrutto(allMitarbeiter[0]);
   } else if (allMitarbeiter[1].beschaeftigungsform === "geringfuegig") {
     count++;
-    total += Math.min(
-      allMitarbeiter[1].bruttogehaltProMonat,
-      SV_GERINGFUEGIGKEITSGRENZE,
-    );
+    total += cappedBrutto(allMitarbeiter[1]);
   } else if (allMitarbeiter[2].beschaeftigungsform === "geringfuegig") {
     count++;
-    total += Math.min(
-      allMitarbeiter[2].bruttogehaltProMonat,
-      SV_GERINGFUEGIGKEITSGRENZE,
-    );
+    total += cappedBrutto(allMitarbeiter[2]);
   } else if (allMitarbeiter[3].beschaeftigungsform === "geringfuegig") {
     count++;
-    total += Math.min(
-      allMitarbeiter[3].bruttogehaltProMonat,
-      SV_GERINGFUEGIGKEITSGRENZE,
-    );
+    total += cappedBrutto(allMitarbeiter[3]);
   }
 
   return count > 1 && total > SV_PAUSCHALIERUNGSGRENZE;
@@ -100,7 +94,7 @@ function calcMitarbeiter(
   branche: Branche,
   all: InputMitarbeiter[],
 ): MitarbeiterResult {
-  if (m.bruttogehaltProMonat <= 0) return emptyMitarbeiterResult();
+  if (!isMitarbeiterBasicComplete(m)) return emptyMitarbeiterResult();
 
   const typ = m.beschaeftigungsform;
   const monate = m.anzahlBeschaeftigungsmonate;
@@ -415,7 +409,7 @@ function calculateWithShared(
 
   let beAufwand_jahr = ausgAufwand_jahr;
   all.forEach((m) => {
-    if (m.bruttogehaltProMonat > 0) {
+    if (isMitarbeiterBasicComplete(m)) {
       beAufwand_jahr +=
         m.zusatzkostenJaehrlich +
         m.zusatzkostenMonatlich * m.anzahlBeschaeftigungsmonate;

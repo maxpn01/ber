@@ -31,4 +31,33 @@ describe("Calculator page", () => {
       expect(slider).not.toHaveAttribute("aria-disabled", "true");
     });
   });
+
+  it("keeps only one employee form open at a time", async () => {
+    const user = userEvent.setup();
+    render(<App />);
+
+    expect(
+      screen.getByRole("textbox", {
+        name: "Daten Mitarbeiter 1: Bruttogehalt pro Monat",
+      }),
+    ).toBeInTheDocument();
+    expect(
+      screen.queryByRole("textbox", {
+        name: "Daten Mitarbeiter 2: Bruttogehalt pro Monat",
+      }),
+    ).not.toBeInTheDocument();
+
+    await user.click(screen.getByRole("button", { name: /Daten Mitarbeiter 2/ }));
+
+    expect(
+      screen.queryByRole("textbox", {
+        name: "Daten Mitarbeiter 1: Bruttogehalt pro Monat",
+      }),
+    ).not.toBeInTheDocument();
+    expect(
+      screen.getByRole("textbox", {
+        name: "Daten Mitarbeiter 2: Bruttogehalt pro Monat",
+      }),
+    ).toBeInTheDocument();
+  });
 });

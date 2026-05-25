@@ -13,6 +13,7 @@ import { useCalculator, type MitarbeiterIndex } from "@/lib/calculator/Calculato
 import { tList, tStr, type TextKey, type TextListKey } from "@/lib/text";
 import { cn } from "@/lib/utils";
 import { JAHR } from "@/lib/calculator/constants";
+import { isMitarbeiterBasicComplete } from "@/lib/calculator/mitarbeiterStatus";
 
 type Kind = "epu" | "bonus" | "startup";
 
@@ -77,7 +78,7 @@ export const SubsidyCard = ({ kind }: Props) => {
   // Eligibility per employee
   const eligible = (i: MitarbeiterIndex) => {
     const m = all[i];
-    if (!m.active || m.bruttogehaltProMonat <= 0) return false;
+    if (!isMitarbeiterBasicComplete(m)) return false;
     if (m.beschaeftigungsform !== "angestellter" && m.beschaeftigungsform !== "arbeiter") return false;
 
     if (kind === "epu") {
