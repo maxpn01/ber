@@ -1,24 +1,20 @@
-import { ChevronRight } from "lucide-react";
 import { useState } from "react";
-import { useCalculator } from "@/lib/calculator/CalculatorContext";
-import { formatMoney, formatNumber } from "@/lib/format";
+import type { ReactNode } from "react";
+import { HelpIcon } from "@/components/HelpIcon";
+import { EmployeeIcon } from "@/components/icons/EmployeeIcon";
 import {
   showsProvision,
   showsStunden,
   showsWareneinsatz,
 } from "@/lib/calculator/branche";
-import { HelpIcon } from "@/components/HelpIcon";
-import { EmployeeIcon } from "@/components/icons/EmployeeIcon";
+import { useCalculator } from "@/lib/calculator/CalculatorContext";
+import { formatMoney, formatNumber } from "@/lib/format";
 import { tStr } from "@/lib/text";
 import { cn } from "@/lib/utils";
 
 export const ResultPanel = () => {
-  const {
-    input,
-    result,
-    activeMitarbeiterCount,
-    hasCalculatedOnce,
-  } = useCalculator();
+  const { input, result, activeMitarbeiterCount, hasCalculatedOnce } =
+    useCalculator();
   const [detailsOpen, setDetailsOpen] = useState(false);
 
   const b = input.branche;
@@ -27,6 +23,7 @@ export const ResultPanel = () => {
   const showProv = showsProvision(b);
 
   const empty = !result || !!result.fehlermeldung;
+  const emptyValue = "-";
 
   if (!hasCalculatedOnce && !result) {
     return (
@@ -55,147 +52,155 @@ export const ResultPanel = () => {
   }
 
   return (
-    <div className="h-full rounded-lg bg-result p-4 text-result-foreground">
-      {/* POTENZIAL */}
-      <div className="mb-6">
-        <div className="mb-3 flex items-center justify-between">
-          <h3 className="flex items-center gap-1.5 text-base font-semibold">
+    <div className="h-full rounded-lg bg-result px-4 py-6 text-result-foreground sm:px-8">
+      <section className="mb-8">
+        <div className="mb-3 flex items-center justify-between gap-4">
+          <h3 className="flex items-center gap-1.5 text-lg font-medium leading-tight">
             {tStr("potenzialTitle")}
-            <HelpIcon text={tStr("potenzialTitle")} />
+            <HelpIcon text={tStr("potenzialHelp")} />
           </h3>
           <EmployeeIcons
             activeCount={activeMitarbeiterCount}
             activeClassName="text-foreground fill-foreground"
           />
         </div>
-        <div className="border-t border-dashed border-result-foreground/20 pt-3" />
-        <div className="grid grid-cols-3 gap-3 text-sm">
-          <div />
-          <div className="text-right text-muted-foreground">
-            {tStr("potenzialInkl")}
-          </div>
-          <div className="text-right text-muted-foreground">
-            {tStr("breakEven")}
-          </div>
-
-          <div>{tStr("gesamtumsatzpotenzial")}</div>
-          <div className="text-right">
-            {empty
-              ? "—"
-              : formatMoney(result!.potenzial.umsatzpotenzialMitarbeiter.jahr)}
-          </div>
-          <div className="text-right">
-            {empty
-              ? "—"
-              : formatMoney(result!.potenzial.umsatzpotenzialBreakEven.jahr)}
-          </div>
-
+        <SectionDivider />
+        <ResultRows>
+          <ResultHeaderRow
+            columns={[
+              "",
+              <span className="inline-flex items-center justify-end gap-1">
+                {tStr("potenzialInkl")}
+                <HelpIcon
+                  text={tStr("potenzialHelp")}
+                  className="h-4 w-4 shrink-0"
+                />
+              </span>,
+              tStr("breakEven"),
+            ]}
+          />
+          <ResultDataRow
+            label={tStr("gesamtumsatzpotenzial")}
+            values={[
+              empty
+                ? emptyValue
+                : formatMoney(
+                    result!.potenzial.umsatzpotenzialMitarbeiter.jahr,
+                  ),
+              empty
+                ? emptyValue
+                : formatMoney(result!.potenzial.umsatzpotenzialBreakEven.jahr),
+            ]}
+            medium
+          />
           {showStunden && (
-            <>
-              <div>{tStr("gesamtstunden")}</div>
-              <div className="text-right">
-                {empty
-                  ? "—"
-                  : formatNumber(result!.potenzial.stundenMitarbeiter.jahr)}
-              </div>
-              <div className="text-right">
-                {empty
-                  ? "—"
-                  : formatNumber(result!.potenzial.stundenBreakEven.jahr)}
-              </div>
-            </>
+            <ResultDataRow
+              label={tStr("gesamtstunden")}
+              values={[
+                empty
+                  ? emptyValue
+                  : formatNumber(result!.potenzial.stundenMitarbeiter.jahr),
+                empty
+                  ? emptyValue
+                  : formatNumber(result!.potenzial.stundenBreakEven.jahr),
+              ]}
+            />
           )}
-        </div>
-      </div>
+        </ResultRows>
+      </section>
 
-      {/* UMSATZ INKL */}
-      <div className="mb-6">
-        <h3 className="mb-3 text-base font-semibold">
+      <section className="mb-8">
+        <h3 className="mb-3 text-lg font-medium leading-tight">
           {tStr("umsatzInklTitle")}
         </h3>
-        <div className="border-t border-dashed border-result-foreground/20 pt-3" />
-        <div className="grid grid-cols-3 gap-3 text-sm">
-          <div />
-          <div className="text-right text-muted-foreground">
-            {tStr("monatlich")}
-          </div>
-          <div className="flex items-center justify-end gap-1 text-muted-foreground">
-            {tStr("jaehrlich")} <HelpIcon text={tStr("jaehrlich")} />
-          </div>
-
+        <SectionDivider />
+        <ResultRows>
+          <ResultHeaderRow
+            columns={[
+              "",
+              tStr("monatlich"),
+              <span className="inline-flex items-center justify-end gap-1">
+                {tStr("jaehrlich")}
+                <HelpIcon
+                  text={tStr("jaehrlich")}
+                  className="h-4 w-4 shrink-0"
+                />
+              </span>,
+            ]}
+          />
           {showProv && (
-            <>
-              <div>{tStr("gesamtumsatz")}</div>
-              <div className="text-right">
-                {empty
-                  ? "—"
-                  : formatMoney(result!.breakEven.gesamtumsatz.monat)}
-              </div>
-              <div className="text-right">
-                {empty ? "—" : formatMoney(result!.breakEven.gesamtumsatz.jahr)}
-              </div>
-            </>
+            <ResultDataRow
+              label={tStr("gesamtumsatz")}
+              values={[
+                empty
+                  ? emptyValue
+                  : formatMoney(result!.breakEven.gesamtumsatz.monat),
+                empty
+                  ? emptyValue
+                  : formatMoney(result!.breakEven.gesamtumsatz.jahr),
+              ]}
+            />
           )}
-
-          <div className="font-medium">
-            {showProv
-              ? tStr("breakEvenProvisionsumsatz")
-              : tStr("breakEvenUmsatz")}
-          </div>
-          <div className="text-right">
-            {empty ? "—" : formatMoney(result!.breakEven.breakEvenUmsatz.monat)}
-          </div>
-          <div className="text-right">
-            {empty ? "—" : formatMoney(result!.breakEven.breakEvenUmsatz.jahr)}
-          </div>
-
+          <ResultDataRow
+            label={
+              showProv
+                ? tStr("breakEvenProvisionsumsatz")
+                : tStr("breakEvenUmsatz")
+            }
+            values={[
+              empty
+                ? emptyValue
+                : formatMoney(result!.breakEven.breakEvenUmsatz.monat),
+              empty
+                ? emptyValue
+                : formatMoney(result!.breakEven.breakEvenUmsatz.jahr),
+            ]}
+            medium
+          />
           {showWE && (
-            <>
-              <div>− {tStr("wareneinsatz")}</div>
-              <div className="text-right">
-                {empty
-                  ? "—"
-                  : formatMoney(result!.breakEven.wareneinsatz.monat)}
-              </div>
-              <div className="text-right">
-                {empty ? "—" : formatMoney(result!.breakEven.wareneinsatz.jahr)}
-              </div>
-            </>
+            <ResultDataRow
+              label={`- ${tStr("wareneinsatz")}`}
+              values={[
+                empty
+                  ? emptyValue
+                  : formatMoney(result!.breakEven.wareneinsatz.monat),
+                empty
+                  ? emptyValue
+                  : formatMoney(result!.breakEven.wareneinsatz.jahr),
+              ]}
+            />
           )}
-
-          <div>− {tStr("aufwand")}</div>
-          <div className="text-right">
-            {empty ? "—" : formatMoney(result!.breakEven.aufwand.monat)}
-          </div>
-          <div className="text-right">
-            {empty ? "—" : formatMoney(result!.breakEven.aufwand.jahr)}
-          </div>
-
-          <div className="flex items-center gap-1">
-            − {tStr("personalkosten")}
-            <button
-              type="button"
-              onClick={() => setDetailsOpen((p) => !p)}
-              className="inline-flex items-center text-xs underline-offset-2 hover:underline"
-            >
-              <ChevronRight
-                className={cn(
-                  "h-3 w-3 transition-transform",
-                  detailsOpen && "rotate-90",
-                )}
-              />
-              {tStr("details")}
-            </button>
-          </div>
-          <div className="text-right">
-            {empty ? "—" : formatMoney(result!.breakEven.personalkosten.monat)}
-          </div>
-          <div className="text-right">
-            {empty ? "—" : formatMoney(result!.breakEven.personalkosten.jahr)}
-          </div>
-
+          <ResultDataRow
+            label={`- ${tStr("aufwand")}`}
+            values={[
+              empty ? emptyValue : formatMoney(result!.breakEven.aufwand.monat),
+              empty ? emptyValue : formatMoney(result!.breakEven.aufwand.jahr),
+            ]}
+          />
+          <ResultDataRow
+            label={
+              <span className="flex items-center gap-1">
+                - {tStr("personalkosten")}
+                <button
+                  type="button"
+                  onClick={() => setDetailsOpen((p) => !p)}
+                  className="inline-flex items-center text-[10px] font-medium underline underline-offset-2"
+                >
+                  ➔ {tStr("details")}
+                </button>
+              </span>
+            }
+            values={[
+              empty
+                ? emptyValue
+                : formatMoney(result!.breakEven.personalkosten.monat),
+              empty
+                ? emptyValue
+                : formatMoney(result!.breakEven.personalkosten.jahr),
+            ]}
+          />
           {detailsOpen && !empty && (
-            <div className="col-span-3 my-2 space-y-3 rounded-md bg-result-strong p-3">
+            <div className="my-1 space-y-3 rounded bg-white/45 p-3">
               {result!.breakEven.mitarbeiter.map((m, i) => {
                 if (m.brutto.jahr === 0) return null;
                 return (
@@ -231,88 +236,137 @@ export const ResultPanel = () => {
               })}
             </div>
           )}
+          <ResultDataRow
+            label={`+ ${tStr("foerderungenGesamt")}`}
+            values={[
+              empty
+                ? emptyValue
+                : formatMoney(result!.breakEven.foerderungenGesamt.monat),
+              empty
+                ? emptyValue
+                : formatMoney(result!.breakEven.foerderungenGesamt.jahr),
+            ]}
+          />
+          <ResultDataRow
+            label={`= ${tStr("gewinn")}`}
+            values={[
+              empty ? emptyValue : formatMoney(result!.breakEven.gewinn.monat),
+              empty ? emptyValue : formatMoney(result!.breakEven.gewinn.jahr),
+            ]}
+          />
+        </ResultRows>
+      </section>
 
-          <div>+ {tStr("foerderungenGesamt")}</div>
-          <div className="text-right">
-            {empty
-              ? "—"
-              : formatMoney(result!.breakEven.foerderungenGesamt.monat)}
-          </div>
-          <div className="text-right">
-            {empty
-              ? "—"
-              : formatMoney(result!.breakEven.foerderungenGesamt.jahr)}
-          </div>
-
-          <div className="font-semibold">= {tStr("gewinn")}</div>
-          <div className="text-right font-semibold">
-            {empty ? "—" : formatMoney(result!.breakEven.gewinn.monat)}
-          </div>
-          <div className="text-right font-semibold">
-            {empty ? "—" : formatMoney(result!.breakEven.gewinn.jahr)}
-          </div>
-        </div>
-      </div>
-
-      {/* AUSGANGSSITUATION */}
-      <div className="mb-6">
-        <h3 className="mb-3 text-base font-semibold">
+      <section>
+        <h3 className="mb-3 text-lg font-medium leading-tight">
           {tStr("ausgangssituation")}
         </h3>
-        <div className="border-t border-dashed border-result-foreground/20 pt-3" />
-        <div className="grid grid-cols-3 gap-3 text-sm">
-          <div />
-          <div className="text-right text-muted-foreground">
-            {tStr("monatlich")}
-          </div>
-          <div className="text-right text-muted-foreground">
-            {tStr("jaehrlich")}
-          </div>
-
-          <div>{showProv ? tStr("provisionsumsatz") : tStr("umsatz")}</div>
-          <div className="text-right">
-            {empty ? "—" : formatMoney(result!.ausgangssituation.umsatz.monat)}
-          </div>
-          <div className="text-right">
-            {empty ? "—" : formatMoney(result!.ausgangssituation.umsatz.jahr)}
-          </div>
-
+        <SectionDivider />
+        <ResultRows>
+          <ResultHeaderRow
+            columns={["", tStr("monatlich"), tStr("jaehrlich")]}
+          />
+          <ResultDataRow
+            label={showProv ? tStr("provisionsumsatz") : tStr("umsatz")}
+            values={[
+              empty
+                ? emptyValue
+                : formatMoney(result!.ausgangssituation.umsatz.monat),
+              empty
+                ? emptyValue
+                : formatMoney(result!.ausgangssituation.umsatz.jahr),
+            ]}
+          />
           {showWE && (
-            <>
-              <div>− {tStr("wareneinsatz")}</div>
-              <div className="text-right">
-                {empty
-                  ? "—"
-                  : formatMoney(result!.ausgangssituation.wareneinsatz.monat)}
-              </div>
-              <div className="text-right">
-                {empty
-                  ? "—"
-                  : formatMoney(result!.ausgangssituation.wareneinsatz.jahr)}
-              </div>
-            </>
+            <ResultDataRow
+              label={`- ${tStr("wareneinsatz")}`}
+              values={[
+                empty
+                  ? emptyValue
+                  : formatMoney(result!.ausgangssituation.wareneinsatz.monat),
+                empty
+                  ? emptyValue
+                  : formatMoney(result!.ausgangssituation.wareneinsatz.jahr),
+              ]}
+            />
           )}
-
-          <div>− {tStr("aufwand")}</div>
-          <div className="text-right">
-            {empty ? "—" : formatMoney(result!.ausgangssituation.aufwand.monat)}
-          </div>
-          <div className="text-right">
-            {empty ? "—" : formatMoney(result!.ausgangssituation.aufwand.jahr)}
-          </div>
-
-          <div className="font-semibold">= {tStr("gewinn")}</div>
-          <div className="text-right font-semibold">
-            {empty ? "—" : formatMoney(result!.ausgangssituation.gewinn.monat)}
-          </div>
-          <div className="text-right font-semibold">
-            {empty ? "—" : formatMoney(result!.ausgangssituation.gewinn.jahr)}
-          </div>
-        </div>
-      </div>
+          <ResultDataRow
+            label={`- ${tStr("aufwand")}`}
+            values={[
+              empty
+                ? emptyValue
+                : formatMoney(result!.ausgangssituation.aufwand.monat),
+              empty
+                ? emptyValue
+                : formatMoney(result!.ausgangssituation.aufwand.jahr),
+            ]}
+          />
+          <ResultDataRow
+            label={`= ${tStr("gewinn")}`}
+            values={[
+              empty
+                ? emptyValue
+                : formatMoney(result!.ausgangssituation.gewinn.monat),
+              empty
+                ? emptyValue
+                : formatMoney(result!.ausgangssituation.gewinn.jahr),
+            ]}
+          />
+        </ResultRows>
+      </section>
     </div>
   );
 };
+
+const SectionDivider = () => (
+  <div className="border-t border-dashed border-result-foreground/20 pt-4" />
+);
+
+const ResultRows = ({ children }: { children: ReactNode }) => (
+  <div className="space-y-2 text-[14px] leading-tight">{children}</div>
+);
+
+const resultGridClass =
+  "grid grid-cols-[minmax(0,1fr)_170px_112px] items-center gap-3 max-[520px]:grid-cols-[minmax(0,1fr)_132px_96px] max-[420px]:grid-cols-[minmax(0,1fr)_82px_80px] max-[420px]:gap-2";
+
+const ResultHeaderRow = ({
+  columns,
+}: {
+  columns: [ReactNode, ReactNode, ReactNode];
+}) => (
+  <div
+    className={cn(
+      resultGridClass,
+      "pb-1 text-[14px] font-normal text-result-foreground",
+    )}
+  >
+    <div>{columns[0]}</div>
+    <div className="text-right whitespace-nowrap">{columns[1]}</div>
+    <div className="text-right whitespace-nowrap">{columns[2]}</div>
+  </div>
+);
+
+const ResultDataRow = ({
+  label,
+  values,
+  medium = false,
+}: {
+  label: ReactNode;
+  values: [ReactNode, ReactNode];
+  medium?: boolean;
+}) => (
+  <div
+    className={cn(
+      resultGridClass,
+      "min-h-[25px] rounded px-2 py-1",
+      medium ? "bg-white font-medium" : "bg-[#FFF7F1]",
+    )}
+  >
+    <div className="min-w-0">{label}</div>
+    <div className="text-right">{values[0]}</div>
+    <div className="text-right">{values[1]}</div>
+  </div>
+);
 
 const EmployeeIcons = ({
   activeCount,
