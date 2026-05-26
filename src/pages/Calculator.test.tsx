@@ -81,6 +81,60 @@ describe("Calculator page", () => {
     });
   });
 
+  it("commits numeric input with Enter and recalculates", async () => {
+    const user = userEvent.setup();
+    render(<App />);
+
+    const [umsatz, aufwand, stunden] = screen.getAllByRole("textbox");
+
+    await user.click(umsatz);
+    await user.keyboard("100000");
+
+    await user.click(aufwand);
+    await user.keyboard("20000");
+
+    await user.click(stunden);
+    await user.keyboard("1000");
+    await user.keyboard("{Enter}");
+
+    await waitFor(() => {
+      expect(screen.getByText("Potenzial inkl. neuer Mitarbeiter")).toBeInTheDocument();
+      expect(screen.getByRole("slider", { name: "Erzielbarer Gewinn" })).not.toHaveAttribute(
+        "aria-disabled",
+        "true",
+      );
+    });
+  });
+
+  it("formats, clamps, and filters general numeric fields", async () => {
+    const user = userEvent.setup();
+    render(<App />);
+
+    const umsatz = screen.getByRole("textbox", { name: "Umsatz" }) as HTMLInputElement;
+    await user.click(umsatz);
+    await user.keyboard("9999999999");
+    await user.tab();
+
+    expect(umsatz.value).toBe("2.147.483.647,00 €");
+
+    const aufwand = screen.getByRole("textbox", { name: "Aufwand" }) as HTMLInputElement;
+    await user.click(aufwand);
+    await user.keyboard("-5");
+    await user.tab();
+
+    expect(aufwand.value).toBe("0,00 €");
+
+    const stunden = screen.getByRole("textbox", {
+      name: "Verrechnete Stunden",
+    }) as HTMLInputElement;
+    await user.click(stunden);
+    await user.keyboard("abc1000x");
+    expect(stunden.value).toBe("1000");
+    await user.tab();
+
+    expect(stunden.value).toBe("1.000,00");
+  });
+
   it("keeps only one employee form open at a time", async () => {
     const user = userEvent.setup();
     render(<App />);
@@ -182,7 +236,7 @@ describe("Calculator page", () => {
     await user.click(await screen.findByRole("option", { name: "Provision" }));
 
     expect(
-      screen.getByRole("textbox", { name: "Provisionsumsatz" }),
+      await screen.findByRole("textbox", { name: "Provisionsumsatz" }),
     ).toBeInTheDocument();
     expect(screen.queryByRole("textbox", { name: "Umsatz" })).not.toBeInTheDocument();
     expect(screen.getByRole("textbox", { name: "Provision in %" })).toBeInTheDocument();
@@ -199,5 +253,22 @@ describe("Calculator page", () => {
 
     expect(await screen.findByText("Break-Even-Provisionsumsatz")).toBeInTheDocument();
     expect(screen.getAllByText("Provisionsumsatz").length).toBeGreaterThan(0);
+  });
+
+  it("formats and clamps percent inputs", async () => {
+    const user = userEvent.setup();
+    render(<App />);
+
+    await user.click(screen.getByRole("combobox", { name: "Branche" }));
+    await user.click(await screen.findByRole("option", { name: "Provision" }));
+
+    const provision = await screen.findByRole("textbox", {
+      name: "Provision in %",
+    }) as HTMLInputElement;
+    await user.click(provision);
+    await user.keyboard("150");
+    await user.tab();
+
+    expect(provision.value).toBe("100,00");
   });
 });

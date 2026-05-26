@@ -63,7 +63,8 @@ export const AllgemeinCard = () => {
             aria-label={tStr("branche")}
             className={cn(
               "border-transparent bg-muted",
-              brancheTouched && "border-wko-red bg-wko-red/5 ring-1 ring-wko-red",
+              brancheTouched &&
+                "border-wko-red bg-wko-red/5 ring-1 ring-wko-red",
             )}
           >
             <SelectValue />
@@ -105,9 +106,8 @@ export const AllgemeinCard = () => {
             <NumberInput
               value={input.stunden}
               onChange={(v) => patchInput({ stunden: v })}
-              variant="integer"
+              variant="decimal"
               ariaLabel={tStr("verrechneteStunden")}
-              suffix="h"
             />
           </Field>
         )}
@@ -127,8 +127,9 @@ export const AllgemeinCard = () => {
             <NumberInput
               value={input.provision}
               onChange={(v) => patchInput({ provision: v })}
-              variant="decimal"
+              variant="percent"
               suffix="%"
+              max={100}
               ariaLabel={tStr("provisionPct")}
             />
           </Field>

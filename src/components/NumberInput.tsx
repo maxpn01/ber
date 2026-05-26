@@ -1,12 +1,20 @@
-import { useEffect, useState } from "react";
+import { KeyboardEvent, useEffect, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
-import { formatMoney, formatNumber, parseDeNumber } from "@/lib/format";
+import {
+  formatDecimal,
+  formatMoney,
+  formatNumber,
+  parseDeNumber,
+} from "@/lib/format";
+
+const DEFAULT_MIN = 0;
+const DEFAULT_MAX = 2_147_483_647;
 
 interface Props {
   value: number;
   onChange: (v: number) => void;
-  variant?: "money" | "integer" | "decimal";
+  variant?: "money" | "integer" | "decimal" | "percent";
   suffix?: string;
   className?: string;
   invalid?: boolean;
@@ -14,6 +22,8 @@ interface Props {
   computed?: boolean; // gray text when value derived from slider
   id?: string;
   ariaLabel?: string;
+  min?: number;
+  max?: number;
 }
 
 export const NumberInput = ({
@@ -27,12 +37,49 @@ export const NumberInput = ({
   computed,
   id,
   ariaLabel,
+  min = DEFAULT_MIN,
+  max = DEFAULT_MAX,
 }: Props) => {
+  const precision = variant === "integer" ? 0 : 2;
+
   const format = (v: number) => {
     if (variant === "money") return formatMoney(v);
     if (variant === "integer") return formatNumber(v);
-    // decimal: show with comma, no currency
-    return v.toLocaleString("de-AT", { maximumFractionDigits: 4 });
+    return formatDecimal(v);
+  };
+
+  const clamp = (v: number) => Math.min(max, Math.max(min, v));
+
+  const roundForVariant = (v: number) => {
+    if (variant === "integer") return Math.round(v);
+    const factor = 10 ** precision;
+    return Math.round(v * factor) / factor;
+  };
+
+  const sanitize = (raw: string) => {
+    const negative = raw.trimStart().startsWith("-");
+    const sign = negative ? "-" : "";
+
+    if (variant === "integer") {
+      return sign + raw.replace(/\D/g, "");
+    }
+
+    const stripped = raw.replace(/[^\d.,]/g, "");
+    const commaIndex = stripped.indexOf(",");
+    if (commaIndex === -1) return sign + stripped;
+
+    return (
+      sign +
+      stripped.slice(0, commaIndex + 1) +
+      stripped.slice(commaIndex + 1).replace(/,/g, "")
+    );
+  };
+
+  const commit = (raw: string) => {
+    const parsed = clamp(roundForVariant(parseDeNumber(raw)));
+    onChange(parsed);
+    setFocused(false);
+    setText(format(parsed));
   };
 
   const [text, setText] = useState<string>(() => format(value));
@@ -51,28 +98,34 @@ export const NumberInput = ({
         aria-invalid={invalid || undefined}
         value={text}
         disabled={disabled}
+        inputMode={variant === "integer" ? "numeric" : "decimal"}
         onFocus={(e) => {
           setFocused(true);
           // show raw editable representation
+          const editableValue = clamp(roundForVariant(value));
           const raw =
-            value === 0
+            editableValue === 0
               ? ""
-              : value
-                  .toLocaleString("de-AT", { maximumFractionDigits: 4 })
+              : editableValue
+                  .toLocaleString("de-DE", {
+                    maximumFractionDigits: precision,
+                  })
                   .replace(/\./g, "");
-          const editable = raw.replace(",", ",");
-          e.currentTarget.value = editable;
-          setText(editable);
-          e.currentTarget.setSelectionRange(0, editable.length);
+          e.currentTarget.value = raw;
+          setText(raw);
+          e.currentTarget.setSelectionRange(0, raw.length);
         }}
         onChange={(e) => {
-          setText(e.target.value);
+          setText(sanitize(e.target.value));
         }}
         onBlur={(e) => {
-          const parsed = parseDeNumber(e.currentTarget.value);
-          onChange(parsed);
-          setFocused(false);
-          setText(format(parsed));
+          commit(e.currentTarget.value);
+        }}
+        onKeyDown={(e: KeyboardEvent<HTMLInputElement>) => {
+          if (e.key === "Enter") {
+            e.preventDefault();
+            e.currentTarget.blur();
+          }
         }}
         className={cn(
           "bg-muted border-transparent",

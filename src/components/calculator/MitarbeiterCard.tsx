@@ -130,6 +130,7 @@ export const MitarbeiterCard = ({ index }: Props) => {
                 value={m.anzahlWochenstunden}
                 variant="decimal"
                 onChange={(v) => patchMitarbeiter(index, { anzahlWochenstunden: v })}
+                max={168}
                 ariaLabel={`${tStr("datenMitarbeiter")} ${index + 1}: ${tStr("wochenstunden")}`}
               />
             </div>
@@ -141,12 +142,10 @@ export const MitarbeiterCard = ({ index }: Props) => {
               <NumberInput
                 value={m.anzahlBeschaeftigungsmonate}
                 variant="integer"
+                min={1}
+                max={12}
                 ariaLabel={`${tStr("datenMitarbeiter")} ${index + 1}: ${tStr("beschaeftigungsmonate")}`}
-                onChange={(v) =>
-                  patchMitarbeiter(index, {
-                    anzahlBeschaeftigungsmonate: Math.max(1, Math.min(12, Math.round(v))),
-                  })
-                }
+                onChange={(v) => patchMitarbeiter(index, { anzahlBeschaeftigungsmonate: v })}
               />
             </div>
           </div>
@@ -184,8 +183,9 @@ export const MitarbeiterCard = ({ index }: Props) => {
                   <label className="mb-1.5 block text-sm font-medium">{tStr("verkaufbareStundenPct")}</label>
                   <NumberInput
                     value={m.verkaufbareStunden}
-                    variant="integer"
+                    variant="percent"
                     suffix="%"
+                    max={100}
                     onChange={(v) => patchMitarbeiter(index, { verkaufbareStunden: v })}
                     ariaLabel={`${tStr("datenMitarbeiter")} ${index + 1}: ${tStr("verkaufbareStundenPct")}`}
                   />
@@ -207,8 +207,9 @@ export const MitarbeiterCard = ({ index }: Props) => {
               <label className="mb-1.5 block text-sm font-medium">{tStr("umsatzsteigerung")}</label>
               <NumberInput
                 value={m.umsatzsteigerung}
-                variant="integer"
+                variant="percent"
                 suffix="%"
+                max={100}
                 onChange={(v) => patchMitarbeiter(index, { umsatzsteigerung: v })}
                 ariaLabel={`${tStr("datenMitarbeiter")} ${index + 1}: ${tStr("umsatzsteigerung")}`}
               />
