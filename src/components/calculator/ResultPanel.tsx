@@ -17,7 +17,6 @@ export const ResultPanel = () => {
     input,
     result,
     activeMitarbeiterCount,
-    inputComplete,
     hasCalculatedOnce,
   } = useCalculator();
   const [detailsOpen, setDetailsOpen] = useState(false);
@@ -29,7 +28,7 @@ export const ResultPanel = () => {
 
   const empty = !result || !!result.fehlermeldung;
 
-  if (!hasCalculatedOnce && !inputComplete) {
+  if (!hasCalculatedOnce && !result) {
     return (
       <div className="h-full min-h-[520px] rounded-lg bg-result p-4 text-result-foreground">
         <div className="rounded bg-card p-4 shadow-sm">

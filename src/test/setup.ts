@@ -29,3 +29,22 @@ Object.defineProperty(globalThis, "ResizeObserver", {
   writable: true,
   value: ResizeObserverMock,
 });
+
+Object.defineProperties(Element.prototype, {
+  hasPointerCapture: {
+    writable: true,
+    value: () => false,
+  },
+  scrollIntoView: {
+    writable: true,
+    value: () => {},
+  },
+  setPointerCapture: {
+    writable: true,
+    value: () => {},
+  },
+  releasePointerCapture: {
+    writable: true,
+    value: () => {},
+  },
+});

@@ -39,7 +39,10 @@ export const HelpIcon = ({
             />
           </button>
         </TooltipTrigger>
-        <TooltipContent side="top" className="max-w-xs text-sm">
+        <TooltipContent
+          side="top"
+          className="max-w-md whitespace-pre-line rounded-sm bg-[#003C56] px-5 py-4 text-sm font-normal leading-relaxed text-white border-none"
+        >
           {text}
         </TooltipContent>
       </Tooltip>

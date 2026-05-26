@@ -15,6 +15,19 @@ export const text = {
   provisionPct: "Provision in %",
   erzielbarerGewinn: "Erzielbarer Gewinn",
 
+  brancheHelp:
+    "Die Ermittlung des Break-Even-Umsatzes erfolgt je nach angegebener Kategorie unterschiedlich, weshalb hier anzugeben ist, in welcher Branche Sie tätig sind.\n\nWenn Sie Ihre Umsätze z.B. durch Beratung oder Softwareerstellung erzielen, wählen Sie bitte die Kategorie Dienstleistung. Sollten Sie zusätzlich Handelswaren verkaufen, wählen Sie bitte die Kategorie Gewerbe-Handel-Dienstleistung/Handwerk. Bei Gastronomieumsätzen wählen Sie bitte ebenfalls diese Kategorie aus. Wenn Sie Ihre Umsätze durch den Verkauf von Handelswaren erzielen (z.B. Textileinzelhändler, Möbelhandel), wählen Sie bitte die Kategorie Handel aus. Sollten Sie Ihre Umsätze durch die Erbringung von Dienstleistung und gleichzeitigem Verkauf von Handelswaren (z.B. ein Friseur mit angeschlossenem Friseurbedarfshandel oder ein EDV-Dienstleister mit Computerhandel), oder durch handwerkliche Leistungserstellung (z.B. ein Tischler oder Spengler) erzielen, wählen Sie bitte die Kategorie Gewerbe-Handel-Dienstleistung/Handwerk. Für alle Tätigkeiten, die auf Provisionsbasis entlohnt werden (z.B. Handelsagent, Direktvertrieb), ist die Kategorie Provisionen zu wählen.",
+  umsatzHelp:
+    "Dieses Feld ist für die Höhe Ihres Jahresumsatzes vorgesehen.",
+  aufwandHelp:
+    "In diesem Feld ist die Höhe Ihres derzeitigen Aufwands als Jahressumme anzuführen.",
+  verrechneteStundenHelp:
+    "In diesem Feld ist die Anzahl der Stunden, die Sie zur Erzielung des angeführten Umsatzes in einem Jahr verrechenbar leisten, angeführt.",
+  provisionPctHelp:
+    "Geben Sie hier die Höhe der Provision in % an, die Sie für vermittelte Umsätze erhalten.",
+  wareneinsatzHelp:
+    "Dieses Feld ist für den Wareneinsatz, den Sie für die Erzielung des angeführten Umsatzes in einem Jahr benötigen, vorgesehen.",
+
   datenMitarbeiter: "Daten Mitarbeiter",
   beschaeftigungsform: "Beschäftigungsform",
   bruttogehalt: "Bruttogehalt pro Monat",

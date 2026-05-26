@@ -69,6 +69,8 @@ export const CalculatorProvider = ({ children }: { children: ReactNode }) => {
   const [input, setInput] = useState<InputModel>(() => defaultLandingInput());
   const [sliderValue, setSliderValueState] = useState(0);
   const [hasCalculatedOnce, setHasCalculatedOnce] = useState(false);
+  const [reviewClearedByBranchChange, setReviewClearedByBranchChange] =
+    useState(false);
   const [showStartUpUnavailable, setShowStartUpUnavailable] = useState(false);
   const [openMitarbeiterIndex, setOpenMitarbeiterIndex] =
     useState<MitarbeiterIndex | null>(0);
@@ -76,13 +78,16 @@ export const CalculatorProvider = ({ children }: { children: ReactNode }) => {
 
   // Compute result reactively (synchronously is fine; calc is cheap)
   const result = useMemo(() => {
+    if (reviewClearedByBranchChange) {
+      return null;
+    }
     if (!inputComplete) {
       return null;
     }
     return sliderValue > 0
       ? calculateExtended(input, sliderValue)
       : calculate(input);
-  }, [input, inputComplete, sliderValue]);
+  }, [input, inputComplete, reviewClearedByBranchChange, sliderValue]);
   const hasValidationError = !!result?.fehlermeldung;
   const hasValidResult = !!result && !hasValidationError;
 
@@ -95,6 +100,7 @@ export const CalculatorProvider = ({ children }: { children: ReactNode }) => {
   const patchInput = useCallback((patch: Partial<InputModel>) => {
     setInput((prev) => ({ ...prev, ...patch, erzielbarerGewinn: 0 }));
     setSliderValueState(0);
+    setReviewClearedByBranchChange(false);
   }, []);
 
   const setBranche = useCallback((b: Branche) => {
@@ -108,7 +114,10 @@ export const CalculatorProvider = ({ children }: { children: ReactNode }) => {
       return {
         ...prev,
         branche: b,
-        // reset branche-specific values on switch
+        // Reset the top input group on branch switch so stale values cannot
+        // carry a previous review state into the new branch.
+        umsatz: 0,
+        aufwand: 0,
         stunden: 0,
         wareneinsatz: 0,
         provision: 0,
@@ -120,6 +129,8 @@ export const CalculatorProvider = ({ children }: { children: ReactNode }) => {
       };
     });
     setSliderValueState(0);
+    setHasCalculatedOnce(false);
+    setReviewClearedByBranchChange(true);
   }, []);
 
   const patchMitarbeiter = useCallback(
@@ -138,6 +149,7 @@ export const CalculatorProvider = ({ children }: { children: ReactNode }) => {
         erzielbarerGewinn: 0,
       }));
       setSliderValueState(0);
+      setReviewClearedByBranchChange(false);
     },
     [],
   );
@@ -158,6 +170,7 @@ export const CalculatorProvider = ({ children }: { children: ReactNode }) => {
       erzielbarerGewinn: 0,
     }));
     setSliderValueState(0);
+    setReviewClearedByBranchChange(false);
   }, []);
 
   const deleteMitarbeiter = useCallback(
@@ -173,6 +186,7 @@ export const CalculatorProvider = ({ children }: { children: ReactNode }) => {
         erzielbarerGewinn: 0,
       }));
       setSliderValueState(0);
+      setReviewClearedByBranchChange(false);
       setOpenMitarbeiterIndex((prev) => (prev === i ? null : prev));
     },
     [],
@@ -181,6 +195,7 @@ export const CalculatorProvider = ({ children }: { children: ReactNode }) => {
   const setSliderValue = useCallback((v: number) => {
     setSliderValueState(v);
     setInput((prev) => ({ ...prev, erzielbarerGewinn: v }));
+    setReviewClearedByBranchChange(false);
   }, []);
 
   const activeMitarbeiterCount = [

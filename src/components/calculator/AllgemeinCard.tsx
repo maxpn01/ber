@@ -1,6 +1,7 @@
 import { Card } from "@/components/ui/card";
 import { HelpIcon } from "@/components/HelpIcon";
 import { NumberInput } from "@/components/NumberInput";
+import { useState } from "react";
 import { useCalculator } from "@/lib/calculator/CalculatorContext";
 import {
   showsProvision,
@@ -17,6 +18,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { cn } from "@/lib/utils";
 
 const brancheLabelKey = (b: Branche): TextKey => {
   const map: Record<Branche, TextKey> = {
@@ -31,7 +33,11 @@ const brancheLabelKey = (b: Branche): TextKey => {
 
 export const AllgemeinCard = () => {
   const { input, patchInput, setBranche } = useCalculator();
+  const [brancheTouched, setBrancheTouched] = useState(false);
   const b = input.branche;
+  const umsatzLabel = showsProvision(b)
+    ? tStr("provisionsumsatz")
+    : tStr("umsatz");
 
   return (
     <Card className="border-border bg-card p-4">
@@ -41,12 +47,24 @@ export const AllgemeinCard = () => {
       <div className="mb-4">
         <label className="mb-1.5 flex items-center gap-1.5 text-xs font-medium">
           {tStr("branche")}
-          <HelpIcon text={tStr("branche")} />
+          <HelpIcon text={tStr("brancheHelp")} />
         </label>
-        <Select value={b} onValueChange={(v) => setBranche(v as Branche)}>
+        <Select
+          value={b}
+          onOpenChange={(open) => {
+            if (open) setBrancheTouched(true);
+          }}
+          onValueChange={(v) => {
+            setBrancheTouched(true);
+            setBranche(v as Branche);
+          }}
+        >
           <SelectTrigger
             aria-label={tStr("branche")}
-            className="border-transparent bg-muted"
+            className={cn(
+              "border-transparent bg-muted",
+              brancheTouched && "border-wko-red bg-wko-red/5 ring-1 ring-wko-red",
+            )}
           >
             <SelectValue />
           </SelectTrigger>
@@ -63,15 +81,15 @@ export const AllgemeinCard = () => {
       <div className="border-t border-dashed border-border pt-4" />
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-        <Field label={tStr("umsatz")} help={tStr("umsatz")}>
+        <Field label={umsatzLabel} help={tStr("umsatzHelp")}>
           <NumberInput
             value={input.umsatz}
             onChange={(v) => patchInput({ umsatz: v })}
-            ariaLabel={tStr("umsatz")}
+            ariaLabel={umsatzLabel}
           />
         </Field>
 
-        <Field label={tStr("aufwand")} help={tStr("aufwand")}>
+        <Field label={tStr("aufwand")} help={tStr("aufwandHelp")}>
           <NumberInput
             value={input.aufwand}
             onChange={(v) => patchInput({ aufwand: v })}
@@ -82,7 +100,7 @@ export const AllgemeinCard = () => {
         {showsStunden(b) && (
           <Field
             label={tStr("verrechneteStunden")}
-            help={tStr("verrechneteStunden")}
+            help={tStr("verrechneteStundenHelp")}
           >
             <NumberInput
               value={input.stunden}
@@ -95,7 +113,7 @@ export const AllgemeinCard = () => {
         )}
 
         {showsWareneinsatz(b) && (
-          <Field label={tStr("wareneinsatz")} help={tStr("wareneinsatz")}>
+          <Field label={tStr("wareneinsatz")} help={tStr("wareneinsatzHelp")}>
             <NumberInput
               value={input.wareneinsatz}
               onChange={(v) => patchInput({ wareneinsatz: v })}
@@ -105,7 +123,7 @@ export const AllgemeinCard = () => {
         )}
 
         {showsProvision(b) && (
-          <Field label={tStr("provisionPct")} help={tStr("provisionPct")}>
+          <Field label={tStr("provisionPct")} help={tStr("provisionPctHelp")}>
             <NumberInput
               value={input.provision}
               onChange={(v) => patchInput({ provision: v })}
