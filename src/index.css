@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 /* WKO Break-Even-Rechner Design System
-   All colors HSL. Brand red, peach result panel, green slider, purple subsidy accent. */
+   All colors HSL. Brand red, peach result panel, blue interaction accent, purple subsidy accent. */
 
 @font-face {
   font-family: "DIN Pro";
@@ -75,7 +75,7 @@
 
     --border: 0 0% 88%;
     --input: 0 0% 88%;
-    --ring: 4 83% 53%;
+    --ring: 198 100% 17%;
 
     --radius: 0.625rem;
 

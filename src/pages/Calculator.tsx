@@ -12,7 +12,7 @@ const Calculator = () => {
   return (
     <div className="flex min-h-screen flex-col bg-background">
       <Header />
-      <main className="mx-auto w-full max-w-[1250px] flex-1 px-4 py-3 sm:px-6">
+      <main className="mx-auto w-full max-w-[1300px] flex-1 px-4 py-3 sm:px-6">
         <h1 className="mb-10 flex items-center gap-2 text-xl font-medium">
           {tStr("appTitle")}
           <HelpIcon
@@ -22,7 +22,7 @@ const Calculator = () => {
         </h1>
 
         <div className="rounded-xl bg-wko-section p-4 sm:p-6">
-          <div className="grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(420px,540px)] xl:grid-cols-[minmax(0,1fr)_540px]">
+          <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
             <div className="space-y-4">
               <AllgemeinCard />
               <ErzielbarerGewinnSlider />

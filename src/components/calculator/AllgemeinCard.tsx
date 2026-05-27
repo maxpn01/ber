@@ -1,7 +1,7 @@
 import { Card } from "@/components/ui/card";
 import { HelpIcon } from "@/components/HelpIcon";
 import { NumberInput } from "@/components/NumberInput";
-import { useState } from "react";
+import { useRef } from "react";
 import { useCalculator } from "@/lib/calculator/CalculatorContext";
 import {
   showsProvision,
@@ -33,7 +33,8 @@ const brancheLabelKey = (b: Branche): TextKey => {
 
 export const AllgemeinCard = () => {
   const { input, patchInput, setBranche } = useCalculator();
-  const [brancheTouched, setBrancheTouched] = useState(false);
+  const brancheTriggerRef = useRef<HTMLButtonElement>(null);
+  const blurBrancheAfterSelectRef = useRef(false);
   const b = input.branche;
   const umsatzLabel = showsProvision(b)
     ? tStr("provisionsumsatz")
@@ -51,25 +52,29 @@ export const AllgemeinCard = () => {
         </label>
         <Select
           value={b}
-          onOpenChange={(open) => {
-            if (open) setBrancheTouched(true);
-          }}
           onValueChange={(v) => {
-            setBrancheTouched(true);
+            blurBrancheAfterSelectRef.current = true;
             setBranche(v as Branche);
           }}
         >
           <SelectTrigger
+            ref={brancheTriggerRef}
             aria-label={tStr("branche")}
             className={cn(
               "border-transparent bg-muted",
-              brancheTouched &&
-                "border-wko-red bg-wko-red/5 ring-1 ring-wko-red",
+              "data-[state=open]:border-slider data-[state=open]:bg-slider/5 data-[state=open]:ring-1 data-[state=open]:ring-slider",
             )}
           >
             <SelectValue />
           </SelectTrigger>
-          <SelectContent>
+          <SelectContent
+            onCloseAutoFocus={(event) => {
+              if (!blurBrancheAfterSelectRef.current) return;
+              event.preventDefault();
+              blurBrancheAfterSelectRef.current = false;
+              brancheTriggerRef.current?.blur();
+            }}
+          >
             {branchen.map((x) => (
               <SelectItem key={x} value={x}>
                 {tStr(brancheLabelKey(x))}

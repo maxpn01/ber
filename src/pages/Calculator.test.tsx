@@ -49,7 +49,8 @@ describe("Calculator page", () => {
     await user.click(screen.getByRole("option", { name: "Gastronomie" }));
 
     await waitFor(() => {
-      expect(branch).toHaveClass("border-wko-red");
+      expect(branch).not.toHaveClass("border-wko-red");
+      expect(branch).not.toHaveFocus();
     });
   });
 

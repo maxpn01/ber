@@ -55,7 +55,7 @@ export const ResultPanel = () => {
     <div className="h-full rounded-lg bg-result px-4 py-6 text-result-foreground sm:px-8">
       <section className="mb-8">
         <div className="mb-3 flex items-center justify-between gap-4">
-          <h3 className="flex items-center gap-1.5 text-lg font-medium leading-tight">
+          <h3 className="flex items-center gap-1.5 text-lg font-medium leading-tight xl:whitespace-nowrap">
             {tStr("potenzialTitle")}
             <HelpIcon text={tStr("potenzialHelp")} />
           </h3>
@@ -327,7 +327,10 @@ const ResultRows = ({ children }: { children: ReactNode }) => (
 );
 
 const resultGridClass =
-  "grid grid-cols-[minmax(0,1fr)_170px_112px] items-center gap-3 max-[520px]:grid-cols-[minmax(0,1fr)_132px_96px] max-[420px]:grid-cols-[minmax(0,1fr)_82px_80px] max-[420px]:gap-2";
+  "grid grid-cols-[minmax(0,1fr)_132px_96px] items-center gap-3 xl:grid-cols-[minmax(0,1fr)_150px_112px] max-[420px]:grid-cols-[minmax(0,1fr)_82px_80px] max-[420px]:gap-2";
+
+const detailGridClass =
+  "grid grid-cols-[minmax(0,1fr)_82px_82px] items-start gap-2 sm:grid-cols-[minmax(0,1fr)_96px_96px] xl:grid-cols-[minmax(0,1fr)_104px_104px]";
 
 const ResultHeaderRow = ({
   columns,
@@ -362,7 +365,7 @@ const ResultDataRow = ({
       medium ? "bg-white font-medium" : "bg-[#FFF7F1]",
     )}
   >
-    <div className="min-w-0">{label}</div>
+    <div className="min-w-0 xl:whitespace-nowrap">{label}</div>
     <div className="text-right">{values[0]}</div>
     <div className="text-right">{values[1]}</div>
   </div>
@@ -399,8 +402,8 @@ const DetailRow = ({
   j: number;
   money?: boolean;
 }) => (
-  <div className="grid grid-cols-3 gap-2 py-0.5">
-    <div className="text-muted-foreground">{label}</div>
+  <div className={cn(detailGridClass, "py-0.5")}>
+    <div className="min-w-0 text-muted-foreground">{label}</div>
     <div className="text-right">{money ? formatMoney(m) : formatNumber(m)}</div>
     <div className="text-right">{money ? formatMoney(j) : formatNumber(j)}</div>
   </div>
