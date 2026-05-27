@@ -156,7 +156,7 @@ const Field = ({
   <div className="flex flex-col">
     <label className="mb-1.5 flex min-h-[2.5rem] items-start gap-1.5 text-xs font-medium leading-tight">
       <span className="flex-1">{label}</span>
-      <HelpIcon text={help} />
+      <HelpIcon text={help} className="pb-1.5" />
     </label>
     {children}
   </div>
