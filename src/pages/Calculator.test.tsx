@@ -242,7 +242,7 @@ describe("Calculator page", () => {
     ).not.toBeInTheDocument();
 
     await user.click(
-      screen.getByRole("button", { name: /Daten Mitarbeiter 2/ }),
+      screen.getByRole("button", { name: /Daten Mitarbeiter(?::in)? 2/ }),
     );
 
     expect(
@@ -263,7 +263,7 @@ describe("Calculator page", () => {
 
     await user.click(screen.getByRole("button", { name: "Löschen" }));
     await user.click(
-      screen.getByRole("button", { name: /Daten Mitarbeiter 1/ }),
+      screen.getByRole("button", { name: /Daten Mitarbeiter(?::in)? 1/ }),
     );
 
     expect(
@@ -338,6 +338,54 @@ describe("Calculator page", () => {
     expect(salary.value).toBe("0,00 €");
     expect(hours.value).toBe("0,00");
     expect(months.value).toBe("0");
+  });
+
+  it("allows EPU funding for only one included employee and clears it when toggled off", async () => {
+    const user = userEvent.setup();
+    render(<App />);
+
+    await user.click(
+      screen.getByRole("button", { name: /Daten Mitarbeiter(?::in)? 2/ }),
+    );
+    await user.click(screen.getByRole("button", { name: "Zurücksetzen" }));
+
+    const epuSwitch = screen.getByRole("switch", {
+      name: "EPU Lohnnebenkostenförderung",
+    });
+
+    await user.click(epuSwitch);
+
+    const employee1 = screen.getByRole("checkbox", {
+      name: "Für Mitarbeiter:in 1",
+    }) as HTMLButtonElement;
+    const employee2 = screen.getByRole("checkbox", {
+      name: "Für Mitarbeiter:in 2",
+    }) as HTMLButtonElement;
+    const employee3 = screen.getByRole("checkbox", {
+      name: "Für Mitarbeiter:in 3",
+    }) as HTMLButtonElement;
+
+    expect(employee1).not.toBeChecked();
+    expect(employee2).not.toBeChecked();
+    expect(employee3).toBeDisabled();
+
+    await user.click(employee2);
+    expect(employee1).not.toBeChecked();
+    expect(employee2).toBeChecked();
+
+    await user.click(employee1);
+    expect(employee1).toBeChecked();
+    expect(employee2).not.toBeChecked();
+
+    await user.click(epuSwitch);
+    expect(
+      screen.queryByRole("checkbox", { name: "Für Mitarbeiter:in 1" }),
+    ).not.toBeInTheDocument();
+
+    await user.click(epuSwitch);
+    expect(
+      screen.getByRole("checkbox", { name: "Für Mitarbeiter:in 1" }),
+    ).not.toBeChecked();
   });
 
   it("clears top inputs, employee defaults, and review state on branch change", async () => {

@@ -11,7 +11,10 @@ import {
 } from "@/components/ui/select";
 import { HelpIcon } from "@/components/HelpIcon";
 import { NumberInput } from "@/components/NumberInput";
-import { useCalculator, type MitarbeiterIndex } from "@/lib/calculator/CalculatorContext";
+import {
+  useCalculator,
+  type MitarbeiterIndex,
+} from "@/lib/calculator/CalculatorContext";
 import {
   defaultMitarbeiterFieldValuesFor,
   dienstverhaeltnisse,
@@ -50,7 +53,12 @@ export const MitarbeiterCard = ({ index }: Props) => {
     resetMitarbeiter,
     deleteMitarbeiter,
   } = useCalculator();
-  const m = [input.mitarbeiter1, input.mitarbeiter2, input.mitarbeiter3, input.mitarbeiter4][index];
+  const m = [
+    input.mitarbeiter1,
+    input.mitarbeiter2,
+    input.mitarbeiter3,
+    input.mitarbeiter4,
+  ][index];
   const b = input.branche;
 
   const isOpen = openMitarbeiterIndex === index;
@@ -58,18 +66,23 @@ export const MitarbeiterCard = ({ index }: Props) => {
   const isFilled = isMitarbeiterAdvancedComplete(m, b);
 
   return (
-    <Card className="border-border bg-card p-5">
+    <Card className="border-border bg-card px-5 py-3">
       <div className="flex items-center justify-between gap-3">
         <button
           type="button"
-          className="flex min-w-0 flex-1 items-center gap-2 text-left text-lg font-semibold"
+          className="flex min-w-0 flex-1 items-center gap-2 text-left text-lg font-medium"
           onClick={() => toggleMitarbeiterOpen(index)}
           aria-expanded={isOpen}
         >
           <span className="truncate">
-            {tStr("datenMitarbeiter")} {index + 1}
+            {tStr("datenMitarbeiter")}:in {index + 1}
           </span>
-          {isFilled && <CheckCircle2 className="h-4 w-4 shrink-0 text-toggle-on" aria-hidden />}
+          {isFilled && (
+            <CheckCircle2
+              className="h-4 w-4 shrink-0 text-toggle-on"
+              aria-hidden
+            />
+          )}
         </button>
         <Switch
           checked={isIncluded}
@@ -78,9 +91,10 @@ export const MitarbeiterCard = ({ index }: Props) => {
           onClick={() => toggleMitarbeiterOpen(index)}
           aria-label={`${tStr("datenMitarbeiter")} ${index + 1} öffnen oder schließen`}
           className={cn(
-            "cursor-pointer",
+            "h-5 w-10 cursor-pointer",
             isIncluded && "data-[state=checked]:bg-toggle-on",
           )}
+          thumbClassName="h-3.5 w-3.5 data-[state=checked]:translate-x-[27px] data-[state=unchecked]:translate-x-[1px]"
         />
       </div>
 
@@ -103,7 +117,7 @@ export const MitarbeiterCard = ({ index }: Props) => {
             >
               <SelectTrigger
                 aria-label={`${tStr("datenMitarbeiter")} ${index + 1}: ${tStr("beschaeftigungsform")}`}
-                className="bg-muted border-transparent"
+                className="border-transparent bg-muted"
               >
                 <SelectValue />
               </SelectTrigger>
@@ -124,7 +138,9 @@ export const MitarbeiterCard = ({ index }: Props) => {
             </label>
             <NumberInput
               value={m.bruttogehaltProMonat}
-              onChange={(v) => patchMitarbeiter(index, { bruttogehaltProMonat: v })}
+              onChange={(v) =>
+                patchMitarbeiter(index, { bruttogehaltProMonat: v })
+              }
               ariaLabel={`${tStr("datenMitarbeiter")} ${index + 1}: ${tStr("bruttogehalt")}`}
             />
           </div>
@@ -138,7 +154,9 @@ export const MitarbeiterCard = ({ index }: Props) => {
               <NumberInput
                 value={m.anzahlWochenstunden}
                 variant="decimal"
-                onChange={(v) => patchMitarbeiter(index, { anzahlWochenstunden: v })}
+                onChange={(v) =>
+                  patchMitarbeiter(index, { anzahlWochenstunden: v })
+                }
                 max={168}
                 ariaLabel={`${tStr("datenMitarbeiter")} ${index + 1}: ${tStr("wochenstunden")}`}
               />
@@ -154,7 +172,9 @@ export const MitarbeiterCard = ({ index }: Props) => {
                 min={0}
                 max={12}
                 ariaLabel={`${tStr("datenMitarbeiter")} ${index + 1}: ${tStr("beschaeftigungsmonate")}`}
-                onChange={(v) => patchMitarbeiter(index, { anzahlBeschaeftigungsmonate: v })}
+                onChange={(v) =>
+                  patchMitarbeiter(index, { anzahlBeschaeftigungsmonate: v })
+                }
               />
             </div>
           </div>
@@ -167,7 +187,9 @@ export const MitarbeiterCard = ({ index }: Props) => {
               </label>
               <NumberInput
                 value={m.zusatzkostenMonatlich}
-                onChange={(v) => patchMitarbeiter(index, { zusatzkostenMonatlich: v })}
+                onChange={(v) =>
+                  patchMitarbeiter(index, { zusatzkostenMonatlich: v })
+                }
                 ariaLabel={`${tStr("datenMitarbeiter")} ${index + 1}: ${tStr("zusatzkostenMonatlich")}`}
               />
             </div>
@@ -178,7 +200,9 @@ export const MitarbeiterCard = ({ index }: Props) => {
               </label>
               <NumberInput
                 value={m.zusatzkostenJaehrlich}
-                onChange={(v) => patchMitarbeiter(index, { zusatzkostenJaehrlich: v })}
+                onChange={(v) =>
+                  patchMitarbeiter(index, { zusatzkostenJaehrlich: v })
+                }
                 ariaLabel={`${tStr("datenMitarbeiter")} ${index + 1}: ${tStr("zusatzkostenJaehrlich")}`}
               />
             </div>
@@ -186,24 +210,34 @@ export const MitarbeiterCard = ({ index }: Props) => {
 
           {showsVerkaufbareStunden(b) && (
             <div className="border-t border-dashed border-border pt-4">
-              <h4 className="mb-3 text-base font-semibold">{tStr("verkaufbareStunden")}</h4>
+              <h4 className="mb-3 text-base font-semibold">
+                {tStr("verkaufbareStunden")}
+              </h4>
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="mb-1.5 block text-sm font-medium">{tStr("verkaufbareStundenPct")}</label>
+                  <label className="mb-1.5 block text-sm font-medium">
+                    {tStr("verkaufbareStundenPct")}
+                  </label>
                   <NumberInput
                     value={m.verkaufbareStunden}
                     variant="percent"
                     suffix="%"
                     max={100}
-                    onChange={(v) => patchMitarbeiter(index, { verkaufbareStunden: v })}
+                    onChange={(v) =>
+                      patchMitarbeiter(index, { verkaufbareStunden: v })
+                    }
                     ariaLabel={`${tStr("datenMitarbeiter")} ${index + 1}: ${tStr("verkaufbareStundenPct")}`}
                   />
                 </div>
                 <div>
-                  <label className="mb-1.5 block text-sm font-medium">{tStr("stundensatz")}</label>
+                  <label className="mb-1.5 block text-sm font-medium">
+                    {tStr("stundensatz")}
+                  </label>
                   <NumberInput
                     value={m.stundensatz}
-                    onChange={(v) => patchMitarbeiter(index, { stundensatz: v })}
+                    onChange={(v) =>
+                      patchMitarbeiter(index, { stundensatz: v })
+                    }
                     ariaLabel={`${tStr("datenMitarbeiter")} ${index + 1}: ${tStr("stundensatz")}`}
                   />
                 </div>
@@ -213,13 +247,17 @@ export const MitarbeiterCard = ({ index }: Props) => {
 
           {showsUmsatzsteigerung(b) && (
             <div className="border-t border-dashed border-border pt-4">
-              <label className="mb-1.5 block text-sm font-medium">{tStr("umsatzsteigerung")}</label>
+              <label className="mb-1.5 block text-sm font-medium">
+                {tStr("umsatzsteigerung")}
+              </label>
               <NumberInput
                 value={m.umsatzsteigerung}
                 variant="percent"
                 suffix="%"
                 max={100}
-                onChange={(v) => patchMitarbeiter(index, { umsatzsteigerung: v })}
+                onChange={(v) =>
+                  patchMitarbeiter(index, { umsatzsteigerung: v })
+                }
                 ariaLabel={`${tStr("datenMitarbeiter")} ${index + 1}: ${tStr("umsatzsteigerung")}`}
               />
             </div>

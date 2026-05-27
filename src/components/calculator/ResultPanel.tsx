@@ -208,6 +208,7 @@ export const ResultPanel = () => {
                     <div className="mb-1 font-semibold">
                       {tStr("datenMitarbeiter")} {i + 1}
                     </div>
+                    <DetailHeaderRow />
                     <DetailRow
                       label={tStr("bruttoEntgelt")}
                       m={m.brutto.monat}
@@ -406,5 +407,13 @@ const DetailRow = ({
     <div className="min-w-0 text-muted-foreground">{label}</div>
     <div className="text-right">{money ? formatMoney(m) : formatNumber(m)}</div>
     <div className="text-right">{money ? formatMoney(j) : formatNumber(j)}</div>
+  </div>
+);
+
+const DetailHeaderRow = () => (
+  <div className={cn(detailGridClass, "pb-1 text-[11px] font-semibold")}>
+    <div />
+    <div className="text-right">{tStr("monatlich")}</div>
+    <div className="text-right">{tStr("jaehrlich")}</div>
   </div>
 );

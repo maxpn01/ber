@@ -120,6 +120,24 @@ describe("calculator", () => {
     expect(r.breakEven.mitarbeiter[0].foerderung.monat).toBeCloseTo(381.32, 2);
   });
 
+  it("calculates EPU funding from monthly gross pay and employment months", () => {
+    const i = defaultInput("dienstleistung");
+    i.umsatz = 120000;
+    i.aufwand = 20000;
+    i.stunden = 1200;
+    i.mitarbeiter1 = {
+      ...defaultMitarbeiterFor("dienstleistung", true),
+      bruttogehaltProMonat: 3000,
+      anzahlBeschaeftigungsmonate: 10,
+      foerderung: true,
+    };
+
+    const r = calculate(i);
+
+    expect(r.breakEven.mitarbeiter[0].foerderung.monat).toBe(720);
+    expect(r.breakEven.mitarbeiter[0].foerderung.jahr).toBe(7200);
+  });
+
   it("keeps original situation visible while calculateExtended applies desired profit to break-even", () => {
     const i = defaultInput("gewerbe");
     i.umsatz = 140000;

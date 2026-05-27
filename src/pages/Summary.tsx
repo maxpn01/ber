@@ -145,6 +145,7 @@ const Summary = ({ onBack }: Props) => {
               m.brutto.jahr > 0 ? (
                 <div key={i} className="col-span-3 my-2 rounded bg-result-strong p-3 text-xs">
                   <div className="mb-1 font-semibold">{tStr("datenMitarbeiter")} {i + 1}</div>
+                  <SubHeader />
                   <SubRow label={tStr("bruttoEntgelt")} m={formatMoney(m.brutto.monat)} j={formatMoney(m.brutto.jahr)} />
                   <SubRow
                     label={tStr("bruttoEntgeltInkl")}
@@ -246,6 +247,14 @@ const SubRow = ({ label, m, j }: { label: string; m: string; j: string }) => (
     <div className="text-muted-foreground">{label}</div>
     <div className="text-right">{m}</div>
     <div className="text-right">{j}</div>
+  </div>
+);
+
+const SubHeader = () => (
+  <div className="grid grid-cols-3 gap-2 pb-1 text-[11px] font-semibold">
+    <div />
+    <div className="text-right">{tStr("monatlich")}</div>
+    <div className="text-right">{tStr("jaehrlich")}</div>
   </div>
 );
 

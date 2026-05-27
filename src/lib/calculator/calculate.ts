@@ -211,13 +211,14 @@ function calcMitarbeiter(
     m.foerderungStartUp,
   ].filter(Boolean).length;
 
-  if ((typ === "angestellter" || typ === "arbeiter") && foerderungCount === 1) {
-    if (m.foerderung) {
-      foerderung_monat = round2(
-        (Math.min(brutto_monat, sv_max) * FOERDERUNG_SATZ) / 100,
-      );
-      foerderung_jahr = foerderung_monat * monate;
-    } else if (m.foerderungBonus && monate >= 6) {
+  if (m.foerderung && foerderungCount === 1) {
+    foerderung_monat = round2((brutto_monat * FOERDERUNG_SATZ) / 100);
+    foerderung_jahr = foerderung_monat * monate;
+  } else if (
+    (typ === "angestellter" || typ === "arbeiter") &&
+    foerderungCount === 1
+  ) {
+    if (m.foerderungBonus && monate >= 6) {
       foerderung_jahr = round2(
         Math.max(((foerderungBasis - brutto_jahr) * 50) / 100, 0),
       );
