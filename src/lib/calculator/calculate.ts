@@ -594,6 +594,24 @@ export function calculateExtended(
   input: InputModel,
   erzielbarerGewinn: number,
 ): OutputModel {
+  const overridden = deriveDesiredProfitInput(input, erzielbarerGewinn);
+  const shared = computeShared(input);
+  const result = calculateWithShared(overridden, shared);
+  const original = calculate(input);
+
+  // The original C# returns the desired-profit scenario in the break-even and
+  // top-level calculated values, then restores the displayed Ausgangssituation
+  // back to the user's original inputs at the end of the second pass.
+  return {
+    ...result,
+    ausgangssituation: original.ausgangssituation,
+  };
+}
+
+export function deriveDesiredProfitInput(
+  input: InputModel,
+  erzielbarerGewinn: number,
+): InputModel {
   const b = input.branche;
   const shared = computeShared(input);
   const { wareneinsatzAnteil, stundensatz } = shared;
@@ -616,23 +634,12 @@ export function calculateExtended(
       ? round0(Math.max(newUmsatz - newWareneinsatz, 0) / stundensatz)
       : 0;
 
-  const overridden: InputModel = {
+  return {
     ...input,
     umsatz: round2(newUmsatz),
     wareneinsatz: newWareneinsatz,
     stunden: newStunden,
     erzielbarerGewinn,
-  };
-
-  const result = calculateWithShared(overridden, shared);
-  const original = calculate(input);
-
-  // The original C# returns the desired-profit scenario in the break-even and
-  // top-level calculated values, then restores the displayed Ausgangssituation
-  // back to the user's original inputs at the end of the second pass.
-  return {
-    ...result,
-    ausgangssituation: original.ausgangssituation,
   };
 }
 

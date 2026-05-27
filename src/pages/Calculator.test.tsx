@@ -125,6 +125,48 @@ describe("Calculator page", () => {
     });
   });
 
+  it("updates branch input fields when desired profit changes by keyboard", async () => {
+    const user = userEvent.setup();
+    render(<App />);
+
+    const [umsatz, aufwand, stunden] = screen.getAllByRole("textbox");
+
+    await user.click(umsatz);
+    await user.keyboard("100000");
+
+    await user.click(aufwand);
+    await user.keyboard("20000");
+
+    await user.click(stunden);
+    await user.keyboard("1000");
+    await user.keyboard("{Enter}");
+
+    const slider = screen.getByRole("slider", { name: "Erzielbarer Gewinn" });
+    await waitFor(() => {
+      expect(slider).toHaveAttribute("aria-valuemin", "1");
+      expect(slider).toHaveAttribute("aria-valuemax", "1000000");
+      expect(slider).toHaveAttribute("aria-valuenow", "80000");
+    });
+
+    slider.focus();
+    await user.keyboard("{ArrowRight}");
+
+    await waitFor(() => {
+      expect(slider).toHaveAttribute("aria-valuenow", "80100");
+      expect(
+        (screen.getByRole("textbox", { name: "Umsatz" }) as HTMLInputElement)
+          .value,
+      ).toBe("100.100,00 €");
+      expect(
+        (
+          screen.getByRole("textbox", {
+            name: "Verrechnete Stunden",
+          }) as HTMLInputElement
+        ).value,
+      ).toBe("1.001,00");
+    });
+  });
+
   it("commits numeric input with Enter and recalculates", async () => {
     const user = userEvent.setup();
     render(<App />);

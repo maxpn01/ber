@@ -7,6 +7,7 @@ import {
   useContext,
   useEffect,
   useMemo,
+  useRef,
   useState,
 } from "react";
 import {
@@ -15,7 +16,7 @@ import {
 } from "@/lib/calculator/branche";
 import {
   calculate,
-  calculateExtended,
+  deriveDesiredProfitInput,
   isReadyToCalculate,
 } from "@/lib/calculator/calculate";
 import {
@@ -68,6 +69,7 @@ const MITARBEITER_KEYS: ReadonlyArray<keyof InputModel> = [
 export const CalculatorProvider = ({ children }: { children: ReactNode }) => {
   const [input, setInput] = useState<InputModel>(() => defaultLandingInput());
   const [sliderValue, setSliderValueState] = useState(0);
+  const desiredProfitBaseInputRef = useRef<InputModel | null>(null);
   const [hasCalculatedOnce, setHasCalculatedOnce] = useState(false);
   const [reviewClearedByBranchChange, setReviewClearedByBranchChange] =
     useState(false);
@@ -84,10 +86,8 @@ export const CalculatorProvider = ({ children }: { children: ReactNode }) => {
     if (!inputComplete) {
       return null;
     }
-    return sliderValue > 0
-      ? calculateExtended(input, sliderValue)
-      : calculate(input);
-  }, [input, inputComplete, reviewClearedByBranchChange, sliderValue]);
+    return calculate(input);
+  }, [input, inputComplete, reviewClearedByBranchChange]);
   const hasValidationError = !!result?.fehlermeldung;
   const hasValidResult = !!result && !hasValidationError;
 
@@ -98,12 +98,14 @@ export const CalculatorProvider = ({ children }: { children: ReactNode }) => {
   }, [hasValidResult]);
 
   const patchInput = useCallback((patch: Partial<InputModel>) => {
+    desiredProfitBaseInputRef.current = null;
     setInput((prev) => ({ ...prev, ...patch, erzielbarerGewinn: 0 }));
     setSliderValueState(0);
     setReviewClearedByBranchChange(false);
   }, []);
 
   const setBranche = useCallback((b: Branche) => {
+    desiredProfitBaseInputRef.current = null;
     setInput((prev) => {
       // Reset employee defaults for the new branch only where employee data is present.
       const buildM = (m: InputMitarbeiter): InputMitarbeiter => {
@@ -148,6 +150,7 @@ export const CalculatorProvider = ({ children }: { children: ReactNode }) => {
         })(),
         erzielbarerGewinn: 0,
       }));
+      desiredProfitBaseInputRef.current = null;
       setSliderValueState(0);
       setReviewClearedByBranchChange(false);
     },
@@ -159,6 +162,7 @@ export const CalculatorProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   const resetMitarbeiter = useCallback((i: MitarbeiterIndex) => {
+    desiredProfitBaseInputRef.current = null;
     const key = MITARBEITER_KEYS[i] as
       | "mitarbeiter1"
       | "mitarbeiter2"
@@ -180,6 +184,7 @@ export const CalculatorProvider = ({ children }: { children: ReactNode }) => {
         | "mitarbeiter2"
         | "mitarbeiter3"
         | "mitarbeiter4";
+      desiredProfitBaseInputRef.current = null;
       setInput((prev) => ({
         ...prev,
         [key]: defaultMitarbeiterFor(prev.branche, false),
@@ -193,8 +198,13 @@ export const CalculatorProvider = ({ children }: { children: ReactNode }) => {
   );
 
   const setSliderValue = useCallback((v: number) => {
-    setSliderValueState(v);
-    setInput((prev) => ({ ...prev, erzielbarerGewinn: v }));
+    const nextValue = Math.min(1_000_000, Math.max(1, v));
+    setSliderValueState(nextValue);
+    setInput((prev) => {
+      const baseInput = desiredProfitBaseInputRef.current ?? prev;
+      desiredProfitBaseInputRef.current = baseInput;
+      return deriveDesiredProfitInput(baseInput, nextValue);
+    });
     setReviewClearedByBranchChange(false);
   }, []);
 
