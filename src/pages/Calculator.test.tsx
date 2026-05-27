@@ -1,10 +1,41 @@
-import { render, screen, waitFor } from "@testing-library/react";
+import { render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it } from "vitest";
 import App from "@/App";
 import { tStr } from "@/lib/text";
 
 describe("Calculator page", () => {
+  it("opens the full general help modal from the title icon", async () => {
+    const user = userEvent.setup();
+    render(<App />);
+
+    await user.click(
+      screen.getByRole("button", { name: "Allgemeine Hilfe öffnen" }),
+    );
+
+    const dialog = await screen.findByRole("dialog", {
+      name: "Break Even Rechner - Allgemeine Hilfe",
+    });
+
+    expect(within(dialog).getByText("Einführung")).toBeInTheDocument();
+    expect(
+      within(dialog).getByText("Beschäftigungsformen"),
+    ).toBeInTheDocument();
+    expect(
+      within(dialog).getByText("Freier Dienstvertrag:"),
+    ).toHaveClass("font-bold");
+    expect(
+      within(dialog).getByText(/Ein freier Dienstvertrag liegt vor/),
+    ).toBeInTheDocument();
+    expect(within(dialog).queryByRole("slider")).not.toBeInTheDocument();
+
+    await user.click(within(dialog).getByRole("button", { name: "Close" }));
+
+    await waitFor(() => {
+      expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+    });
+  });
+
   it("has original-site help text for branch and dynamic general fields", () => {
     expect(tStr("brancheHelp")).toContain(
       "Die Ermittlung des Break-Even-Umsatzes erfolgt je nach angegebener Kategorie unterschiedlich",
@@ -36,15 +67,21 @@ describe("Calculator page", () => {
 
     await user.click(branch);
 
-    expect(await screen.findByRole("option", { name: "Dienstleistung" })).toBeInTheDocument();
-    expect(screen.getByRole("option", { name: "Gastronomie" })).toBeInTheDocument();
+    expect(
+      await screen.findByRole("option", { name: "Dienstleistung" }),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("option", { name: "Gastronomie" }),
+    ).toBeInTheDocument();
     expect(screen.getByRole("option", { name: "Handel" })).toBeInTheDocument();
     expect(
       screen.getByRole("option", {
         name: "Gewerbe-Handel-Dienstleistung/Handwerk",
       }),
     ).toBeInTheDocument();
-    expect(screen.getByRole("option", { name: "Provision" })).toBeInTheDocument();
+    expect(
+      screen.getByRole("option", { name: "Provision" }),
+    ).toBeInTheDocument();
 
     await user.click(screen.getByRole("option", { name: "Gastronomie" }));
 
@@ -69,13 +106,19 @@ describe("Calculator page", () => {
     await user.click(stunden);
     await user.keyboard("1000");
 
-    expect(screen.getByText("Was kosten Ihre Ersten Mitarbeiter?")).toBeInTheDocument();
+    expect(
+      screen.getByText("Was kosten Ihre Ersten Mitarbeiter?"),
+    ).toBeInTheDocument();
 
     await user.tab();
 
     await waitFor(() => {
-      expect(screen.getByText("Potenzial inkl. neuer Mitarbeiter")).toBeInTheDocument();
-      expect(screen.queryByText("Was kosten Ihre Ersten Mitarbeiter?")).not.toBeInTheDocument();
+      expect(
+        screen.getByText("Potenzial inkl. neuer Mitarbeiter"),
+      ).toBeInTheDocument();
+      expect(
+        screen.queryByText("Was kosten Ihre Ersten Mitarbeiter?"),
+      ).not.toBeInTheDocument();
       const slider = screen.getByRole("slider", { name: "Erzielbarer Gewinn" });
       expect(slider).toHaveAttribute("aria-valuenow", "80000");
       expect(slider).not.toHaveAttribute("aria-disabled", "true");
@@ -99,11 +142,12 @@ describe("Calculator page", () => {
     await user.keyboard("{Enter}");
 
     await waitFor(() => {
-      expect(screen.getByText("Potenzial inkl. neuer Mitarbeiter")).toBeInTheDocument();
-      expect(screen.getByRole("slider", { name: "Erzielbarer Gewinn" })).not.toHaveAttribute(
-        "aria-disabled",
-        "true",
-      );
+      expect(
+        screen.getByText("Potenzial inkl. neuer Mitarbeiter"),
+      ).toBeInTheDocument();
+      expect(
+        screen.getByRole("slider", { name: "Erzielbarer Gewinn" }),
+      ).not.toHaveAttribute("aria-disabled", "true");
     });
   });
 
@@ -111,14 +155,18 @@ describe("Calculator page", () => {
     const user = userEvent.setup();
     render(<App />);
 
-    const umsatz = screen.getByRole("textbox", { name: "Umsatz" }) as HTMLInputElement;
+    const umsatz = screen.getByRole("textbox", {
+      name: "Umsatz",
+    }) as HTMLInputElement;
     await user.click(umsatz);
     await user.keyboard("9999999999");
     await user.tab();
 
     expect(umsatz.value).toBe("2.147.483.647,00 €");
 
-    const aufwand = screen.getByRole("textbox", { name: "Aufwand" }) as HTMLInputElement;
+    const aufwand = screen.getByRole("textbox", {
+      name: "Aufwand",
+    }) as HTMLInputElement;
     await user.click(aufwand);
     await user.keyboard("-5");
     await user.tab();
@@ -151,7 +199,9 @@ describe("Calculator page", () => {
       }),
     ).not.toBeInTheDocument();
 
-    await user.click(screen.getByRole("button", { name: /Daten Mitarbeiter 2/ }));
+    await user.click(
+      screen.getByRole("button", { name: /Daten Mitarbeiter 2/ }),
+    );
 
     expect(
       screen.queryByRole("textbox", {
@@ -187,18 +237,22 @@ describe("Calculator page", () => {
     });
 
     await user.click(screen.getByRole("combobox", { name: "Branche" }));
-    await user.click(await screen.findByRole("option", { name: "Gastronomie" }));
+    await user.click(
+      await screen.findByRole("option", { name: "Gastronomie" }),
+    );
 
     expect(
       screen.queryByRole("textbox", { name: "Verrechnete Stunden" }),
     ).not.toBeInTheDocument();
 
-    expect((screen.getByRole("textbox", { name: "Umsatz" }) as HTMLInputElement).value).toContain(
-      "0,00",
-    );
-    expect((screen.getByRole("textbox", { name: "Aufwand" }) as HTMLInputElement).value).toContain(
-      "0,00",
-    );
+    expect(
+      (screen.getByRole("textbox", { name: "Umsatz" }) as HTMLInputElement)
+        .value,
+    ).toContain("0,00");
+    expect(
+      (screen.getByRole("textbox", { name: "Aufwand" }) as HTMLInputElement)
+        .value,
+    ).toContain("0,00");
     const wareneinsatz = screen.getByRole("textbox", { name: "Wareneinsatz" });
     expect((wareneinsatz as HTMLInputElement).value).toContain("0,00");
     expect(
@@ -206,11 +260,12 @@ describe("Calculator page", () => {
         name: /Daten Mitarbeiter 1: Besch/,
       }),
     ).toHaveTextContent("Arbeiter");
-    expect(screen.getByText("Was kosten Ihre Ersten Mitarbeiter?")).toBeInTheDocument();
-    expect(screen.getByRole("slider", { name: "Erzielbarer Gewinn" })).toHaveAttribute(
-      "data-disabled",
-      "",
-    );
+    expect(
+      screen.getByText("Was kosten Ihre Ersten Mitarbeiter?"),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("slider", { name: "Erzielbarer Gewinn" }),
+    ).toHaveAttribute("data-disabled", "");
 
     await user.click(screen.getByRole("textbox", { name: "Umsatz" }));
     await user.keyboard("100000");
@@ -223,9 +278,9 @@ describe("Calculator page", () => {
     await user.tab();
 
     await waitFor(() => {
-      expect(screen.getByRole("slider", { name: "Erzielbarer Gewinn" })).not.toHaveAttribute(
-        "data-disabled",
-      );
+      expect(
+        screen.getByRole("slider", { name: "Erzielbarer Gewinn" }),
+      ).not.toHaveAttribute("data-disabled");
     });
   });
 
@@ -239,8 +294,12 @@ describe("Calculator page", () => {
     expect(
       await screen.findByRole("textbox", { name: "Provisionsumsatz" }),
     ).toBeInTheDocument();
-    expect(screen.queryByRole("textbox", { name: "Umsatz" })).not.toBeInTheDocument();
-    expect(screen.getByRole("textbox", { name: "Provision in %" })).toBeInTheDocument();
+    expect(
+      screen.queryByRole("textbox", { name: "Umsatz" }),
+    ).not.toBeInTheDocument();
+    expect(
+      screen.getByRole("textbox", { name: "Provision in %" }),
+    ).toBeInTheDocument();
 
     await user.click(screen.getByRole("textbox", { name: "Provisionsumsatz" }));
     await user.keyboard("100000");
@@ -252,7 +311,9 @@ describe("Calculator page", () => {
     await user.keyboard("10");
     await user.tab();
 
-    expect(await screen.findByText("Break-Even-Provisionsumsatz")).toBeInTheDocument();
+    expect(
+      await screen.findByText("Break-Even-Provisionsumsatz"),
+    ).toBeInTheDocument();
     expect(screen.getAllByText("Provisionsumsatz").length).toBeGreaterThan(0);
   });
 
@@ -263,9 +324,9 @@ describe("Calculator page", () => {
     await user.click(screen.getByRole("combobox", { name: "Branche" }));
     await user.click(await screen.findByRole("option", { name: "Provision" }));
 
-    const provision = await screen.findByRole("textbox", {
+    const provision = (await screen.findByRole("textbox", {
       name: "Provision in %",
-    }) as HTMLInputElement;
+    })) as HTMLInputElement;
     await user.click(provision);
     await user.keyboard("150");
     await user.tab();

@@ -1,6 +1,6 @@
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
-import { HelpIcon } from "@/components/HelpIcon";
+import { AppHelpDialog } from "@/components/AppHelpDialog";
 import { AllgemeinCard } from "@/components/calculator/AllgemeinCard";
 import { ErzielbarerGewinnSlider } from "@/components/calculator/ErzielbarerGewinnSlider";
 import { MitarbeiterCard } from "@/components/calculator/MitarbeiterCard";
@@ -15,10 +15,7 @@ const Calculator = () => {
       <main className="mx-auto w-full max-w-[1300px] flex-1 px-4 py-3 sm:px-6">
         <h1 className="mb-10 flex items-center gap-2 text-xl font-medium">
           {tStr("appTitle")}
-          <HelpIcon
-            text={tStr("appShortDesc")}
-            iconSrc="/title_tooltip_icon.svg"
-          />
+          <AppHelpDialog />
         </h1>
 
         <div className="rounded-xl bg-wko-section p-4 sm:p-6">
