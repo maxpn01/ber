@@ -36,9 +36,6 @@ export const AllgemeinCard = () => {
   const brancheTriggerRef = useRef<HTMLButtonElement>(null);
   const blurBrancheAfterSelectRef = useRef(false);
   const b = input.branche;
-  const umsatzLabel = showsProvision(b)
-    ? tStr("provisionsumsatz")
-    : tStr("umsatz");
 
   return (
     <Card className="border-border bg-card p-4">
@@ -87,11 +84,11 @@ export const AllgemeinCard = () => {
       <div className="border-t border-dashed border-border pt-4" />
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-        <Field label={umsatzLabel} help={tStr("umsatzHelp")}>
+        <Field label={tStr("umsatz")} help={tStr("umsatzHelp")}>
           <NumberInput
             value={input.umsatz}
             onChange={(v) => patchInput({ umsatz: v })}
-            ariaLabel={umsatzLabel}
+            ariaLabel={tStr("umsatz")}
           />
         </Field>
 
