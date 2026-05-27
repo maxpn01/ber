@@ -90,7 +90,7 @@ export const emptyMitarbeiter = (): InputMitarbeiter => ({
   beschaeftigungsform: "angestellter",
   bruttogehaltProMonat: 0,
   anzahlWochenstunden: 0,
-  anzahlBeschaeftigungsmonate: 12,
+  anzahlBeschaeftigungsmonate: 0,
   zusatzkostenMonatlich: 0,
   zusatzkostenJaehrlich: 0,
   verkaufbareStunden: 0,

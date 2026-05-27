@@ -257,6 +257,89 @@ describe("Calculator page", () => {
     ).toBeInTheDocument();
   });
 
+  it("clears employee form values to zero", async () => {
+    const user = userEvent.setup();
+    render(<App />);
+
+    await user.click(screen.getByRole("button", { name: "Löschen" }));
+    await user.click(
+      screen.getByRole("button", { name: /Daten Mitarbeiter 1/ }),
+    );
+
+    expect(
+      (
+        screen.getByRole("textbox", {
+          name: "Daten Mitarbeiter 1: Bruttogehalt pro Monat",
+        }) as HTMLInputElement
+      ).value,
+    ).toBe("0,00 €");
+    expect(
+      (
+        screen.getByRole("textbox", {
+          name: "Daten Mitarbeiter 1: Anzahl Wochenstunden",
+        }) as HTMLInputElement
+      ).value,
+    ).toBe("0,00");
+    expect(
+      (
+        screen.getByRole("textbox", {
+          name: "Daten Mitarbeiter 1: Anzahl Beschäftigungsmonate",
+        }) as HTMLInputElement
+      ).value,
+    ).toBe("0");
+  });
+
+  it("applies default employee field values by employment type", async () => {
+    const user = userEvent.setup();
+    render(<App />);
+
+    const employmentType = screen.getByRole("combobox", {
+      name: "Daten Mitarbeiter 1: Beschäftigungsform",
+    });
+    const salary = screen.getByRole("textbox", {
+      name: "Daten Mitarbeiter 1: Bruttogehalt pro Monat",
+    }) as HTMLInputElement;
+    const hours = screen.getByRole("textbox", {
+      name: "Daten Mitarbeiter 1: Anzahl Wochenstunden",
+    }) as HTMLInputElement;
+    const months = screen.getByRole("textbox", {
+      name: "Daten Mitarbeiter 1: Anzahl Beschäftigungsmonate",
+    }) as HTMLInputElement;
+
+    expect(salary.value).toBe("2.200,00 €");
+    expect(hours.value).toBe("38,50");
+    expect(months.value).toBe("12");
+
+    await user.click(employmentType);
+    await user.click(
+      await screen.findByRole("option", {
+        name: "Freier Dienstvertrag",
+      }),
+    );
+
+    expect(salary.value).toBe("2.200,00 €");
+    expect(hours.value).toBe("38,50");
+    expect(months.value).toBe("12");
+
+    await user.click(employmentType);
+    await user.click(
+      await screen.findByRole("option", {
+        name: "Geringfügiges Dienstverhältnis",
+      }),
+    );
+
+    expect(salary.value).toBe("0,00 €");
+    expect(hours.value).toBe("0,00");
+    expect(months.value).toBe("0");
+
+    await user.click(employmentType);
+    await user.click(await screen.findByRole("option", { name: "Lehrling" }));
+
+    expect(salary.value).toBe("0,00 €");
+    expect(hours.value).toBe("0,00");
+    expect(months.value).toBe("0");
+  });
+
   it("clears top inputs, employee defaults, and review state on branch change", async () => {
     const user = userEvent.setup();
     render(<App />);
@@ -302,6 +385,20 @@ describe("Calculator page", () => {
         name: /Daten Mitarbeiter 1: Besch/,
       }),
     ).toHaveTextContent("Arbeiter");
+    expect(
+      (
+        screen.getByRole("textbox", {
+          name: "Daten Mitarbeiter 1: Bruttogehalt pro Monat",
+        }) as HTMLInputElement
+      ).value,
+    ).toBe("2.200,00 €");
+    expect(
+      (
+        screen.getByRole("textbox", {
+          name: "Daten Mitarbeiter 1: Anzahl Wochenstunden",
+        }) as HTMLInputElement
+      ).value,
+    ).toBe("38,50");
     expect(
       screen.getByText("Was kosten Ihre Ersten Mitarbeiter?"),
     ).toBeInTheDocument();

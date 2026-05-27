@@ -18,35 +18,23 @@ export const dienstverhaeltnisse: Dienstverhaeltnis[] = [
 
 export interface BrancheDefaults {
   defaultDienstverhaeltnis: Dienstverhaeltnis;
-  defaultBruttoMonat: number;
-  defaultWochenstunden: number;
 }
 
 export const brancheDefaults: Record<Branche, BrancheDefaults> = {
   dienstleistung: {
     defaultDienstverhaeltnis: "angestellter",
-    defaultBruttoMonat: 2200,
-    defaultWochenstunden: 38.5,
   },
   gastronomie: {
     defaultDienstverhaeltnis: "arbeiter",
-    defaultBruttoMonat: 1500,
-    defaultWochenstunden: 40,
   },
   handel: {
     defaultDienstverhaeltnis: "arbeiter",
-    defaultBruttoMonat: 1500,
-    defaultWochenstunden: 38.5,
   },
   gewerbe: {
     defaultDienstverhaeltnis: "angestellter",
-    defaultBruttoMonat: 2000,
-    defaultWochenstunden: 38.5,
   },
   provision: {
     defaultDienstverhaeltnis: "angestellter",
-    defaultBruttoMonat: 1800,
-    defaultWochenstunden: 38.5,
   },
 };
 
@@ -59,17 +47,44 @@ export const showsVerkaufbareStunden = (b: Branche) =>
 export const showsUmsatzsteigerung = (b: Branche) =>
   b === "gastronomie" || b === "handel" || b === "provision";
 
+export function defaultMitarbeiterFieldValuesFor(
+  beschaeftigungsform: Dienstverhaeltnis,
+): Pick<
+  InputMitarbeiter,
+  "bruttogehaltProMonat" | "anzahlWochenstunden" | "anzahlBeschaeftigungsmonate"
+> {
+  if (beschaeftigungsform === "geringfuegig" || beschaeftigungsform === "lehrling") {
+    return {
+      bruttogehaltProMonat: 0,
+      anzahlWochenstunden: 0,
+      anzahlBeschaeftigungsmonate: 0,
+    };
+  }
+
+  return {
+    bruttogehaltProMonat: 2200,
+    anzahlWochenstunden: 38.5,
+    anzahlBeschaeftigungsmonate: 12,
+  };
+}
+
 export function defaultMitarbeiterFor(
   branche: Branche,
   active: boolean,
 ): InputMitarbeiter {
   const d = brancheDefaults[branche];
+  const fieldValues = active
+    ? defaultMitarbeiterFieldValuesFor(d.defaultDienstverhaeltnis)
+    : {
+        bruttogehaltProMonat: 0,
+        anzahlWochenstunden: 0,
+        anzahlBeschaeftigungsmonate: 0,
+      };
+
   return {
     active,
     beschaeftigungsform: d.defaultDienstverhaeltnis,
-    bruttogehaltProMonat: active ? d.defaultBruttoMonat : 0,
-    anzahlWochenstunden: active ? d.defaultWochenstunden : 0,
-    anzahlBeschaeftigungsmonate: 12,
+    ...fieldValues,
     zusatzkostenMonatlich: 0,
     zusatzkostenJaehrlich: 0,
     verkaufbareStunden: 0,

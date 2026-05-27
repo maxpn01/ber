@@ -12,7 +12,12 @@ import {
 import { HelpIcon } from "@/components/HelpIcon";
 import { NumberInput } from "@/components/NumberInput";
 import { useCalculator, type MitarbeiterIndex } from "@/lib/calculator/CalculatorContext";
-import { dienstverhaeltnisse, showsUmsatzsteigerung, showsVerkaufbareStunden } from "@/lib/calculator/branche";
+import {
+  defaultMitarbeiterFieldValuesFor,
+  dienstverhaeltnisse,
+  showsUmsatzsteigerung,
+  showsVerkaufbareStunden,
+} from "@/lib/calculator/branche";
 import {
   isMitarbeiterAdvancedComplete,
   isMitarbeiterBasicComplete,
@@ -88,9 +93,13 @@ export const MitarbeiterCard = ({ index }: Props) => {
             </label>
             <Select
               value={m.beschaeftigungsform}
-              onValueChange={(v) =>
-                patchMitarbeiter(index, { beschaeftigungsform: v as Dienstverhaeltnis })
-              }
+              onValueChange={(v) => {
+                const beschaeftigungsform = v as Dienstverhaeltnis;
+                patchMitarbeiter(index, {
+                  beschaeftigungsform,
+                  ...defaultMitarbeiterFieldValuesFor(beschaeftigungsform),
+                });
+              }}
             >
               <SelectTrigger
                 aria-label={`${tStr("datenMitarbeiter")} ${index + 1}: ${tStr("beschaeftigungsform")}`}
@@ -142,7 +151,7 @@ export const MitarbeiterCard = ({ index }: Props) => {
               <NumberInput
                 value={m.anzahlBeschaeftigungsmonate}
                 variant="integer"
-                min={1}
+                min={0}
                 max={12}
                 ariaLabel={`${tStr("datenMitarbeiter")} ${index + 1}: ${tStr("beschaeftigungsmonate")}`}
                 onChange={(v) => patchMitarbeiter(index, { anzahlBeschaeftigungsmonate: v })}
