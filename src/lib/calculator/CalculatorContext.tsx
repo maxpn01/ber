@@ -26,7 +26,6 @@ import {
   OutputModel,
 } from "@/lib/calculator/types";
 import {
-  hasMitarbeiterInput,
   isMitarbeiterBasicComplete,
 } from "@/lib/calculator/mitarbeiterStatus";
 
@@ -107,12 +106,6 @@ export const CalculatorProvider = ({ children }: { children: ReactNode }) => {
   const setBranche = useCallback((b: Branche) => {
     desiredProfitBaseInputRef.current = null;
     setInput((prev) => {
-      // Reset employee defaults for the new branch only where employee data is present.
-      const buildM = (m: InputMitarbeiter): InputMitarbeiter => {
-        if (!hasMitarbeiterInput(m)) return defaultMitarbeiterFor(b, false);
-        const d = defaultMitarbeiterFor(b, true);
-        return { ...d, active: true };
-      };
       return {
         ...prev,
         branche: b,
@@ -124,14 +117,15 @@ export const CalculatorProvider = ({ children }: { children: ReactNode }) => {
         wareneinsatz: 0,
         provision: 0,
         erzielbarerGewinn: 0,
-        mitarbeiter1: buildM(prev.mitarbeiter1),
-        mitarbeiter2: buildM(prev.mitarbeiter2),
-        mitarbeiter3: buildM(prev.mitarbeiter3),
-        mitarbeiter4: buildM(prev.mitarbeiter4),
+        mitarbeiter1: defaultMitarbeiterFor(b, true),
+        mitarbeiter2: defaultMitarbeiterFor(b, false),
+        mitarbeiter3: defaultMitarbeiterFor(b, false),
+        mitarbeiter4: defaultMitarbeiterFor(b, false),
       };
     });
     setSliderValueState(0);
     setHasCalculatedOnce(false);
+    setOpenMitarbeiterIndex(0);
     setReviewClearedByBranchChange(true);
   }, []);
 

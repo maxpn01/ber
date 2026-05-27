@@ -439,14 +439,14 @@ describe("Calculator page", () => {
           name: "Daten Mitarbeiter 1: Bruttogehalt pro Monat",
         }) as HTMLInputElement
       ).value,
-    ).toBe("2.200,00 €");
+    ).toBe("1.500,00 €");
     expect(
       (
         screen.getByRole("textbox", {
           name: "Daten Mitarbeiter 1: Anzahl Wochenstunden",
         }) as HTMLInputElement
       ).value,
-    ).toBe("38,50");
+    ).toBe("40,00");
     expect(
       screen.getByText("Was kosten Ihre Ersten Mitarbeiter?"),
     ).toBeInTheDocument();
@@ -469,6 +469,66 @@ describe("Calculator page", () => {
         screen.getByRole("slider", { name: "Erzielbarer Gewinn" }),
       ).not.toHaveAttribute("data-disabled");
     });
+  });
+
+  it("resets employee forms to selected branch defaults on branch change", async () => {
+    const user = userEvent.setup();
+    render(<App />);
+
+    await user.click(screen.getByRole("button", { name: "Löschen" }));
+    await user.click(
+      screen.getByRole("button", { name: /Daten Mitarbeiter(?::in)? 2/ }),
+    );
+    await user.click(screen.getByRole("button", { name: "Zurücksetzen" }));
+
+    await user.click(screen.getByRole("combobox", { name: "Branche" }));
+    await user.click(await screen.findByRole("option", { name: "Provision" }));
+
+    expect(
+      screen.getByRole("combobox", {
+        name: /Daten Mitarbeiter 1: Besch/,
+      }),
+    ).toHaveTextContent("Angestellter");
+    expect(
+      (
+        screen.getByRole("textbox", {
+          name: "Daten Mitarbeiter 1: Bruttogehalt pro Monat",
+        }) as HTMLInputElement
+      ).value,
+    ).toBe("1.800,00 €");
+    expect(
+      (
+        screen.getByRole("textbox", {
+          name: "Daten Mitarbeiter 1: Anzahl Wochenstunden",
+        }) as HTMLInputElement
+      ).value,
+    ).toBe("38,50");
+    expect(
+      (
+        screen.getByRole("textbox", {
+          name: "Daten Mitarbeiter 1: Anzahl Beschäftigungsmonate",
+        }) as HTMLInputElement
+      ).value,
+    ).toBe("12");
+
+    await user.click(
+      screen.getByRole("button", { name: /Daten Mitarbeiter(?::in)? 2/ }),
+    );
+
+    expect(
+      (
+        screen.getByRole("textbox", {
+          name: "Daten Mitarbeiter 2: Bruttogehalt pro Monat",
+        }) as HTMLInputElement
+      ).value,
+    ).toBe("0,00 €");
+    expect(
+      (
+        screen.getByRole("textbox", {
+          name: "Daten Mitarbeiter 2: Anzahl Wochenstunden",
+        }) as HTMLInputElement
+      ).value,
+    ).toBe("0,00");
   });
 
   it("uses provision-specific input and review labels", async () => {

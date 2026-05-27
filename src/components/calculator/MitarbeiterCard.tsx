@@ -111,7 +111,10 @@ export const MitarbeiterCard = ({ index }: Props) => {
                 const beschaeftigungsform = v as Dienstverhaeltnis;
                 patchMitarbeiter(index, {
                   beschaeftigungsform,
-                  ...defaultMitarbeiterFieldValuesFor(beschaeftigungsform),
+                  ...defaultMitarbeiterFieldValuesFor(
+                    input.branche,
+                    beschaeftigungsform,
+                  ),
                 });
               }}
             >

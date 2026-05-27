@@ -16,6 +16,39 @@ describe("calculator", () => {
     });
   });
 
+  it("applies branch-specific active employee defaults", () => {
+    expect(defaultMitarbeiterFor("dienstleistung", true)).toMatchObject({
+      beschaeftigungsform: "angestellter",
+      bruttogehaltProMonat: 2200,
+      anzahlWochenstunden: 38.5,
+      anzahlBeschaeftigungsmonate: 12,
+    });
+    expect(defaultMitarbeiterFor("gewerbe", true)).toMatchObject({
+      beschaeftigungsform: "angestellter",
+      bruttogehaltProMonat: 2200,
+      anzahlWochenstunden: 38.5,
+      anzahlBeschaeftigungsmonate: 12,
+    });
+    expect(defaultMitarbeiterFor("gastronomie", true)).toMatchObject({
+      beschaeftigungsform: "arbeiter",
+      bruttogehaltProMonat: 1500,
+      anzahlWochenstunden: 40,
+      anzahlBeschaeftigungsmonate: 12,
+    });
+    expect(defaultMitarbeiterFor("handel", true)).toMatchObject({
+      beschaeftigungsform: "arbeiter",
+      bruttogehaltProMonat: 1500,
+      anzahlWochenstunden: 40,
+      anzahlBeschaeftigungsmonate: 12,
+    });
+    expect(defaultMitarbeiterFor("provision", true)).toMatchObject({
+      beschaeftigungsform: "angestellter",
+      bruttogehaltProMonat: 1800,
+      anzahlWochenstunden: 38.5,
+      anzahlBeschaeftigungsmonate: 12,
+    });
+  });
+
   it("isReadyToCalculate is false for empty input", () => {
     expect(isReadyToCalculate(defaultInput("dienstleistung"))).toBe(false);
   });

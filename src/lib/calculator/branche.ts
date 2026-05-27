@@ -18,23 +18,35 @@ export const dienstverhaeltnisse: Dienstverhaeltnis[] = [
 
 export interface BrancheDefaults {
   defaultDienstverhaeltnis: Dienstverhaeltnis;
+  defaultBruttogehaltProMonat: number;
+  defaultAnzahlWochenstunden: number;
 }
 
 export const brancheDefaults: Record<Branche, BrancheDefaults> = {
   dienstleistung: {
     defaultDienstverhaeltnis: "angestellter",
+    defaultBruttogehaltProMonat: 2200,
+    defaultAnzahlWochenstunden: 38.5,
   },
   gastronomie: {
     defaultDienstverhaeltnis: "arbeiter",
+    defaultBruttogehaltProMonat: 1500,
+    defaultAnzahlWochenstunden: 40,
   },
   handel: {
     defaultDienstverhaeltnis: "arbeiter",
+    defaultBruttogehaltProMonat: 1500,
+    defaultAnzahlWochenstunden: 40,
   },
   gewerbe: {
     defaultDienstverhaeltnis: "angestellter",
+    defaultBruttogehaltProMonat: 2200,
+    defaultAnzahlWochenstunden: 38.5,
   },
   provision: {
     defaultDienstverhaeltnis: "angestellter",
+    defaultBruttogehaltProMonat: 1800,
+    defaultAnzahlWochenstunden: 38.5,
   },
 };
 
@@ -48,6 +60,7 @@ export const showsUmsatzsteigerung = (b: Branche) =>
   b === "gastronomie" || b === "handel" || b === "provision";
 
 export function defaultMitarbeiterFieldValuesFor(
+  branche: Branche,
   beschaeftigungsform: Dienstverhaeltnis,
 ): Pick<
   InputMitarbeiter,
@@ -61,9 +74,10 @@ export function defaultMitarbeiterFieldValuesFor(
     };
   }
 
+  const d = brancheDefaults[branche];
   return {
-    bruttogehaltProMonat: 2200,
-    anzahlWochenstunden: 38.5,
+    bruttogehaltProMonat: d.defaultBruttogehaltProMonat,
+    anzahlWochenstunden: d.defaultAnzahlWochenstunden,
     anzahlBeschaeftigungsmonate: 12,
   };
 }
@@ -74,7 +88,7 @@ export function defaultMitarbeiterFor(
 ): InputMitarbeiter {
   const d = brancheDefaults[branche];
   const fieldValues = active
-    ? defaultMitarbeiterFieldValuesFor(d.defaultDienstverhaeltnis)
+    ? defaultMitarbeiterFieldValuesFor(branche, d.defaultDienstverhaeltnis)
     : {
         bruttogehaltProMonat: 0,
         anzahlWochenstunden: 0,
