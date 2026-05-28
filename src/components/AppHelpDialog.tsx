@@ -1,6 +1,10 @@
+import { useEffect, useState } from "react";
+import * as DialogPrimitive from "@radix-ui/react-dialog";
+import { createPortal } from "react-dom";
+import { X } from "lucide-react";
 import {
   Dialog,
-  DialogContent,
+  DialogClose,
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
@@ -13,9 +17,22 @@ const accentedPrefixes = [
   "Freier Dienstvertrag:",
 ];
 
-export const AppHelpDialog = () => {
+const appHelpDialogSlotId = "app-help-dialog-slot";
+
+type AppHelpDialogProps = {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+};
+
+export const AppHelpDialog = ({ open, onOpenChange }: AppHelpDialogProps) => {
+  const [dialogSlot, setDialogSlot] = useState<HTMLElement | null>(null);
+
+  useEffect(() => {
+    setDialogSlot(document.getElementById(appHelpDialogSlotId));
+  }, []);
+
   return (
-    <Dialog modal={false}>
+    <Dialog modal={false} open={open} onOpenChange={onOpenChange}>
       <DialogTrigger asChild>
         <button
           type="button"
@@ -25,32 +42,42 @@ export const AppHelpDialog = () => {
           <img src="/title_tooltip_icon.svg" alt="" className="h-full w-full" />
         </button>
       </DialogTrigger>
-      <DialogContent
-        aria-describedby={undefined}
-        overlayClassName="pointer-events-none bg-transparent data-[state=open]:!animate-none data-[state=closed]:!animate-none"
-        className="!absolute left-1/2 top-[8.5rem] w-[calc(100vw-2rem)] max-w-[1252px] translate-y-0 gap-0 rounded-lg border-none bg-[#003C56] px-8 py-9 text-white shadow-none data-[state=closed]:!animate-none data-[state=open]:!animate-none sm:w-[calc(100vw-3rem)] sm:px-11 [&>button]:right-8 [&>button]:top-7 [&>button]:rounded-full [&>button]:bg-white/15 [&>button]:p-1.5 [&>button]:text-white [&>button]:opacity-100 [&>button]:ring-offset-[#003C56] [&>button]:hover:bg-white/25 [&>button_svg]:h-5 [&>button_svg]:w-5"
-      >
-        <DialogTitle className="mb-7 pr-12 text-xl font-medium leading-none tracking-normal text-white">
-          {tStr("appHelpTitle")}
-        </DialogTitle>
-        <div className="space-y-7 pr-2 text-xs leading-[1.45] text-white/90">
-          {text.appHelpSections.map((section) => (
-            <section key={section.title} className="space-y-3">
-              <h2 className="text-xs font-bold leading-none text-white">
-                {section.title}
-              </h2>
-              {section.paragraphs.map((paragraph) => (
-                <p key={paragraph} className="whitespace-pre-line">
-                  <AccentedParagraphText text={paragraph} />
-                </p>
-              ))}
-            </section>
-          ))}
-        </div>
-      </DialogContent>
+      {dialogSlot
+        ? createPortal(
+            <DialogPrimitive.Content
+              aria-describedby={undefined}
+              className="relative mb-10 grid w-full gap-5 rounded-lg border-none bg-[#003C56] px-8 py-9 text-white shadow-none outline-none sm:px-11"
+            >
+              <DialogTitle className="mb-7 pr-12 text-xl font-medium leading-none tracking-normal text-white">
+                {tStr("appHelpTitle")}
+              </DialogTitle>
+              <DialogClose className="absolute right-8 top-7 rounded-full bg-white/15 p-1.5 text-white opacity-100 ring-offset-[#003C56] transition-colors hover:bg-white/25 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2">
+                <X className="h-5 w-5" />
+                <span className="sr-only">Close</span>
+              </DialogClose>
+              <div className="space-y-9 pr-2 text-sm leading-[1.45] text-white/90">
+                {text.appHelpSections.map((section) => (
+                  <section key={section.title} className="space-y-3">
+                    <h2 className="font-medium leading-none text-white">
+                      {section.title}
+                    </h2>
+                    {section.paragraphs.map((paragraph) => (
+                      <p key={paragraph} className="whitespace-pre-line">
+                        <AccentedParagraphText text={paragraph} />
+                      </p>
+                    ))}
+                  </section>
+                ))}
+              </div>
+            </DialogPrimitive.Content>,
+            dialogSlot,
+          )
+        : null}
     </Dialog>
   );
 };
+
+export const AppHelpDialogSlot = () => <div id={appHelpDialogSlotId} />;
 
 const AccentedParagraphText = ({ text }: { text: string }) => {
   const prefix = accentedPrefixes.find((item) => text.startsWith(item));

@@ -28,12 +28,18 @@ describe("Calculator page", () => {
       within(dialog).getByText(/Ein freier Dienstvertrag liegt vor/),
     ).toBeInTheDocument();
     expect(within(dialog).queryByRole("slider")).not.toBeInTheDocument();
+    expect(
+      screen.queryByRole("combobox", { name: "Branche" }),
+    ).not.toBeInTheDocument();
 
     await user.click(within(dialog).getByRole("button", { name: "Close" }));
 
     await waitFor(() => {
       expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
     });
+    expect(
+      screen.getByRole("combobox", { name: "Branche" }),
+    ).toBeInTheDocument();
   });
 
   it("has original-site help text for branch and dynamic general fields", () => {
