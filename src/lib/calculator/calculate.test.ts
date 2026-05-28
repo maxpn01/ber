@@ -10,6 +10,17 @@ import {
   defaultLandingInput,
   defaultMitarbeiterFor,
 } from "@/lib/calculator/branche";
+import type { Branche, InputModel } from "@/lib/calculator/types";
+
+const round2 = (v: number) => Math.round(v * 100) / 100;
+
+const branchInput = (
+  branche: Branche,
+  values: Partial<InputModel>,
+): InputModel => ({
+  ...defaultInput(branche),
+  ...values,
+});
 
 describe("calculator", () => {
   it("pre-populates first calculator landing defaults", () => {
@@ -81,6 +92,145 @@ describe("calculator", () => {
     expect(r.ausgangssituation.gewinn.jahr).toBe(40000);
     // No employees → break-even == ausgangssituation
     expect(r.breakEven.breakEvenUmsatz.jahr).toBe(50000);
+  });
+
+  it("calculates Ausgangssituation profit by branch-specific revenue formula", () => {
+    const cases: Array<{
+      name: string;
+      input: InputModel;
+      expectedProfit: number;
+      expectedWareneinsatz: number;
+    }> = [
+      {
+        name: "dienstleistung",
+        input: branchInput("dienstleistung", {
+          umsatz: 100000,
+          aufwand: 25000,
+          stunden: 1000,
+        }),
+        expectedProfit: 75000,
+        expectedWareneinsatz: 0,
+      },
+      {
+        name: "gastronomie",
+        input: branchInput("gastronomie", {
+          umsatz: 160000,
+          aufwand: 50000,
+          wareneinsatz: 70000,
+        }),
+        expectedProfit: 40000,
+        expectedWareneinsatz: 70000,
+      },
+      {
+        name: "handel",
+        input: branchInput("handel", {
+          umsatz: 180000,
+          aufwand: 40000,
+          wareneinsatz: 65000,
+        }),
+        expectedProfit: 75000,
+        expectedWareneinsatz: 65000,
+      },
+      {
+        name: "gewerbe",
+        input: branchInput("gewerbe", {
+          umsatz: 140000,
+          aufwand: 35000,
+          wareneinsatz: 28000,
+          stunden: 1200,
+        }),
+        expectedProfit: 77000,
+        expectedWareneinsatz: 28000,
+      },
+      {
+        name: "provision",
+        input: branchInput("provision", {
+          umsatz: 50000,
+          aufwand: 10000,
+          provision: 10,
+        }),
+        expectedProfit: 40000,
+        expectedWareneinsatz: 0,
+      },
+    ];
+
+    cases.forEach(({ name, input, expectedProfit, expectedWareneinsatz }) => {
+      const r = calculate(input);
+
+      expect(r.fehlermeldung, name).toBe("");
+      expect(r.ausgangssituation.gewinn.jahr, name).toBe(expectedProfit);
+      expect(r.ausgangssituation.wareneinsatz.jahr, name).toBe(
+        expectedWareneinsatz,
+      );
+    });
+  });
+
+  it("keeps Umsatz inkl. neuer Mitarbeiter profit equal to displayed row arithmetic", () => {
+    const cases: Array<{ name: string; input: InputModel }> = [
+      {
+        name: "dienstleistung",
+        input: branchInput("dienstleistung", {
+          umsatz: 100000,
+          aufwand: 25000,
+          stunden: 1000,
+          mitarbeiter1: defaultMitarbeiterFor("dienstleistung", true),
+        }),
+      },
+      {
+        name: "gastronomie",
+        input: branchInput("gastronomie", {
+          umsatz: 160000,
+          aufwand: 50000,
+          wareneinsatz: 70000,
+          mitarbeiter1: defaultMitarbeiterFor("gastronomie", true),
+        }),
+      },
+      {
+        name: "handel",
+        input: branchInput("handel", {
+          umsatz: 180000,
+          aufwand: 40000,
+          wareneinsatz: 65000,
+          mitarbeiter1: defaultMitarbeiterFor("handel", true),
+        }),
+      },
+      {
+        name: "gewerbe",
+        input: branchInput("gewerbe", {
+          umsatz: 140000,
+          aufwand: 35000,
+          wareneinsatz: 28000,
+          stunden: 1200,
+          mitarbeiter1: defaultMitarbeiterFor("gewerbe", true),
+        }),
+      },
+      {
+        name: "provision",
+        input: branchInput("provision", {
+          umsatz: 50000,
+          aufwand: 10000,
+          provision: 10,
+          mitarbeiter1: defaultMitarbeiterFor("provision", true),
+        }),
+      },
+    ];
+
+    cases.forEach(({ name, input }) => {
+      const r = calculate(input);
+      const rowProfit = round2(
+        r.breakEven.breakEvenUmsatz.jahr -
+          r.breakEven.wareneinsatz.jahr -
+          r.breakEven.aufwand.jahr -
+          r.breakEven.personalkosten.jahr +
+          r.breakEven.foerderungenGesamt.jahr,
+      );
+
+      expect(r.fehlermeldung, name).toBe("");
+      expect(rowProfit, name).toBeCloseTo(r.breakEven.gewinn.jahr, 2);
+      expect(r.breakEven.gewinn.jahr, name).toBe(
+        r.ausgangssituation.gewinn.jahr,
+      );
+    });
   });
 
   it("keeps default dienstleistung employee out of potential until sales inputs are set", () => {
