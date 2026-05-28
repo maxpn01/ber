@@ -143,9 +143,7 @@ export const text = {
     "Sämtliche Beträge sind als Nettobeträge, d.h. ohne Umsatzsteuer einzugeben, wenn Sie umsatzsteuerpflichtig sind. Sofern Sie unter die Kleinunternehmerregelung fallen, geben Sie die Umsätze ohne Umsatzsteuer, die Aufwände inkl. Vorsteuer an.",
   potenzialTitle: "Potenzial inkl. neuer Mitarbeiter",
   potenzialHelp:
-    "In diesem Bereich ist das Zusatzpotential, das sich durch die Mitarbeiter ergibt, auf einen Blick zusammengefasst. Sie sehen den Break-Even-Umsatz und die Break-Even-Stunden (= Gesamtstunden, die im Jahr verrechnet werden müssen, um den Break-Even-Umsatz zu erreichen). Darüber hinaus sehen Sie das zusätzliche Umsatzpotenzial, das sich aufgrund der verkaufbaren Stunden der Mitarbeiter ergibt und die zusätzlich verrechenbaren Stunden, die sich aufgrund der Mitarbeiter ergeben.",
-  potenzialUmsatzsteigerungHelp:
-    "In diesem Bereich ist das Zusatzpotential, das sich durch die Mitarbeiter ergibt, auf einen Blick zusammengefasst. Sie sehen den Break-Even-Umsatz und das zusätzliche Umsatzpotenzial, das sich aufgrund der geschätzten Umsatzsteigerung der Mitarbeiter ergibt.",
+    "In diesem Bereich ist das Zusatzpotential, das sich durch die Mitarbeiter:innen ergibt, auf einem Blick zusammengefasst. Sie sehen den Break-Even-Umsatz und die Break-Even-Stunden (= Gesamtstunden, die im Jahr verrechnet werden müssen, um den Break-Even-Umsatz zu erreichen). Darüber hinaus sehen Sie das zusätzliche Umsatzpotenzial, das sich aufgrund der verkaufbaren Stunden der Mitarbeiter:innen ergibt und die zusätzlich verrechenbaren Stunden, die sich aufgrund der Mitarbeiter:innen ergeben.",
   potenzialInputVerkaufbareStundenHelp:
     "Die Eingaben zum Potenzial der Mitarbeiter können in den einzelnen Mitarbeiterdetailmasken im Bereich „Verkaufbare Stunden“ erfasst werden.",
   potenzialInputUmsatzsteigerungHelp:

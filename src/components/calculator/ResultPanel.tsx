@@ -21,9 +21,6 @@ export const ResultPanel = () => {
   const showWE = showsWareneinsatz(b);
   const showStunden = showsStunden(b);
   const showProv = showsProvision(b);
-  const potenzialHelp = showStunden
-    ? tStr("potenzialHelp")
-    : tStr("potenzialUmsatzsteigerungHelp");
   const potenzialInputHelp = showStunden
     ? tStr("potenzialInputVerkaufbareStundenHelp")
     : tStr("potenzialInputUmsatzsteigerungHelp");
@@ -63,7 +60,7 @@ export const ResultPanel = () => {
         <div className="mb-3 flex items-center justify-between gap-4">
           <h3 className="flex items-center gap-1.5 text-lg font-medium leading-tight xl:whitespace-nowrap">
             {tStr("potenzialTitle")}
-            <HelpIcon text={potenzialHelp} />
+            <HelpIcon text={tStr("potenzialHelp")} />
           </h3>
           <EmployeeIcons
             activeCount={activeMitarbeiterCount}
