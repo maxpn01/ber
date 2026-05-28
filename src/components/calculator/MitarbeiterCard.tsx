@@ -213,8 +213,9 @@ export const MitarbeiterCard = ({ index }: Props) => {
 
           {showsVerkaufbareStunden(b) && (
             <div className="border-t border-dashed border-border pt-4">
-              <h4 className="mb-3 text-base font-semibold">
+              <h4 className="mb-3 flex items-center gap-1.5 text-base font-semibold">
                 {tStr("verkaufbareStunden")}
+                <HelpIcon text={tStr("verkaufbareStundenHelp")} />
               </h4>
               <div className="grid grid-cols-2 gap-4">
                 <div>
@@ -250,6 +251,10 @@ export const MitarbeiterCard = ({ index }: Props) => {
 
           {showsUmsatzsteigerung(b) && (
             <div className="border-t border-dashed border-border pt-4">
+              <h4 className="mb-3 flex items-center gap-1.5 text-base font-semibold">
+                {tStr("potenzielleUmsatzsteigerung")}
+                <HelpIcon text={tStr("potenzielleUmsatzsteigerungHelp")} />
+              </h4>
               <label className="mb-1.5 block text-sm font-medium">
                 {tStr("umsatzsteigerung")}
               </label>

@@ -76,9 +76,14 @@ export const text = {
   zusatzkostenMonatlich: "Zusatzkosten monatlich",
   zusatzkostenJaehrlich: "Zusatzkosten jährlich",
   verkaufbareStunden: "Verkaufbare Stunden",
+  potenzielleUmsatzsteigerung: "Potenzielle Umsatzsteigerung",
   verkaufbareStundenPct: "Verkaufbare Stunden in %",
   stundensatz: "Stundensatz",
   umsatzsteigerung: "Geschätzte Umsatzsteigerung in %",
+  verkaufbareStundenHelp:
+    "Verkaufbare Stunden in %:\nGeben Sie hier den Prozentsatz an, den Ihr Mitarbeiter mit produktiven Tätigkeiten beschäftigt ist. Beachten Sie bitte, dass Sie die Arbeitszeit für nicht-produktive Tätigkeiten nicht verrechnen können.\n\nStundensatz:\nGeben Sie hier jenen Stundensatz an, mit dem Sie Leistungen Ihres Mitarbeiters verrechnen möchten. Bitte beachten Sie den Stundensatz netto anzugeben, sofern Sie umsatzsteuerpflichtig sind.",
+  potenzielleUmsatzsteigerungHelp:
+    "Geschätzte Umsatzsteigerung in %:\nGeben Sie die Umsatzsteigerung, die Sie durch den Mitarbeiter schätzungsweise erzielen können, ein.",
   zuruecksetzen: "Zurücksetzen",
   loeschen: "Löschen",
 
@@ -139,6 +144,12 @@ export const text = {
   potenzialTitle: "Potenzial inkl. neuer Mitarbeiter",
   potenzialHelp:
     "In diesem Bereich ist das Zusatzpotential, das sich durch die Mitarbeiter ergibt, auf einen Blick zusammengefasst. Sie sehen den Break-Even-Umsatz und die Break-Even-Stunden (= Gesamtstunden, die im Jahr verrechnet werden müssen, um den Break-Even-Umsatz zu erreichen). Darüber hinaus sehen Sie das zusätzliche Umsatzpotenzial, das sich aufgrund der verkaufbaren Stunden der Mitarbeiter ergibt und die zusätzlich verrechenbaren Stunden, die sich aufgrund der Mitarbeiter ergeben.",
+  potenzialUmsatzsteigerungHelp:
+    "In diesem Bereich ist das Zusatzpotential, das sich durch die Mitarbeiter ergibt, auf einen Blick zusammengefasst. Sie sehen den Break-Even-Umsatz und das zusätzliche Umsatzpotenzial, das sich aufgrund der geschätzten Umsatzsteigerung der Mitarbeiter ergibt.",
+  potenzialInputVerkaufbareStundenHelp:
+    "Die Eingaben zum Potenzial der Mitarbeiter können in den einzelnen Mitarbeiterdetailmasken im Bereich „Verkaufbare Stunden“ erfasst werden.",
+  potenzialInputUmsatzsteigerungHelp:
+    "Die Eingaben zum Potenzial der Mitarbeiter können in den einzelnen Mitarbeiterdetailmasken im Bereich „Potenzielle Umsatzsteigerung“ erfasst werden.",
   potenzialInkl: "inkl. zzgl Mitarbeiter",
   breakEven: "Break Even",
   gesamtumsatzpotenzial: "Gesamtumsatzpotenzial",

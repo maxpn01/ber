@@ -1,6 +1,15 @@
 import { describe, expect, it } from "vitest";
-import { calculate, calculateExtended, isReadyToCalculate, validateInput } from "@/lib/calculator/calculate";
-import { defaultInput, defaultLandingInput, defaultMitarbeiterFor } from "@/lib/calculator/branche";
+import {
+  calculate,
+  calculateExtended,
+  isReadyToCalculate,
+  validateInput,
+} from "@/lib/calculator/calculate";
+import {
+  defaultInput,
+  defaultLandingInput,
+  defaultMitarbeiterFor,
+} from "@/lib/calculator/branche";
 
 describe("calculator", () => {
   it("pre-populates first calculator landing defaults", () => {
@@ -96,7 +105,10 @@ describe("calculator", () => {
     i.aufwand = 20000;
     i.wareneinsatz = 10000;
     i.stunden = 1000;
-    i.mitarbeiter1 = { ...defaultMitarbeiterFor("gewerbe", true), bruttogehaltProMonat: 2000 };
+    i.mitarbeiter1 = {
+      ...defaultMitarbeiterFor("gewerbe", true),
+      bruttogehaltProMonat: 2000,
+    };
     const r = calculate(i);
     expect(r.fehlermeldung).toBe("");
     expect(r.breakEven.personalkosten.jahr).toBeGreaterThan(0);
@@ -129,8 +141,12 @@ describe("calculator", () => {
     const r = calculate(i);
 
     expect(r.fehlermeldung).toBe("");
-    expect(r.breakEven.mitarbeiter[0].bruttoInklLohnnebenkosten.jahr).toBeCloseTo(157316.81, 2);
-    expect(r.breakEven.mitarbeiter[0].bruttoInklLohnnebenkosten.monat).toBeCloseTo(13109.73, 2);
+    expect(
+      r.breakEven.mitarbeiter[0].bruttoInklLohnnebenkosten.jahr,
+    ).toBeCloseTo(157316.81, 2);
+    expect(
+      r.breakEven.mitarbeiter[0].bruttoInklLohnnebenkosten.monat,
+    ).toBeCloseTo(13109.73, 2);
   });
 
   it("matches original bonus subsidy annual-to-monthly rounding order", () => {

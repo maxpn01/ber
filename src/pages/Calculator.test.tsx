@@ -21,9 +21,9 @@ describe("Calculator page", () => {
     expect(
       within(dialog).getByText("Beschäftigungsformen"),
     ).toBeInTheDocument();
-    expect(
-      within(dialog).getByText("Freier Dienstvertrag:"),
-    ).toHaveClass("font-bold");
+    expect(within(dialog).getByText("Freier Dienstvertrag:")).toHaveClass(
+      "font-bold",
+    );
     expect(
       within(dialog).getByText(/Ein freier Dienstvertrag liegt vor/),
     ).toBeInTheDocument();
@@ -60,6 +60,9 @@ describe("Calculator page", () => {
     );
     expect(tStr("wareneinsatzHelp")).toBe(
       "Dieses Feld ist für den Wareneinsatz, den Sie für die Erzielung des angeführten Umsatzes in einem Jahr benötigen, vorgesehen.",
+    );
+    expect(tStr("potenzialInputUmsatzsteigerungHelp")).toContain(
+      "Potenzielle Umsatzsteigerung",
     );
   });
 
@@ -259,6 +262,28 @@ describe("Calculator page", () => {
     expect(
       screen.getByRole("textbox", {
         name: "Daten Mitarbeiter 2: Bruttogehalt pro Monat",
+      }),
+    ).toBeInTheDocument();
+  });
+
+  it("shows the included employee count dynamically", async () => {
+    const user = userEvent.setup();
+    render(<App />);
+
+    expect(
+      screen.getByRole("img", {
+        name: "1 von 4 Mitarbeitern in der Berechnung enthalten",
+      }),
+    ).toBeInTheDocument();
+
+    await user.click(
+      screen.getByRole("button", { name: /Daten Mitarbeiter(?::in)? 2/ }),
+    );
+    await user.click(screen.getByRole("button", { name: "Zurücksetzen" }));
+
+    expect(
+      screen.getByRole("img", {
+        name: "2 von 4 Mitarbeitern in der Berechnung enthalten",
       }),
     ).toBeInTheDocument();
   });
@@ -545,16 +570,13 @@ describe("Calculator page", () => {
     await user.click(await screen.findByRole("option", { name: "Provision" }));
 
     expect(
-      await screen.findByRole("textbox", { name: "Provisionsumsatz" }),
+      await screen.findByRole("textbox", { name: "Umsatz" }),
     ).toBeInTheDocument();
-    expect(
-      screen.queryByRole("textbox", { name: "Umsatz" }),
-    ).not.toBeInTheDocument();
     expect(
       screen.getByRole("textbox", { name: "Provision in %" }),
     ).toBeInTheDocument();
 
-    await user.click(screen.getByRole("textbox", { name: "Provisionsumsatz" }));
+    await user.click(screen.getByRole("textbox", { name: "Umsatz" }));
     await user.keyboard("100000");
 
     await user.click(screen.getByRole("textbox", { name: "Aufwand" }));
@@ -568,6 +590,36 @@ describe("Calculator page", () => {
       await screen.findByText("Break-Even-Provisionsumsatz"),
     ).toBeInTheDocument();
     expect(screen.getAllByText("Provisionsumsatz").length).toBeGreaterThan(0);
+  });
+
+  it("shows potential revenue increase inputs and hides Gesamtstunden outside hour branches", async () => {
+    const user = userEvent.setup();
+    render(<App />);
+
+    await user.click(screen.getByRole("combobox", { name: "Branche" }));
+    await user.click(await screen.findByRole("option", { name: "Handel" }));
+
+    expect(
+      screen.getByText("Potenzielle Umsatzsteigerung"),
+    ).toBeInTheDocument();
+    expect(screen.queryByText("Verkaufbare Stunden")).not.toBeInTheDocument();
+
+    await user.click(screen.getByRole("textbox", { name: "Umsatz" }));
+    await user.keyboard("160000");
+
+    await user.click(screen.getByRole("textbox", { name: "Aufwand" }));
+    await user.keyboard("50000");
+
+    await user.click(screen.getByRole("textbox", { name: "Wareneinsatz" }));
+    await user.keyboard("70000");
+    await user.tab();
+
+    await waitFor(() => {
+      expect(
+        screen.getByText("Potenzial inkl. neuer Mitarbeiter"),
+      ).toBeInTheDocument();
+      expect(screen.queryByText("Gesamtstunden")).not.toBeInTheDocument();
+    });
   });
 
   it("formats and clamps percent inputs", async () => {

@@ -21,6 +21,12 @@ export const ResultPanel = () => {
   const showWE = showsWareneinsatz(b);
   const showStunden = showsStunden(b);
   const showProv = showsProvision(b);
+  const potenzialHelp = showStunden
+    ? tStr("potenzialHelp")
+    : tStr("potenzialUmsatzsteigerungHelp");
+  const potenzialInputHelp = showStunden
+    ? tStr("potenzialInputVerkaufbareStundenHelp")
+    : tStr("potenzialInputUmsatzsteigerungHelp");
 
   const empty = !result || !!result.fehlermeldung;
   const emptyValue = "-";
@@ -57,7 +63,7 @@ export const ResultPanel = () => {
         <div className="mb-3 flex items-center justify-between gap-4">
           <h3 className="flex items-center gap-1.5 text-lg font-medium leading-tight xl:whitespace-nowrap">
             {tStr("potenzialTitle")}
-            <HelpIcon text={tStr("potenzialHelp")} />
+            <HelpIcon text={potenzialHelp} />
           </h3>
           <EmployeeIcons
             activeCount={activeMitarbeiterCount}
@@ -72,7 +78,7 @@ export const ResultPanel = () => {
               <span className="inline-flex items-center justify-end gap-1">
                 {tStr("potenzialInkl")}
                 <HelpIcon
-                  text={tStr("potenzialHelp")}
+                  text={potenzialInputHelp}
                   className="h-4 w-4 shrink-0"
                 />
               </span>,
@@ -345,8 +351,8 @@ const ResultHeaderRow = ({
     )}
   >
     <div>{columns[0]}</div>
-    <div className="text-right whitespace-nowrap">{columns[1]}</div>
-    <div className="text-right whitespace-nowrap">{columns[2]}</div>
+    <div className="whitespace-nowrap text-right">{columns[1]}</div>
+    <div className="whitespace-nowrap text-right">{columns[2]}</div>
   </div>
 );
 
@@ -379,7 +385,11 @@ const EmployeeIcons = ({
   activeCount: number;
   activeClassName: string;
 }) => (
-  <div className="flex shrink-0 items-center gap-1.5">
+  <div
+    className="flex shrink-0 items-center gap-1.5"
+    role="img"
+    aria-label={`${activeCount} von 4 Mitarbeitern in der Berechnung enthalten`}
+  >
     {[0, 1, 2, 3].map((i) => (
       <EmployeeIcon
         key={i}

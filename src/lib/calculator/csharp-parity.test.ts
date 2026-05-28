@@ -1,5 +1,8 @@
 import { describe, expect, it } from "vitest";
-import { defaultInput, defaultMitarbeiterFor as defaultEmployeeFor } from "./branche";
+import {
+  defaultInput,
+  defaultMitarbeiterFor as defaultEmployeeFor,
+} from "./branche";
 import { calculate, calculateExtended } from "./calculate";
 import type {
   Branche as Industry,
@@ -31,12 +34,14 @@ class MonthlyYearlyAmount {
 
   setMonth(value: number) {
     this.monat = round2(value);
-    if (this.conversionFactor !== 0) this.jahr = round2(this.monat * this.conversionFactor);
+    if (this.conversionFactor !== 0)
+      this.jahr = round2(this.monat * this.conversionFactor);
   }
 
   setYear(value: number) {
     this.jahr = round2(value);
-    if (this.conversionFactor !== 0) this.monat = round2(this.jahr / this.conversionFactor);
+    if (this.conversionFactor !== 0)
+      this.monat = round2(this.jahr / this.conversionFactor);
   }
 
   addYear(value: number) {
@@ -153,7 +158,8 @@ function csharpReference(input: InputModel): ReferenceOutput {
   }
 
   const ausgangssituation = (extended: boolean) => {
-    result.ausgangssituation.umsatzText = b === "provision" ? "Provisionsumsatz" : "Umsatz";
+    result.ausgangssituation.umsatzText =
+      b === "provision" ? "Provisionsumsatz" : "Umsatz";
     result.ausgangssituation.umsatz.setYear(input.umsatz);
     result.ausgangssituation.aufwand.setYear(input.aufwand);
 
@@ -170,7 +176,8 @@ function csharpReference(input: InputModel): ReferenceOutput {
     if (extended) {
       result.ausgangssituation.gewinn.setYear(input.erzielbarerGewinn);
       result.ausgangssituation.umsatz.setYear(
-        result.ausgangssituation.aufwand.jahr + result.ausgangssituation.gewinn.jahr,
+        result.ausgangssituation.aufwand.jahr +
+          result.ausgangssituation.gewinn.jahr,
       );
 
       if (hasCostOfGoods(b) && round2(wareneinsatzAnteil) !== 0) {
@@ -192,7 +199,8 @@ function csharpReference(input: InputModel): ReferenceOutput {
         let grundlage = result.ausgangssituation.umsatz.jahr;
         if (b === "gewerbe") {
           grundlage = Math.max(
-            result.ausgangssituation.umsatz.jahr - result.ausgangssituation.wareneinsatz.jahr,
+            result.ausgangssituation.umsatz.jahr -
+              result.ausgangssituation.wareneinsatz.jahr,
             0,
           );
         }
@@ -213,7 +221,12 @@ function csharpReference(input: InputModel): ReferenceOutput {
 
     const employees = employeesOf(input);
     employees.forEach((employee, index) => {
-      employeeLikeCSharp(input, employee, b, result.breakEven.mitarbeiter[index]);
+      employeeLikeCSharp(
+        input,
+        employee,
+        b,
+        result.breakEven.mitarbeiter[index],
+      );
     });
 
     result.breakEven.breakEvenUmsatzText =
@@ -221,7 +234,10 @@ function csharpReference(input: InputModel): ReferenceOutput {
 
     result.breakEven.gewinn.setYear(result.ausgangssituation.gewinn.jahr);
     result.breakEven.foerderungenGesamt.setYear(
-      result.breakEven.mitarbeiter.reduce((sum, employee) => sum + employee.foerderung.jahr, 0),
+      result.breakEven.mitarbeiter.reduce(
+        (sum, employee) => sum + employee.foerderung.jahr,
+        0,
+      ),
     );
     result.breakEven.personalkosten.setYear(
       result.breakEven.mitarbeiter.reduce(
@@ -235,12 +251,15 @@ function csharpReference(input: InputModel): ReferenceOutput {
       if (employee.bruttogehaltProMonat > 0) {
         result.breakEven.aufwand.addYear(
           employee.zusatzkostenJaehrlich +
-            employee.zusatzkostenMonatlich * employee.anzahlBeschaeftigungsmonate,
+            employee.zusatzkostenMonatlich *
+              employee.anzahlBeschaeftigungsmonate,
         );
       }
     });
 
-    result.breakEven.wareneinsatz.setYear(result.ausgangssituation.wareneinsatz.jahr);
+    result.breakEven.wareneinsatz.setYear(
+      result.ausgangssituation.wareneinsatz.jahr,
+    );
     result.breakEven.breakEvenUmsatz.setYear(
       result.breakEven.aufwand.jahr +
         result.breakEven.personalkosten.jahr +
@@ -252,7 +271,8 @@ function csharpReference(input: InputModel): ReferenceOutput {
     if (hasCostOfGoods(b)) {
       if (result.ausgangssituation.umsatz.jahr !== 0 && !extended) {
         wareneinsatzAnteil = round6(
-          result.ausgangssituation.wareneinsatz.jahr / result.ausgangssituation.umsatz.jahr,
+          result.ausgangssituation.wareneinsatz.jahr /
+            result.ausgangssituation.umsatz.jahr,
         );
         if (wareneinsatzAnteil >= 1) wareneinsatzAnteil = 0;
       }
@@ -288,7 +308,10 @@ function csharpReference(input: InputModel): ReferenceOutput {
 
       if (
         input.wareneinsatz !== 0 &&
-        employees.some((employee) => employee.verkaufbareStunden !== 0 && employee.stundensatz !== 0)
+        employees.some(
+          (employee) =>
+            employee.verkaufbareStunden !== 0 && employee.stundensatz !== 0,
+        )
       ) {
         result.potenzial.umsatzpotenzialMitarbeiter.addYear(
           result.breakEven.wareneinsatz.jahr - result.wareneinsatz.jahr,
@@ -298,7 +321,11 @@ function csharpReference(input: InputModel): ReferenceOutput {
       result.potenzial.stundenMitarbeiter.setYear(
         result.breakEven.mitarbeiter.reduce(
           (sum, employee, index) =>
-            sum + round0(employee.arbeitsstunden.jahr * (employees[index].verkaufbareStunden / 100)),
+            sum +
+            round0(
+              employee.arbeitsstunden.jahr *
+                (employees[index].verkaufbareStunden / 100),
+            ),
           round0(result.stunden.jahr),
         ),
       );
@@ -306,13 +333,17 @@ function csharpReference(input: InputModel): ReferenceOutput {
       result.potenzial.umsatzpotenzialMitarbeiter.setYear(
         employees.reduce(
           (sum, employee) =>
-            sum + (result.ausgangssituation.umsatz.jahr * employee.umsatzsteigerung) / 100,
+            sum +
+            (result.ausgangssituation.umsatz.jahr * employee.umsatzsteigerung) /
+              100,
           result.umsatz.jahr,
         ),
       );
     }
 
-    result.potenzial.umsatzpotenzialBreakEven.setYear(result.breakEven.breakEvenUmsatz.jahr);
+    result.potenzial.umsatzpotenzialBreakEven.setYear(
+      result.breakEven.breakEvenUmsatz.jahr,
+    );
 
     if (!extended) stundensatz = 0;
     if (hasHours(b) && input.stunden !== 0) {
@@ -320,7 +351,8 @@ function csharpReference(input: InputModel): ReferenceOutput {
         let grundlage = result.ausgangssituation.umsatz.jahr;
         if (b === "gewerbe") {
           grundlage = Math.max(
-            result.ausgangssituation.umsatz.jahr - result.ausgangssituation.wareneinsatz.jahr,
+            result.ausgangssituation.umsatz.jahr -
+              result.ausgangssituation.wareneinsatz.jahr,
             0,
           );
         }
@@ -330,14 +362,25 @@ function csharpReference(input: InputModel): ReferenceOutput {
       if (stundensatz !== 0) {
         if (
           input.wareneinsatz !== 0 &&
-          employees.some((employee) => employee.verkaufbareStunden !== 0 && employee.stundensatz !== 0)
+          employees.some(
+            (employee) =>
+              employee.verkaufbareStunden !== 0 && employee.stundensatz !== 0,
+          )
         ) {
           result.potenzial.stundenMitarbeiter.setYear(
             result.breakEven.mitarbeiter.reduce(
               (sum, employee, index) =>
                 sum +
-                round0(employee.arbeitsstunden.jahr * (employees[index].verkaufbareStunden / 100)),
-              round0((result.umsatz.jahr + (result.breakEven.wareneinsatz.jahr - result.wareneinsatz.jahr)) / stundensatz),
+                round0(
+                  employee.arbeitsstunden.jahr *
+                    (employees[index].verkaufbareStunden / 100),
+                ),
+              round0(
+                (result.umsatz.jahr +
+                  (result.breakEven.wareneinsatz.jahr -
+                    result.wareneinsatz.jahr)) /
+                  stundensatz,
+              ),
             ),
           );
         }
@@ -347,12 +390,19 @@ function csharpReference(input: InputModel): ReferenceOutput {
         );
       }
 
-      if (employees.some((employee) => employee.verkaufbareStunden !== 0 && employee.stundensatz !== 0)) {
+      if (
+        employees.some(
+          (employee) =>
+            employee.verkaufbareStunden !== 0 && employee.stundensatz !== 0,
+        )
+      ) {
         result.potenzial.stundenBreakEven.setYear(input.stunden);
         if (stundensatz !== 0) {
           result.potenzial.stundenBreakEven.setYear(
             round0(
-              (result.umsatz.jahr + (result.breakEven.wareneinsatz.jahr - result.wareneinsatz.jahr)) /
+              (result.umsatz.jahr +
+                (result.breakEven.wareneinsatz.jahr -
+                  result.wareneinsatz.jahr)) /
                 stundensatz,
             ),
           );
@@ -364,12 +414,17 @@ function csharpReference(input: InputModel): ReferenceOutput {
             calculatedEmployee.bruttoInklLohnnebenkosten.jahr -
             calculatedEmployee.foerderung.jahr +
             employee.zusatzkostenJaehrlich +
-            employee.zusatzkostenMonatlich * employee.anzahlBeschaeftigungsmonate;
+            employee.zusatzkostenMonatlich *
+              employee.anzahlBeschaeftigungsmonate;
 
           if (employee.verkaufbareStunden !== 0 && employee.stundensatz !== 0) {
-            result.potenzial.stundenBreakEven.addYear(round0(cost / employee.stundensatz));
+            result.potenzial.stundenBreakEven.addYear(
+              round0(cost / employee.stundensatz),
+            );
           } else if (stundensatz !== 0) {
-            result.potenzial.stundenBreakEven.addYear(round0(cost / stundensatz));
+            result.potenzial.stundenBreakEven.addYear(
+              round0(cost / stundensatz),
+            );
           }
         });
       }
@@ -388,8 +443,10 @@ function validateLikeCSharp(input: InputModel): string {
   const b = input.branche;
   if (!b) return "Bitte wählen Sie ein Industry aus!";
   if (input.umsatz <= 0) return "Der Umsatz muss größer als Null (0) sein!";
-  if (input.aufwand < 0) return "Der Aufwand darf nicht kleiner als Null (0) sein!";
-  if (hasHours(b) && input.stunden < 0) return "Die Stunden dürfen nicht kleiner als Null (0) sein!";
+  if (input.aufwand < 0)
+    return "Der Aufwand darf nicht kleiner als Null (0) sein!";
+  if (hasHours(b) && input.stunden < 0)
+    return "Die Stunden dürfen nicht kleiner als Null (0) sein!";
   if (hasCostOfGoods(b) && input.wareneinsatz < 0)
     return "Der Wareneinsatz darf nicht kleiner als Null (0) sein!";
   if (b === "provision" && input.provision <= 0)
@@ -421,18 +478,26 @@ function employeeLikeCSharp(
 
   output.brutto.setMonth(mitarbeiter.bruttogehaltProMonat);
   if (typ === "geringfuegig") {
-    output.brutto.setMonth(Math.min(output.brutto.monat, MARGINAL_EMPLOYMENT_LIMIT));
+    output.brutto.setMonth(
+      Math.min(output.brutto.monat, MARGINAL_EMPLOYMENT_LIMIT),
+    );
   }
 
   if (typ === "dienstvertrag") {
-    output.brutto.setYear(output.brutto.monat * mitarbeiter.anzahlBeschaeftigungsmonate);
+    output.brutto.setYear(
+      output.brutto.monat * mitarbeiter.anzahlBeschaeftigungsmonate,
+    );
   } else {
-    output.brutto.setYear(output.brutto.monat * (14 * (mitarbeiter.anzahlBeschaeftigungsmonate / 12)));
+    output.brutto.setYear(
+      output.brutto.monat *
+        (14 * (mitarbeiter.anzahlBeschaeftigungsmonate / 12)),
+    );
   }
 
   output.bruttoInklLohnnebenkosten.setYear(output.brutto.jahr);
   let bonusSubsidyBasis = output.bruttoInklLohnnebenkosten.jahr;
-  let sonderzahlung = (output.brutto.monat / 12) * mitarbeiter.anzahlBeschaeftigungsmonate;
+  let sonderzahlung =
+    (output.brutto.monat / 12) * mitarbeiter.anzahlBeschaeftigungsmonate;
 
   if (typ === "angestellter" || typ === "arbeiter") {
     svSatz = 21.23;
@@ -455,12 +520,25 @@ function employeeLikeCSharp(
   }
 
   output.bruttoInklLohnnebenkosten.addYear(
-    ancillaryPayrollCosts(output.brutto.monat, mitarbeiter.anzahlBeschaeftigungsmonate, sonderzahlung, svSatz, svSatzSZ, svMax),
+    ancillaryPayrollCosts(
+      output.brutto.monat,
+      mitarbeiter.anzahlBeschaeftigungsmonate,
+      sonderzahlung,
+      svSatz,
+      svSatzSZ,
+      svMax,
+    ),
   );
   bonusSubsidyBasis = output.bruttoInklLohnnebenkosten.jahr;
 
   output.bruttoInklLohnnebenkosten.addYear(
-    ancillaryPayrollCosts(output.brutto.monat, mitarbeiter.anzahlBeschaeftigungsmonate, sonderzahlung, MUNICIPAL_TAX_RATE, MUNICIPAL_TAX_RATE),
+    ancillaryPayrollCosts(
+      output.brutto.monat,
+      mitarbeiter.anzahlBeschaeftigungsmonate,
+      sonderzahlung,
+      MUNICIPAL_TAX_RATE,
+      MUNICIPAL_TAX_RATE,
+    ),
   );
   bonusSubsidyBasis += ancillaryPayrollCosts(
     output.brutto.monat,
@@ -472,7 +550,13 @@ function employeeLikeCSharp(
   );
 
   output.bruttoInklLohnnebenkosten.addYear(
-    ancillaryPayrollCosts(output.brutto.monat, mitarbeiter.anzahlBeschaeftigungsmonate, sonderzahlung, EMPLOYER_CONTRIBUTION_RATE, EMPLOYER_CONTRIBUTION_RATE),
+    ancillaryPayrollCosts(
+      output.brutto.monat,
+      mitarbeiter.anzahlBeschaeftigungsmonate,
+      sonderzahlung,
+      EMPLOYER_CONTRIBUTION_RATE,
+      EMPLOYER_CONTRIBUTION_RATE,
+    ),
   );
   bonusSubsidyBasis += ancillaryPayrollCosts(
     output.brutto.monat,
@@ -484,7 +568,13 @@ function employeeLikeCSharp(
   );
 
   output.bruttoInklLohnnebenkosten.addYear(
-    ancillaryPayrollCosts(output.brutto.monat, mitarbeiter.anzahlBeschaeftigungsmonate, sonderzahlung, EMPLOYER_SURCHARGE_RATE, EMPLOYER_SURCHARGE_RATE),
+    ancillaryPayrollCosts(
+      output.brutto.monat,
+      mitarbeiter.anzahlBeschaeftigungsmonate,
+      sonderzahlung,
+      EMPLOYER_SURCHARGE_RATE,
+      EMPLOYER_SURCHARGE_RATE,
+    ),
   );
   bonusSubsidyBasis += ancillaryPayrollCosts(
     output.brutto.monat,
@@ -496,7 +586,13 @@ function employeeLikeCSharp(
   );
 
   output.bruttoInklLohnnebenkosten.addYear(
-    ancillaryPayrollCosts(output.brutto.monat, mitarbeiter.anzahlBeschaeftigungsmonate, sonderzahlung, COMPANY_PENSION_RATE, COMPANY_PENSION_RATE),
+    ancillaryPayrollCosts(
+      output.brutto.monat,
+      mitarbeiter.anzahlBeschaeftigungsmonate,
+      sonderzahlung,
+      COMPANY_PENSION_RATE,
+      COMPANY_PENSION_RATE,
+    ),
   );
   bonusSubsidyBasis += ancillaryPayrollCosts(
     output.brutto.monat,
@@ -509,7 +605,8 @@ function employeeLikeCSharp(
 
   if (mitarbeiter.anzahlBeschaeftigungsmonate > 0) {
     output.bruttoInklLohnnebenkosten.setMonth(
-      output.bruttoInklLohnnebenkosten.jahr / mitarbeiter.anzahlBeschaeftigungsmonate,
+      output.bruttoInklLohnnebenkosten.jahr /
+        mitarbeiter.anzahlBeschaeftigungsmonate,
     );
   }
 
@@ -532,19 +629,33 @@ function employeeLikeCSharp(
         );
       }
 
-      if (mitarbeiter.foerderungBonus && mitarbeiter.anzahlBeschaeftigungsmonate >= 6) {
-        output.foerderung.setYear(Math.max(((bonusSubsidyBasis - output.brutto.jahr) * 50) / 100, 0));
+      if (
+        mitarbeiter.foerderungBonus &&
+        mitarbeiter.anzahlBeschaeftigungsmonate >= 6
+      ) {
+        output.foerderung.setYear(
+          Math.max(((bonusSubsidyBasis - output.brutto.jahr) * 50) / 100, 0),
+        );
         if (mitarbeiter.anzahlBeschaeftigungsmonate > 0) {
-          output.foerderung.setMonth(output.foerderung.jahr / mitarbeiter.anzahlBeschaeftigungsmonate);
+          output.foerderung.setMonth(
+            output.foerderung.jahr / mitarbeiter.anzahlBeschaeftigungsmonate,
+          );
         }
       }
 
       if (mitarbeiter.foerderungStartUp) {
         const unternehmensjahr = YEAR - input.gruendungsjahr + 1;
-        if ((input.gruendungsjahr === 0 || unternehmensjahr <= 5) && mitarbeiter.anzahlBeschaeftigungsmonate >= 3) {
-          output.foerderung.setYear(Math.max(bonusSubsidyBasis - output.brutto.jahr, 0));
+        if (
+          (input.gruendungsjahr === 0 || unternehmensjahr <= 5) &&
+          mitarbeiter.anzahlBeschaeftigungsmonate >= 3
+        ) {
+          output.foerderung.setYear(
+            Math.max(bonusSubsidyBasis - output.brutto.jahr, 0),
+          );
           if (mitarbeiter.anzahlBeschaeftigungsmonate > 0) {
-            output.foerderung.setMonth(output.foerderung.jahr / mitarbeiter.anzahlBeschaeftigungsmonate);
+            output.foerderung.setMonth(
+              output.foerderung.jahr / mitarbeiter.anzahlBeschaeftigungsmonate,
+            );
           }
         }
       }
@@ -571,18 +682,33 @@ function ancillaryPayrollCosts(
   svMax: number | null = null,
 ) {
   let monthlyAncillaryPayrollCosts = round2((brutto * contributionRate) / 100);
-  let thirteenthSalaryAncillaryPayrollCosts = round2((sonderzahlung * specialPaymentContributionRate) / 100);
-  let fourteenthSalaryAncillaryPayrollCosts = round2((sonderzahlung * specialPaymentContributionRate) / 100);
+  let thirteenthSalaryAncillaryPayrollCosts = round2(
+    (sonderzahlung * specialPaymentContributionRate) / 100,
+  );
+  let fourteenthSalaryAncillaryPayrollCosts = round2(
+    (sonderzahlung * specialPaymentContributionRate) / 100,
+  );
 
   if (svMax !== null) {
-    monthlyAncillaryPayrollCosts = round2((Math.min(brutto, svMax) * contributionRate) / 100);
-    thirteenthSalaryAncillaryPayrollCosts = round2((Math.min(sonderzahlung, svMax * 2) * specialPaymentContributionRate) / 100);
+    monthlyAncillaryPayrollCosts = round2(
+      (Math.min(brutto, svMax) * contributionRate) / 100,
+    );
+    thirteenthSalaryAncillaryPayrollCosts = round2(
+      (Math.min(sonderzahlung, svMax * 2) * specialPaymentContributionRate) /
+        100,
+    );
     fourteenthSalaryAncillaryPayrollCosts = round2(
-      (Math.min(sonderzahlung, Math.max(svMax * 2 - sonderzahlung, 0)) * specialPaymentContributionRate) / 100,
+      (Math.min(sonderzahlung, Math.max(svMax * 2 - sonderzahlung, 0)) *
+        specialPaymentContributionRate) /
+        100,
     );
   }
 
-  return monthlyAncillaryPayrollCosts * monate + thirteenthSalaryAncillaryPayrollCosts + fourteenthSalaryAncillaryPayrollCosts;
+  return (
+    monthlyAncillaryPayrollCosts * monate +
+    thirteenthSalaryAncillaryPayrollCosts +
+    fourteenthSalaryAncillaryPayrollCosts
+  );
 }
 
 function matchesOriginalMarginalEmploymentFlatRateRule(input: InputModel) {
@@ -593,16 +719,28 @@ function matchesOriginalMarginalEmploymentFlatRateRule(input: InputModel) {
   // Mirrors the original else-if chain exactly, including its likely bug.
   if (employees[0].beschaeftigungsform === "geringfuegig") {
     count++;
-    sum += Math.min(employees[0].bruttogehaltProMonat, MARGINAL_EMPLOYMENT_LIMIT);
+    sum += Math.min(
+      employees[0].bruttogehaltProMonat,
+      MARGINAL_EMPLOYMENT_LIMIT,
+    );
   } else if (employees[1].beschaeftigungsform === "geringfuegig") {
     count++;
-    sum += Math.min(employees[1].bruttogehaltProMonat, MARGINAL_EMPLOYMENT_LIMIT);
+    sum += Math.min(
+      employees[1].bruttogehaltProMonat,
+      MARGINAL_EMPLOYMENT_LIMIT,
+    );
   } else if (employees[2].beschaeftigungsform === "geringfuegig") {
     count++;
-    sum += Math.min(employees[2].bruttogehaltProMonat, MARGINAL_EMPLOYMENT_LIMIT);
+    sum += Math.min(
+      employees[2].bruttogehaltProMonat,
+      MARGINAL_EMPLOYMENT_LIMIT,
+    );
   } else if (employees[3].beschaeftigungsform === "geringfuegig") {
     count++;
-    sum += Math.min(employees[3].bruttogehaltProMonat, MARGINAL_EMPLOYMENT_LIMIT);
+    sum += Math.min(
+      employees[3].bruttogehaltProMonat,
+      MARGINAL_EMPLOYMENT_LIMIT,
+    );
   }
 
   return count > 1 && sum > MARGINAL_EMPLOYMENT_FLAT_RATE_LIMIT;
@@ -611,14 +749,16 @@ function matchesOriginalMarginalEmploymentFlatRateRule(input: InputModel) {
 const subsidyTextLikeCSharp = (mitarbeiter: EmployeeInput) => {
   if (mitarbeiter.foerderung) return "EPU Lohnnebenkostenförderung";
   if (mitarbeiter.foerderungBonus) return "Beschäftigungsbonus";
-  if (mitarbeiter.foerderungStartUp) return "aws Förderung für innovative Start-Ups";
+  if (mitarbeiter.foerderungStartUp)
+    return "aws Förderung für innovative Start-Ups";
   return "Förderung";
 };
 
 const hasCostOfGoods = (branche: Industry) =>
   branche === "gastronomie" || branche === "handel" || branche === "gewerbe";
 
-const hasHours = (branche: Industry) => branche === "dienstleistung" || branche === "gewerbe";
+const hasHours = (branche: Industry) =>
+  branche === "dienstleistung" || branche === "gewerbe";
 
 const employeesOf = (input: InputModel) => [
   input.mitarbeiter1,
@@ -627,7 +767,10 @@ const employeesOf = (input: InputModel) => [
   input.mitarbeiter4,
 ];
 
-function inputFor(branche: Industry, patch: Partial<InputModel> = {}): InputModel {
+function inputFor(
+  branche: Industry,
+  patch: Partial<InputModel> = {},
+): InputModel {
   return {
     ...defaultInput(branche),
     ...patch,
@@ -645,64 +788,169 @@ function employee(
   return { ...defaultEmployeeFor(branche, true), ...patch, active: true };
 }
 
-function assertParity(input: InputModel, actual: OutputModel = calculate(input)) {
+function assertParity(
+  input: InputModel,
+  actual: OutputModel = calculate(input),
+) {
   const expected = csharpReference(input);
 
   expect(actual.fehlermeldung).toBe(expected.fehlermeldung);
   if (expected.fehlermeldung) {
-    compareMonthlyYearlyAmount("ausgangssituation.umsatz", actual.ausgangssituation.umsatz, expected.ausgangssituation.umsatz);
-    compareMonthlyYearlyAmount("breakEven.breakEvenUmsatz", actual.breakEven.breakEvenUmsatz, expected.breakEven.breakEvenUmsatz);
-    compareYearOnly("potenzial.umsatzpotenzialMitarbeiter", actual.potenzial.umsatzpotenzialMitarbeiter, expected.potenzial.umsatzpotenzialMitarbeiter);
+    compareMonthlyYearlyAmount(
+      "ausgangssituation.umsatz",
+      actual.ausgangssituation.umsatz,
+      expected.ausgangssituation.umsatz,
+    );
+    compareMonthlyYearlyAmount(
+      "breakEven.breakEvenUmsatz",
+      actual.breakEven.breakEvenUmsatz,
+      expected.breakEven.breakEvenUmsatz,
+    );
+    compareYearOnly(
+      "potenzial.umsatzpotenzialMitarbeiter",
+      actual.potenzial.umsatzpotenzialMitarbeiter,
+      expected.potenzial.umsatzpotenzialMitarbeiter,
+    );
     return;
   }
 
-  compareMonthlyYearlyAmount("ausgangssituation.umsatz", actual.ausgangssituation.umsatz, expected.ausgangssituation.umsatz);
-  compareMonthlyYearlyAmount("ausgangssituation.wareneinsatz", actual.ausgangssituation.wareneinsatz, expected.ausgangssituation.wareneinsatz);
-  compareMonthlyYearlyAmount("ausgangssituation.aufwand", actual.ausgangssituation.aufwand, expected.ausgangssituation.aufwand);
-  compareMonthlyYearlyAmount("ausgangssituation.gewinn", actual.ausgangssituation.gewinn, expected.ausgangssituation.gewinn);
+  compareMonthlyYearlyAmount(
+    "ausgangssituation.umsatz",
+    actual.ausgangssituation.umsatz,
+    expected.ausgangssituation.umsatz,
+  );
+  compareMonthlyYearlyAmount(
+    "ausgangssituation.wareneinsatz",
+    actual.ausgangssituation.wareneinsatz,
+    expected.ausgangssituation.wareneinsatz,
+  );
+  compareMonthlyYearlyAmount(
+    "ausgangssituation.aufwand",
+    actual.ausgangssituation.aufwand,
+    expected.ausgangssituation.aufwand,
+  );
+  compareMonthlyYearlyAmount(
+    "ausgangssituation.gewinn",
+    actual.ausgangssituation.gewinn,
+    expected.ausgangssituation.gewinn,
+  );
 
-  compareMonthlyYearlyAmount("breakEven.gesamtumsatz", actual.breakEven.gesamtumsatz, expected.breakEven.gesamtumsatz);
-  expect(actual.breakEven.breakEvenUmsatzText).toBe(expected.breakEven.breakEvenUmsatzText);
-  compareMonthlyYearlyAmount("breakEven.breakEvenUmsatz", actual.breakEven.breakEvenUmsatz, expected.breakEven.breakEvenUmsatz);
-  compareMonthlyYearlyAmount("breakEven.wareneinsatz", actual.breakEven.wareneinsatz, expected.breakEven.wareneinsatz);
-  compareMonthlyYearlyAmount("breakEven.aufwand", actual.breakEven.aufwand, expected.breakEven.aufwand);
-  compareMonthlyYearlyAmount("breakEven.personalkosten", actual.breakEven.personalkosten, expected.breakEven.personalkosten);
-  compareMonthlyYearlyAmount("breakEven.foerderungenGesamt", actual.breakEven.foerderungenGesamt, expected.breakEven.foerderungenGesamt);
-  compareMonthlyYearlyAmount("breakEven.gewinn", actual.breakEven.gewinn, expected.breakEven.gewinn);
+  compareMonthlyYearlyAmount(
+    "breakEven.gesamtumsatz",
+    actual.breakEven.gesamtumsatz,
+    expected.breakEven.gesamtumsatz,
+  );
+  expect(actual.breakEven.breakEvenUmsatzText).toBe(
+    expected.breakEven.breakEvenUmsatzText,
+  );
+  compareMonthlyYearlyAmount(
+    "breakEven.breakEvenUmsatz",
+    actual.breakEven.breakEvenUmsatz,
+    expected.breakEven.breakEvenUmsatz,
+  );
+  compareMonthlyYearlyAmount(
+    "breakEven.wareneinsatz",
+    actual.breakEven.wareneinsatz,
+    expected.breakEven.wareneinsatz,
+  );
+  compareMonthlyYearlyAmount(
+    "breakEven.aufwand",
+    actual.breakEven.aufwand,
+    expected.breakEven.aufwand,
+  );
+  compareMonthlyYearlyAmount(
+    "breakEven.personalkosten",
+    actual.breakEven.personalkosten,
+    expected.breakEven.personalkosten,
+  );
+  compareMonthlyYearlyAmount(
+    "breakEven.foerderungenGesamt",
+    actual.breakEven.foerderungenGesamt,
+    expected.breakEven.foerderungenGesamt,
+  );
+  compareMonthlyYearlyAmount(
+    "breakEven.gewinn",
+    actual.breakEven.gewinn,
+    expected.breakEven.gewinn,
+  );
 
   // Original comments and jQuery rendering use only yearly potential values.
-  compareYearOnly("potenzial.umsatzpotenzialMitarbeiter", actual.potenzial.umsatzpotenzialMitarbeiter, expected.potenzial.umsatzpotenzialMitarbeiter);
-  compareYearOnly("potenzial.umsatzpotenzialBreakEven", actual.potenzial.umsatzpotenzialBreakEven, expected.potenzial.umsatzpotenzialBreakEven);
-  compareYearOnly("potenzial.stundenMitarbeiter", actual.potenzial.stundenMitarbeiter, expected.potenzial.stundenMitarbeiter);
-  compareYearOnly("potenzial.stundenBreakEven", actual.potenzial.stundenBreakEven, expected.potenzial.stundenBreakEven);
+  compareYearOnly(
+    "potenzial.umsatzpotenzialMitarbeiter",
+    actual.potenzial.umsatzpotenzialMitarbeiter,
+    expected.potenzial.umsatzpotenzialMitarbeiter,
+  );
+  compareYearOnly(
+    "potenzial.umsatzpotenzialBreakEven",
+    actual.potenzial.umsatzpotenzialBreakEven,
+    expected.potenzial.umsatzpotenzialBreakEven,
+  );
+  compareYearOnly(
+    "potenzial.stundenMitarbeiter",
+    actual.potenzial.stundenMitarbeiter,
+    expected.potenzial.stundenMitarbeiter,
+  );
+  compareYearOnly(
+    "potenzial.stundenBreakEven",
+    actual.potenzial.stundenBreakEven,
+    expected.potenzial.stundenBreakEven,
+  );
 
   actual.breakEven.mitarbeiter.forEach((actualEmployee, index) => {
     const expectedEmployee = expected.breakEven.mitarbeiter[index];
-    compareMonthlyYearlyAmount(`mitarbeiter.${index}.brutto`, actualEmployee.brutto, expectedEmployee.brutto);
+    compareMonthlyYearlyAmount(
+      `mitarbeiter.${index}.brutto`,
+      actualEmployee.brutto,
+      expectedEmployee.brutto,
+    );
     compareMonthlyYearlyAmount(
       `mitarbeiter.${index}.bruttoInklLohnnebenkosten`,
       actualEmployee.bruttoInklLohnnebenkosten,
       expectedEmployee.bruttoInklLohnnebenkosten,
     );
     if (expectedEmployee.brutto.monat > 0 || actualEmployee.brutto.monat > 0) {
-      expect(actualEmployee.foerderungText).toBe(expectedEmployee.foerderungText);
+      expect(actualEmployee.foerderungText).toBe(
+        expectedEmployee.foerderungText,
+      );
     }
-    compareMonthlyYearlyAmount(`mitarbeiter.${index}.foerderung`, actualEmployee.foerderung, expectedEmployee.foerderung);
-    compareMonthlyYearlyAmount(`mitarbeiter.${index}.arbeitsstunden`, actualEmployee.arbeitsstunden, expectedEmployee.arbeitsstunden);
+    compareMonthlyYearlyAmount(
+      `mitarbeiter.${index}.foerderung`,
+      actualEmployee.foerderung,
+      expectedEmployee.foerderung,
+    );
+    compareMonthlyYearlyAmount(
+      `mitarbeiter.${index}.arbeitsstunden`,
+      actualEmployee.arbeitsstunden,
+      expectedEmployee.arbeitsstunden,
+    );
   });
 }
 
-function compareMonthlyYearlyAmount(label: string, actual: { monat: number; jahr: number }, expected: { monat: number; jahr: number }) {
+function compareMonthlyYearlyAmount(
+  label: string,
+  actual: { monat: number; jahr: number },
+  expected: { monat: number; jahr: number },
+) {
   expect(actual.monat, `${label}.monat`).toBeCloseTo(expected.monat, 2);
   expect(actual.jahr, `${label}.jahr`).toBeCloseTo(expected.jahr, 2);
 }
 
-function compareYearOnly(label: string, actual: { jahr: number }, expected: { jahr: number }) {
+function compareYearOnly(
+  label: string,
+  actual: { jahr: number },
+  expected: { jahr: number },
+) {
   expect(actual.jahr, `${label}.jahr`).toBeCloseTo(expected.jahr, 2);
 }
 
 describe("calculator parity with original .NET BreakEvenCalculator", () => {
-  it.each<Industry>(["dienstleistung", "gastronomie", "handel", "gewerbe", "provision"])(
+  it.each<Industry>([
+    "dienstleistung",
+    "gastronomie",
+    "handel",
+    "gewerbe",
+    "provision",
+  ])(
     "matches original validation/error output for invalid %s input",
     (branche) => {
       assertParity(inputFor(branche));
@@ -710,11 +958,23 @@ describe("calculator parity with original .NET BreakEvenCalculator", () => {
   );
 
   it("matches service baseline without employees", () => {
-    assertParity(inputFor("dienstleistung", { umsatz: 50000, aufwand: 10000, stunden: 1000 }));
+    assertParity(
+      inputFor("dienstleistung", {
+        umsatz: 50000,
+        aufwand: 10000,
+        stunden: 1000,
+      }),
+    );
   });
 
   it("matches gastronomy break-even gross-up using cost-of-goods ratio", () => {
-    assertParity(inputFor("gastronomie", { umsatz: 120000, aufwand: 45000, wareneinsatz: 30000 }));
+    assertParity(
+      inputFor("gastronomie", {
+        umsatz: 120000,
+        aufwand: 45000,
+        wareneinsatz: 30000,
+      }),
+    );
   });
 
   it("matches retail potential from estimated employee revenue increase", () => {
@@ -751,7 +1011,10 @@ describe("calculator parity with original .NET BreakEvenCalculator", () => {
         umsatz: 60000,
         aufwand: 18000,
         provision: 8,
-        mitarbeiter1: employee("provision", { bruttogehaltProMonat: 1800, umsatzsteigerung: 10 }),
+        mitarbeiter1: employee("provision", {
+          bruttogehaltProMonat: 1800,
+          umsatzsteigerung: 10,
+        }),
       }),
     );
   });
@@ -860,7 +1123,10 @@ describe("calculator parity with original .NET BreakEvenCalculator", () => {
       erzielbarerGewinn: 60000,
     });
 
-    assertParity(input, calculateExtended({ ...input, erzielbarerGewinn: 0 }, 60000));
+    assertParity(
+      input,
+      calculateExtended({ ...input, erzielbarerGewinn: 0 }, 60000),
+    );
   });
 
   it("matches original behavior: original keeps subsidy label even when startup subsidy is ineligible", () => {
