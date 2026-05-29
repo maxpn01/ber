@@ -212,7 +212,7 @@ export const SubsidyCard = ({ kind }: Props) => {
               "h-5 w-10 cursor-pointer",
               isExpanded && "data-[state=checked]:bg-toggle-on",
             )}
-            thumbClassName="h-3.5 w-3.5 data-[state=checked]:translate-x-[27px] data-[state=unchecked]:translate-x-[1px]"
+            thumbClassName="h-3.5 w-3.5 data-[state=checked]:translate-x-[calc(2.5rem-0.875rem-4px-0.0625rem)] data-[state=unchecked]:translate-x-[0.0625rem]"
             aria-label={tStr(TITLE_KEY[kind])}
           />
         </div>
