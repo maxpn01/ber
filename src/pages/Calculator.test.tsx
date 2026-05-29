@@ -46,6 +46,18 @@ describe("Calculator page", () => {
     expect(tStr("brancheHelp")).toContain(
       "Die Ermittlung des Break-Even-Umsatzes erfolgt je nach angegebener Kategorie unterschiedlich",
     );
+    expect(tStr("brancheHelp")).toContain(
+      "(z.B. Textileinzelhändler:in, Möbelhandel)",
+    );
+    expect(tStr("brancheHelp")).toContain(
+      "(z.B. ein/e Friseur:in mit angeschlossenem Friseurbedarfshandel oder ein/e EDV-Dienstleister:in mit Computerhandel)",
+    );
+    expect(tStr("brancheHelp")).toContain(
+      "(z.B. ein Tischler:in oder Spengler:in)",
+    );
+    expect(tStr("brancheHelp")).toContain(
+      "(z.B. Handelsagent:in, Direktvertrieb)",
+    );
     expect(tStr("umsatzHelp")).toBe(
       "Dieses Feld ist für die Höhe Ihres Jahresumsatzes vorgesehen.",
     );
