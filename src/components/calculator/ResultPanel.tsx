@@ -90,6 +90,7 @@ export const ResultPanel = () => {
                 <HelpIcon
                   text={potenzialInputHelp}
                   className="h-4 w-4 shrink-0"
+                  contentClassName="text-left"
                 />
               </span>,
               tStr("breakEven"),

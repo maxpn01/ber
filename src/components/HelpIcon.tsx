@@ -10,12 +10,14 @@ import {
 interface Props {
   text: string;
   className?: string;
+  contentClassName?: string;
   iconSrc?: string;
 }
 
 export const HelpIcon = ({
   text,
   className,
+  contentClassName,
   iconSrc = "/tooltip_icon.svg",
 }: Props) => {
   const isTitleIcon = iconSrc === "/title_tooltip_icon.svg";
@@ -95,7 +97,10 @@ export const HelpIcon = ({
           instantClose
           side="top"
           collisionPadding={12}
-          className="max-w-[min(calc(100vw-1.5rem),20rem)] whitespace-pre-line rounded-sm border-none bg-[#003C56] px-3 py-2.5 text-xs font-normal leading-relaxed text-white sm:max-w-sm sm:px-4 sm:py-3 lg:max-w-md lg:px-5 lg:py-4"
+          className={cn(
+            "max-w-[min(calc(100vw-1.5rem),20rem)] whitespace-pre-line rounded-sm border-none bg-[#003C56] px-3 py-2.5 text-xs font-normal leading-relaxed text-white sm:max-w-sm sm:px-4 sm:py-3 lg:max-w-md lg:px-5 lg:py-4",
+            contentClassName,
+          )}
         >
           {text}
         </TooltipContent>
