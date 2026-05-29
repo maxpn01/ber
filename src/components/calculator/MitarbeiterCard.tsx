@@ -1,7 +1,8 @@
-import { CheckCircle2, Trash2 } from "lucide-react";
+import { CheckCircle2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Switch } from "@/components/ui/switch";
+import { TrashIcon } from "@/components/icons/TrashIcon";
 import {
   Select,
   SelectContent,
@@ -283,11 +284,11 @@ export const MitarbeiterCard = ({ index }: Props) => {
             <Button
               variant="default"
               size="icon"
-              className="h-9 w-9 rounded-full bg-foreground text-background hover:bg-foreground/85"
+              className="h-9 w-9 rounded-full bg-transparent p-0 shadow-none hover:opacity-80"
               onClick={() => deleteMitarbeiter(index)}
               aria-label={tStr("loeschen")}
             >
-              <Trash2 className="h-4 w-4" />
+              <TrashIcon />
             </Button>
           </div>
         </div>
