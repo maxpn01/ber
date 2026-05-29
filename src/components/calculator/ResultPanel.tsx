@@ -201,7 +201,7 @@ export const ResultPanel = () => {
                   <button
                     type="button"
                     onClick={() => setDetailsOpen((p) => !p)}
-                    className="inline-flex items-center text-[10px] font-medium underline underline-offset-2"
+                    className="inline-flex items-center text-[12px] font-medium underline underline-offset-2"
                     aria-expanded={detailsOpen}
                   >
                     ➔ {tStr("details")}
