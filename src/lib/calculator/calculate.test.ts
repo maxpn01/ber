@@ -266,6 +266,24 @@ describe("calculator", () => {
     expect(r.breakEven.mitarbeiter[0].brutto.jahr).toBeCloseTo(28000, 0);
   });
 
+  it("uses synced Zusatzkosten as one recurring cost instead of double counting", () => {
+    const i = defaultInput("dienstleistung");
+    i.umsatz = 100000;
+    i.aufwand = 20000;
+    i.stunden = 1000;
+    i.mitarbeiter1 = {
+      ...defaultMitarbeiterFor("dienstleistung", true),
+      anzahlBeschaeftigungsmonate: 10,
+      zusatzkostenMonatlich: 100,
+      zusatzkostenJaehrlich: 1200,
+    };
+
+    const r = calculate(i);
+
+    expect(r.fehlermeldung).toBe("");
+    expect(r.breakEven.aufwand.jahr).toBe(21000);
+  });
+
   it("provision branch produces gesamtumsatz when provision > 0", () => {
     const i = defaultInput("provision");
     i.umsatz = 50000;

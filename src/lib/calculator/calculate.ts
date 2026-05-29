@@ -25,6 +25,9 @@ const round0 = (v: number) => Math.round(v);
 const round2 = (v: number) => Math.round(v * 100) / 100;
 const round4 = (v: number) => Math.round(v * 10000) / 10000;
 const round6 = (v: number) => Math.round(v * 1000000) / 1000000;
+const zusatzkostenFuerBeschaeftigungsmonate = (m: InputMitarbeiter) =>
+  (m.zusatzkostenMonatlich || m.zusatzkostenJaehrlich / 12) *
+  m.anzahlBeschaeftigungsmonate;
 
 function calcLohnnebenkosten(
   brutto: number,
@@ -410,9 +413,7 @@ function calculateWithShared(
   let beAufwand_jahr = ausgAufwand_jahr;
   all.forEach((m) => {
     if (isMitarbeiterBasicComplete(m)) {
-      beAufwand_jahr +=
-        m.zusatzkostenJaehrlich +
-        m.zusatzkostenMonatlich * m.anzahlBeschaeftigungsmonate;
+      beAufwand_jahr += zusatzkostenFuerBeschaeftigungsmonate(m);
     }
   });
 
@@ -494,9 +495,7 @@ function calculateWithShared(
       stundenBreakEven_jahr = baseStunden;
       all.forEach((m, i) => {
         const mr = mResults[i];
-        const zusatz =
-          m.zusatzkostenJaehrlich +
-          m.zusatzkostenMonatlich * m.anzahlBeschaeftigungsmonate;
+        const zusatz = zusatzkostenFuerBeschaeftigungsmonate(m);
         const netto =
           mr.bruttoInklLohnnebenkosten.jahr - mr.foerderung.jahr + zusatz;
         if (m.verkaufbareStunden !== 0 && m.stundensatz !== 0) {

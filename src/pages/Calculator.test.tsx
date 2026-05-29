@@ -320,6 +320,33 @@ describe("Calculator page", () => {
     expect(stunden.value).toBe("1.000,00");
   });
 
+  it("keeps monthly and yearly additional employee costs in sync", async () => {
+    const user = userEvent.setup();
+    render(<App />);
+
+    const monatlich = screen.getByRole("textbox", {
+      name: "Daten Mitarbeiter 1: Zusatzkosten monatlich",
+    }) as HTMLInputElement;
+    const jaehrlich = screen.getByRole("textbox", {
+      name: "Daten Mitarbeiter 1: Zusatzkosten jährlich",
+    }) as HTMLInputElement;
+
+    await user.click(monatlich);
+    await user.keyboard("120");
+    await user.tab();
+
+    expect(monatlich.value).toBe("120,00 €");
+    expect(jaehrlich.value).toBe("1.440,00 €");
+
+    await user.click(jaehrlich);
+    await user.clear(jaehrlich);
+    await user.keyboard("2400");
+    await user.tab();
+
+    expect(monatlich.value).toBe("200,00 €");
+    expect(jaehrlich.value).toBe("2.400,00 €");
+  });
+
   it("keeps only one employee form open at a time", async () => {
     const user = userEvent.setup();
     render(<App />);
