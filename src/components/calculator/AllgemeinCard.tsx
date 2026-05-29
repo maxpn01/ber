@@ -43,7 +43,7 @@ export const AllgemeinCard = () => {
       <div className="border-t border-dashed border-border pt-4 text-[#A2A4A9]" />
 
       <div className="mb-4">
-        <label className="mb-1.5 flex items-center gap-1.5 text-xs font-medium">
+        <label className="mb-1.5 flex items-center text-xs font-medium">
           {tStr("branche")}
           <HelpIcon text={tStr("brancheHelp")} />
         </label>
@@ -151,8 +151,8 @@ const Field = ({
   children: React.ReactNode;
 }) => (
   <div className="flex flex-col">
-    <label className="mb-1.5 flex min-h-[2.5rem] items-start gap-1.5 text-xs font-medium leading-tight">
-      <span className="flex-1">{label}</span>
+    <label className="mb-1.5 flex min-h-[2.5rem] items-start text-xs font-medium leading-tight">
+      <span>{label}</span>
       <HelpIcon text={help} className="pb-1.5" />
     </label>
     {children}

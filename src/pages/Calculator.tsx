@@ -15,7 +15,7 @@ const Calculator = () => {
   return (
     <div className="flex min-h-screen flex-col bg-background">
       <Header />
-      <main className="mx-auto w-full max-w-[1300px] flex-1 px-4 py-3 sm:px-6">
+      <main className="mx-auto w-full max-w-[1350px] flex-1 px-4 py-3 sm:px-6">
         <h1 className="mb-10 flex items-center gap-2 text-xl font-medium">
           {tStr("appTitle")}
           <AppHelpDialog open={helpOpen} onOpenChange={setHelpOpen} />

@@ -128,7 +128,7 @@ export const NumberInput = ({
           }
         }}
         className={cn(
-          "bg-muted border-transparent",
+          "border-transparent bg-muted",
           invalid && "border-destructive bg-destructive/10 text-destructive",
           computed && !focused && "text-muted-foreground",
           suffix && "pr-8",
