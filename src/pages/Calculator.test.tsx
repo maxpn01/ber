@@ -444,6 +444,12 @@ describe("Calculator page", () => {
     });
 
     await user.click(epuSwitch);
+    expect(
+      screen.queryByText(tStr("voraussetzungenTitel")),
+    ).not.toBeInTheDocument();
+
+    await user.click(screen.getByRole("button", { name: "Voraussetzungen" }));
+    expect(screen.getByText(tStr("voraussetzungenTitel"))).toBeInTheDocument();
 
     const employee1 = screen.getByRole("checkbox", {
       name: "Für Mitarbeiter:in 1",
@@ -471,8 +477,14 @@ describe("Calculator page", () => {
     expect(
       screen.queryByRole("checkbox", { name: "Für Mitarbeiter:in 1" }),
     ).not.toBeInTheDocument();
+    expect(
+      screen.queryByText(tStr("voraussetzungenTitel")),
+    ).not.toBeInTheDocument();
 
     await user.click(epuSwitch);
+    expect(
+      screen.queryByText(tStr("voraussetzungenTitel")),
+    ).not.toBeInTheDocument();
     expect(
       screen.getByRole("checkbox", { name: "Für Mitarbeiter:in 1" }),
     ).not.toBeChecked();

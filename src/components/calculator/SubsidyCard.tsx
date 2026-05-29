@@ -48,7 +48,7 @@ const COND_KEY: Record<Kind, TextListKey> = {
 };
 
 export const SubsidyCard = ({ kind }: Props) => {
-  const [conditionsOpen, setConditionsOpen] = useState(true);
+  const [conditionsOpen, setConditionsOpen] = useState(kind !== "epu");
   const [epuOpen, setEpuOpen] = useState(false);
   const {
     input,
@@ -185,6 +185,7 @@ export const SubsidyCard = ({ kind }: Props) => {
             onCheckedChange={(on) => {
               if (isEpu) {
                 setEpuOpen(on);
+                setConditionsOpen(false);
                 if (!on) {
                   ([0, 1, 2, 3] as MitarbeiterIndex[]).forEach((i) =>
                     setKindFor(i, false),
