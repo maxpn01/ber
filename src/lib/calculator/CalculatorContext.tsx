@@ -25,9 +25,7 @@ import {
   InputModel,
   OutputModel,
 } from "@/lib/calculator/types";
-import {
-  isMitarbeiterBasicComplete,
-} from "@/lib/calculator/mitarbeiterStatus";
+import { isMitarbeiterBasicComplete } from "@/lib/calculator/mitarbeiterStatus";
 
 export type MitarbeiterIndex = 0 | 1 | 2 | 3;
 
@@ -70,8 +68,6 @@ export const CalculatorProvider = ({ children }: { children: ReactNode }) => {
   const [sliderValue, setSliderValueState] = useState(0);
   const desiredProfitBaseInputRef = useRef<InputModel | null>(null);
   const [hasCalculatedOnce, setHasCalculatedOnce] = useState(false);
-  const [reviewClearedByBranchChange, setReviewClearedByBranchChange] =
-    useState(false);
   const [showStartUpUnavailable, setShowStartUpUnavailable] = useState(false);
   const [openMitarbeiterIndex, setOpenMitarbeiterIndex] =
     useState<MitarbeiterIndex | null>(0);
@@ -79,14 +75,11 @@ export const CalculatorProvider = ({ children }: { children: ReactNode }) => {
 
   // Compute result reactively (synchronously is fine; calc is cheap)
   const result = useMemo(() => {
-    if (reviewClearedByBranchChange) {
-      return null;
-    }
     if (!inputComplete) {
       return null;
     }
     return calculate(input);
-  }, [input, inputComplete, reviewClearedByBranchChange]);
+  }, [input, inputComplete]);
   const hasValidationError = !!result?.fehlermeldung;
   const hasValidResult = !!result && !hasValidationError;
 
@@ -100,7 +93,6 @@ export const CalculatorProvider = ({ children }: { children: ReactNode }) => {
     desiredProfitBaseInputRef.current = null;
     setInput((prev) => ({ ...prev, ...patch, erzielbarerGewinn: 0 }));
     setSliderValueState(0);
-    setReviewClearedByBranchChange(false);
   }, []);
 
   const setBranche = useCallback((b: Branche) => {
@@ -124,9 +116,7 @@ export const CalculatorProvider = ({ children }: { children: ReactNode }) => {
       };
     });
     setSliderValueState(0);
-    setHasCalculatedOnce(false);
     setOpenMitarbeiterIndex(0);
-    setReviewClearedByBranchChange(true);
   }, []);
 
   const patchMitarbeiter = useCallback(
@@ -146,7 +136,6 @@ export const CalculatorProvider = ({ children }: { children: ReactNode }) => {
       }));
       desiredProfitBaseInputRef.current = null;
       setSliderValueState(0);
-      setReviewClearedByBranchChange(false);
     },
     [],
   );
@@ -168,28 +157,23 @@ export const CalculatorProvider = ({ children }: { children: ReactNode }) => {
       erzielbarerGewinn: 0,
     }));
     setSliderValueState(0);
-    setReviewClearedByBranchChange(false);
   }, []);
 
-  const deleteMitarbeiter = useCallback(
-    (i: MitarbeiterIndex) => {
-      const key = MITARBEITER_KEYS[i] as
-        | "mitarbeiter1"
-        | "mitarbeiter2"
-        | "mitarbeiter3"
-        | "mitarbeiter4";
-      desiredProfitBaseInputRef.current = null;
-      setInput((prev) => ({
-        ...prev,
-        [key]: defaultMitarbeiterFor(prev.branche, false),
-        erzielbarerGewinn: 0,
-      }));
-      setSliderValueState(0);
-      setReviewClearedByBranchChange(false);
-      setOpenMitarbeiterIndex((prev) => (prev === i ? null : prev));
-    },
-    [],
-  );
+  const deleteMitarbeiter = useCallback((i: MitarbeiterIndex) => {
+    const key = MITARBEITER_KEYS[i] as
+      | "mitarbeiter1"
+      | "mitarbeiter2"
+      | "mitarbeiter3"
+      | "mitarbeiter4";
+    desiredProfitBaseInputRef.current = null;
+    setInput((prev) => ({
+      ...prev,
+      [key]: defaultMitarbeiterFor(prev.branche, false),
+      erzielbarerGewinn: 0,
+    }));
+    setSliderValueState(0);
+    setOpenMitarbeiterIndex((prev) => (prev === i ? null : prev));
+  }, []);
 
   const setSliderValue = useCallback((v: number) => {
     const nextValue = Math.min(1_000_000, Math.max(1, v));
@@ -199,7 +183,6 @@ export const CalculatorProvider = ({ children }: { children: ReactNode }) => {
       desiredProfitBaseInputRef.current = baseInput;
       return deriveDesiredProfitInput(baseInput, nextValue);
     });
-    setReviewClearedByBranchChange(false);
   }, []);
 
   const activeMitarbeiterCount = [

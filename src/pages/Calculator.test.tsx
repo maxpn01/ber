@@ -478,7 +478,7 @@ describe("Calculator page", () => {
     ).not.toBeChecked();
   });
 
-  it("clears top inputs, employee defaults, and review state on branch change", async () => {
+  it("clears top inputs and employee defaults without returning review to intro on branch change", async () => {
     const user = userEvent.setup();
     render(<App />);
 
@@ -538,8 +538,12 @@ describe("Calculator page", () => {
       ).value,
     ).toBe("40,00");
     expect(
-      screen.getByText("Was kosten Ihre Ersten Mitarbeiter?"),
+      screen.queryByText("Was kosten Ihre Ersten Mitarbeiter?"),
+    ).not.toBeInTheDocument();
+    expect(
+      screen.getByText("Potenzial inkl. neuer Mitarbeiter"),
     ).toBeInTheDocument();
+    expect(screen.getByText("- Personalkosten")).toBeInTheDocument();
     expect(
       screen.getByRole("slider", { name: "Erzielbarer Gewinn" }),
     ).toHaveAttribute("data-disabled", "");
