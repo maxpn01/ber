@@ -167,6 +167,8 @@ export const text = {
   umsatzInklTitle: "Umsatz Inkl. Neuer Mitarbeiter",
   monatlich: "monatlich",
   jaehrlich: "jährlich",
+  jaehrlichHelp:
+    "In diesem Bereich finden Sie die detaillierten Break-Even-Ergebnisse inkl. der neuen Mitarbeiter.",
   breakEvenUmsatz: "Break-Even-Umsatz",
   breakEvenProvisionsumsatz: "Break-Even-Provisionsumsatz",
   gesamtumsatz: "Gesamtumsatz",

@@ -3,7 +3,6 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { AppHelpDialog, AppHelpDialogSlot } from "@/components/AppHelpDialog";
 import { AllgemeinCard } from "@/components/calculator/AllgemeinCard";
-import { ErzielbarerGewinnSlider } from "@/components/calculator/ErzielbarerGewinnSlider";
 import { MitarbeiterCard } from "@/components/calculator/MitarbeiterCard";
 import { SubsidyCard } from "@/components/calculator/SubsidyCard";
 import { ResultPanel } from "@/components/calculator/ResultPanel";
@@ -15,7 +14,7 @@ const Calculator = () => {
   const isMobile = useIsMobile();
 
   const title = (
-    <h1 className="flex items-center gap-2 text-sm font-medium min-[640px]:text-lg">
+    <h1 className="flex items-center gap-2 text-sm font-medium min-[640px]:mb-8 min-[640px]:text-lg">
       {tStr("appTitle")}
       <AppHelpDialog open={helpOpen} onOpenChange={setHelpOpen} />
     </h1>
@@ -33,7 +32,6 @@ const Calculator = () => {
             <div className="grid grid-cols-1 gap-5 sm:gap-6 lg:grid-cols-2">
               <div className="space-y-4">
                 <AllgemeinCard />
-                <ErzielbarerGewinnSlider />
                 <MitarbeiterCard index={0} />
                 <MitarbeiterCard index={1} />
                 <MitarbeiterCard index={2} />

@@ -71,9 +71,9 @@ export const ResultPanel = () => {
     <div className="h-full rounded-lg bg-result px-3 py-6 text-result-foreground min-[380px]:px-4 sm:px-8">
       <section className="mb-8">
         <div className="mb-3 flex flex-wrap items-center justify-between gap-3 min-[430px]:flex-nowrap min-[430px]:gap-4">
-          <h3 className="flex min-w-0 items-start gap-1.5 text-lg font-medium leading-tight xl:whitespace-nowrap">
+          <h3 className="flex min-w-0 items-start gap-1.5 text-base font-medium leading-tight xl:whitespace-nowrap">
             {tStr("potenzialTitle")}
-            <HelpIcon text={tStr("potenzialHelp")} />
+            <HelpIcon text={tStr("potenzialHelp")} className="mt-[8px]" />
           </h3>
           <EmployeeIcons
             activeCount={activeMitarbeiterCount}
@@ -139,7 +139,7 @@ export const ResultPanel = () => {
               <span className="inline-flex items-center justify-end gap-1">
                 {tStr("jaehrlich")}
                 <HelpIcon
-                  text={tStr("jaehrlich")}
+                  text={tStr("jaehrlichHelp")}
                   className="h-4 w-4 shrink-0"
                 />
               </span>,

@@ -19,6 +19,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { cn } from "@/lib/utils";
+import { ErzielbarerGewinnSlider } from "@/components/calculator/ErzielbarerGewinnSlider";
 
 const brancheLabelKey = (b: Branche): TextKey => {
   const map: Record<Branche, TextKey> = {
@@ -43,14 +44,15 @@ export const AllgemeinCard = () => {
       <div className="border-t border-dashed border-border pt-4 text-[#A2A4A9]" />
 
       <div className="mb-4">
-        <label className="mb-1.5 flex flex-wrap items-center text-xs font-medium">
+        <div className="relative mb-1.5 flex flex-wrap items-center gap-1 text-xs font-medium">
           {tStr("branche")}
           <HelpIcon
             text={tStr("brancheHelp")}
             inlineContent
-            contentClassName="mt-2 w-full max-w-none sm:max-w-none lg:max-w-none"
+            className="mt-0.5"
+            contentClassName="w-full max-w-none sm:max-w-none lg:max-w-none"
           />
-        </label>
+        </div>
         <Select
           value={b}
           onValueChange={(v) => {
@@ -87,7 +89,7 @@ export const AllgemeinCard = () => {
 
       <div className="border-t border-dashed border-border pt-4" />
 
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+      <div className="grid grid-cols-1 gap-4 pb-6 sm:grid-cols-3 sm:items-end">
         <Field label={tStr("umsatz")} help={tStr("umsatzHelp")}>
           <NumberInput
             value={input.umsatz}
@@ -141,6 +143,8 @@ export const AllgemeinCard = () => {
           </Field>
         )}
       </div>
+
+      <ErzielbarerGewinnSlider />
     </Card>
   );
 };
@@ -155,10 +159,10 @@ const Field = ({
   children: React.ReactNode;
 }) => (
   <div className="flex flex-col">
-    <label className="mb-1.5 flex min-h-[2.5rem] items-start text-xs font-medium leading-tight">
+    <div className="mb-1.5 flex items-start gap-1 text-xs font-medium leading-tight">
       <span>{label}</span>
-      <HelpIcon text={help} className="pb-1.5" />
-    </label>
+      <HelpIcon text={help} className="mt-0.5" />
+    </div>
     {children}
   </div>
 );

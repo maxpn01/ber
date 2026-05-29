@@ -102,10 +102,13 @@ export const MitarbeiterCard = ({ index }: Props) => {
       {isOpen && (
         <div className="mt-4 space-y-4 border-t border-dashed border-border pt-4">
           <div>
-            <label className="mb-1.5 flex items-center gap-1.5 text-sm font-medium">
+            <div className="mb-1.5 flex items-center gap-1.5 text-sm font-medium">
               {tStr("beschaeftigungsform")}
-              <HelpIcon text={tStr("beschaeftigungsformHelp")} />
-            </label>
+              <HelpIcon
+                text={tStr("beschaeftigungsformHelp")}
+                className="mt-0.5"
+              />
+            </div>
             <Select
               value={m.beschaeftigungsform}
               onValueChange={(v) => {
@@ -136,10 +139,10 @@ export const MitarbeiterCard = ({ index }: Props) => {
           </div>
 
           <div>
-            <label className="mb-1.5 flex items-center gap-1.5 text-sm font-medium">
+            <div className="mb-1.5 flex items-center gap-1.5 text-sm font-medium">
               {tStr("bruttogehalt")}
-              <HelpIcon text={tStr("bruttogehaltHelp")} />
-            </label>
+              <HelpIcon text={tStr("bruttogehaltHelp")} className="mt-[3px]" />
+            </div>
             <NumberInput
               value={m.bruttogehaltProMonat}
               onChange={(v) =>
@@ -151,10 +154,13 @@ export const MitarbeiterCard = ({ index }: Props) => {
 
           <div className="grid grid-cols-1 gap-4 min-[430px]:grid-cols-2">
             <div>
-              <label className="mb-1.5 flex items-start gap-1.5 text-sm font-medium leading-tight">
+              <div className="mb-1.5 flex items-start gap-1.5 text-sm font-medium leading-tight">
                 {tStr("wochenstunden")}
-                <HelpIcon text={tStr("wochenstundenHelp")} />
-              </label>
+                <HelpIcon
+                  text={tStr("wochenstundenHelp")}
+                  className="mt-[4px]"
+                />
+              </div>
               <NumberInput
                 value={m.anzahlWochenstunden}
                 variant="decimal"
@@ -166,10 +172,13 @@ export const MitarbeiterCard = ({ index }: Props) => {
               />
             </div>
             <div>
-              <label className="mb-1.5 flex items-start gap-1.5 text-sm font-medium leading-tight">
+              <div className="mb-1.5 flex items-start gap-1.5 text-sm font-medium leading-tight">
                 {tStr("beschaeftigungsmonate")}
-                <HelpIcon text={tStr("beschaeftigungsmonateHelp")} />
-              </label>
+                <HelpIcon
+                  text={tStr("beschaeftigungsmonateHelp")}
+                  className="mt-[4px]"
+                />
+              </div>
               <NumberInput
                 value={m.anzahlBeschaeftigungsmonate}
                 variant="integer"
@@ -185,10 +194,13 @@ export const MitarbeiterCard = ({ index }: Props) => {
 
           <div className="grid grid-cols-1 gap-4 min-[430px]:grid-cols-2">
             <div>
-              <label className="mb-1.5 flex items-start gap-1.5 text-sm font-medium leading-tight">
+              <div className="mb-1.5 flex items-start gap-1.5 text-sm font-medium leading-tight">
                 {tStr("zusatzkostenMonatlich")}
-                <HelpIcon text={tStr("zusatzkostenMonatlichHelp")} />
-              </label>
+                <HelpIcon
+                  text={tStr("zusatzkostenMonatlichHelp")}
+                  className="mt-[4px]"
+                />
+              </div>
               <NumberInput
                 value={m.zusatzkostenMonatlich}
                 onChange={(v) =>
@@ -201,10 +213,13 @@ export const MitarbeiterCard = ({ index }: Props) => {
               />
             </div>
             <div>
-              <label className="mb-1.5 flex items-start gap-1.5 text-sm font-medium leading-tight">
+              <div className="mb-1.5 flex items-start gap-1.5 text-sm font-medium leading-tight">
                 {tStr("zusatzkostenJaehrlich")}
-                <HelpIcon text={tStr("zusatzkostenJaehrlichHelp")} />
-              </label>
+                <HelpIcon
+                  text={tStr("zusatzkostenJaehrlichHelp")}
+                  className="mt-[4px]"
+                />
+              </div>
               <NumberInput
                 value={m.zusatzkostenJaehrlich}
                 onChange={(v) =>
@@ -237,6 +252,7 @@ export const MitarbeiterCard = ({ index }: Props) => {
                       }
                     </>
                   }
+                  className="mt-[4px]"
                 />
               </h4>
               <div className="grid grid-cols-1 gap-4 min-[430px]:grid-cols-2">
