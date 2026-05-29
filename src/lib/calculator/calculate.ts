@@ -335,11 +335,9 @@ export function isReadyToCalculate(input: InputModel): boolean {
   if (input.umsatz <= 0 || input.aufwand < 0) return false;
   if ((b === "dienstleistung" || b === "gewerbe") && input.stunden <= 0)
     return false;
-  if (
-    (b === "gastronomie" || b === "handel" || b === "gewerbe") &&
-    input.wareneinsatz < 0
-  )
+  if ((b === "gastronomie" || b === "handel") && input.wareneinsatz <= 0)
     return false;
+  if (b === "gewerbe" && input.wareneinsatz < 0) return false;
   if (b === "provision" && input.provision <= 0) return false;
   return true;
 }
