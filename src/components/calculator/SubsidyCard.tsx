@@ -219,7 +219,7 @@ export const SubsidyCard = ({ kind }: Props) => {
 
         {isExpanded && (
           <div className="mt-5 space-y-5">
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 gap-3 min-[430px]:grid-cols-2">
               {([0, 1, 2, 3] as MitarbeiterIndex[]).map((i) => {
                 const isEligible = eligible(i);
                 const isChecked = checked(i);

@@ -8,23 +8,29 @@ import { MitarbeiterCard } from "@/components/calculator/MitarbeiterCard";
 import { SubsidyCard } from "@/components/calculator/SubsidyCard";
 import { ResultPanel } from "@/components/calculator/ResultPanel";
 import { tStr } from "@/lib/text";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const Calculator = () => {
   const [helpOpen, setHelpOpen] = useState(false);
+  const isMobile = useIsMobile();
+
+  const title = (
+    <h1 className="flex items-center gap-2 text-sm font-medium min-[640px]:text-lg">
+      {tStr("appTitle")}
+      <AppHelpDialog open={helpOpen} onOpenChange={setHelpOpen} />
+    </h1>
+  );
 
   return (
     <div className="flex min-h-screen flex-col bg-background">
-      <Header />
-      <main className="mx-auto w-full max-w-[1350px] flex-1 px-4 py-3 sm:px-6">
-        <h1 className="mb-10 flex items-center gap-2 text-xl font-medium">
-          {tStr("appTitle")}
-          <AppHelpDialog open={helpOpen} onOpenChange={setHelpOpen} />
-        </h1>
+      <Header title={isMobile ? title : undefined} />
+      <main className="mx-auto w-full max-w-[1350px] flex-1 px-3 py-3 min-[380px]:px-4 sm:px-6">
+        {!isMobile && title}
         <AppHelpDialogSlot />
 
         {!helpOpen && (
-          <div className="rounded-xl bg-wko-section p-4 sm:p-6">
-            <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+          <div className="rounded-xl bg-wko-section p-3 min-[380px]:p-4 sm:p-6">
+            <div className="grid grid-cols-1 gap-5 sm:gap-6 lg:grid-cols-2">
               <div className="space-y-4">
                 <AllgemeinCard />
                 <ErzielbarerGewinnSlider />

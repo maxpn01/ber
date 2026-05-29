@@ -72,7 +72,7 @@ const Summary = ({ onBack }: Props) => {
   return (
     <div className="flex min-h-screen flex-col bg-background">
       <Header />
-      <main className="mx-auto w-full max-w-4xl flex-1 px-4 py-6 sm:px-6">
+      <main className="mx-auto w-full max-w-4xl flex-1 px-3 py-6 min-[380px]:px-4 sm:px-6">
         <div className="no-print mb-4 flex items-center justify-between">
           <Button variant="outline" onClick={onBack}>
             <ArrowLeft className="mr-2 h-4 w-4" />
@@ -89,7 +89,7 @@ const Summary = ({ onBack }: Props) => {
 
         <h1 className="mb-6 text-2xl font-bold">{tStr("summaryTitle")}</h1>
 
-        <Card className="mb-6 p-6">
+        <Card className="mb-6 p-4 sm:p-6">
           <h2 className="mb-3 text-lg font-semibold">{tStr("stammdaten")}</h2>
           <div className="grid grid-cols-1 gap-3 text-sm sm:grid-cols-3">
             <div>
@@ -113,7 +113,7 @@ const Summary = ({ onBack }: Props) => {
           </div>
         </Card>
 
-        <Card className="mb-6 bg-result p-6 text-result-foreground">
+        <Card className="mb-6 bg-result p-4 text-result-foreground sm:p-6">
           <h2 className="mb-3 text-lg font-semibold">
             {tStr("potenzialTitle")}
           </h2>
@@ -142,7 +142,7 @@ const Summary = ({ onBack }: Props) => {
           </Table>
         </Card>
 
-        <Card className="mb-6 bg-result p-6 text-result-foreground">
+        <Card className="mb-6 bg-result p-4 text-result-foreground sm:p-6">
           <h2 className="mb-3 text-lg font-semibold">
             {tStr("umsatzInklTitle")}
           </h2>
@@ -207,7 +207,7 @@ const Summary = ({ onBack }: Props) => {
               ]}
             />
             {detailsOpen && hasPersonnelDetails && (
-              <div className="col-span-3 my-2 overflow-hidden rounded bg-white text-xs">
+              <div className="col-span-full my-2 overflow-hidden rounded bg-white text-xs">
                 <div className="space-y-4 py-2">
                   {personnelDetails.map(
                     ({ mitarbeiter: m, index }, detailIndex) => {
@@ -289,7 +289,7 @@ const Summary = ({ onBack }: Props) => {
           </Table>
         </Card>
 
-        <Card className="mb-6 bg-result p-6 text-result-foreground">
+        <Card className="mb-6 bg-result p-4 text-result-foreground sm:p-6">
           <h2 className="mb-3 text-lg font-semibold">
             {tStr("ausgangssituation")}
           </h2>
@@ -335,7 +335,9 @@ const Summary = ({ onBack }: Props) => {
 };
 
 const Table = ({ children }: { children: React.ReactNode }) => (
-  <div className="grid grid-cols-3 gap-x-4 gap-y-2 text-sm">{children}</div>
+  <div className="grid grid-cols-2 gap-x-3 gap-y-2 text-sm min-[430px]:grid-cols-[minmax(0,1fr)_132px_96px] sm:grid-cols-3 sm:gap-x-4">
+    {children}
+  </div>
 );
 
 const Row = ({
@@ -348,21 +350,29 @@ const Row = ({
   cols: [string, string];
   muted?: boolean;
   bold?: boolean;
-}) => (
-  <>
-    <div className={bold ? "font-semibold" : ""}>{label}</div>
-    <div
-      className={`text-right ${muted ? "text-muted-foreground" : ""} ${bold ? "font-semibold" : ""}`}
-    >
-      {cols[0]}
-    </div>
-    <div
-      className={`text-right ${muted ? "text-muted-foreground" : ""} ${bold ? "font-semibold" : ""}`}
-    >
-      {cols[1]}
-    </div>
-  </>
-);
+}) => {
+  const headerOnly = muted && label === "";
+
+  return (
+    <>
+      <div
+        className={`${headerOnly ? "hidden min-[430px]:block" : "col-span-2 min-[430px]:col-span-1"} min-w-0 ${bold ? "font-semibold" : ""}`}
+      >
+        {label}
+      </div>
+      <div
+        className={`whitespace-nowrap text-right tabular-nums ${muted ? "text-muted-foreground" : ""} ${bold ? "font-semibold" : ""}`}
+      >
+        {cols[0]}
+      </div>
+      <div
+        className={`whitespace-nowrap text-right tabular-nums ${muted ? "text-muted-foreground" : ""} ${bold ? "font-semibold" : ""}`}
+      >
+        {cols[1]}
+      </div>
+    </>
+  );
+};
 
 const SubRow = ({
   label,
@@ -376,11 +386,13 @@ const SubRow = ({
   shaded?: boolean;
 }) => (
   <div
-    className={`grid grid-cols-3 gap-2 px-2 py-1.5 ${shaded ? "bg-[#EFEFEF]" : ""}`}
+    className={`grid grid-cols-2 gap-x-2 gap-y-1 px-2 py-1.5 min-[430px]:grid-cols-3 ${shaded ? "bg-[#EFEFEF]" : ""}`}
   >
-    <div className="text-result-foreground/80">{label}</div>
-    <div className="text-right">{m}</div>
-    <div className="text-right">{j}</div>
+    <div className="col-span-2 min-w-0 text-result-foreground/80 min-[430px]:col-span-1">
+      {label}
+    </div>
+    <div className="whitespace-nowrap text-right tabular-nums">{m}</div>
+    <div className="whitespace-nowrap text-right tabular-nums">{j}</div>
   </div>
 );
 

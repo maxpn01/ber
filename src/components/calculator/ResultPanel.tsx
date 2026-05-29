@@ -43,7 +43,7 @@ export const ResultPanel = () => {
 
   if (!hasCalculatedOnce && !result) {
     return (
-      <div className="h-full min-h-[520px] rounded-lg bg-result p-4 text-result-foreground">
+      <div className="h-full min-h-[520px] rounded-lg bg-result p-3 text-result-foreground min-[380px]:p-4">
         <div className="rounded bg-card p-4 shadow-sm">
           <div className="mb-3 flex items-start justify-between gap-3">
             <h3 className="text-[18px] font-semibold leading-snug">
@@ -68,10 +68,10 @@ export const ResultPanel = () => {
   }
 
   return (
-    <div className="h-full rounded-lg bg-result px-4 py-6 text-result-foreground sm:px-8">
+    <div className="h-full rounded-lg bg-result px-3 py-6 text-result-foreground min-[380px]:px-4 sm:px-8">
       <section className="mb-8">
-        <div className="mb-3 flex items-center justify-between gap-4">
-          <h3 className="flex items-center gap-1.5 text-lg font-medium leading-tight xl:whitespace-nowrap">
+        <div className="mb-3 flex flex-wrap items-center justify-between gap-3 min-[430px]:flex-nowrap min-[430px]:gap-4">
+          <h3 className="flex min-w-0 items-start gap-1.5 text-lg font-medium leading-tight xl:whitespace-nowrap">
             {tStr("potenzialTitle")}
             <HelpIcon text={tStr("potenzialHelp")} />
           </h3>
@@ -382,10 +382,10 @@ const ResultRows = ({ children }: { children: ReactNode }) => (
 );
 
 const resultGridClass =
-  "grid grid-cols-[minmax(0,1fr)_132px_96px] items-center gap-3 xl:grid-cols-[minmax(0,1fr)_150px_112px] max-[420px]:grid-cols-[minmax(0,1fr)_82px_80px] max-[420px]:gap-2";
+  "grid grid-cols-2 items-center gap-x-3 gap-y-1 min-[430px]:grid-cols-[minmax(0,1fr)_132px_96px] xl:grid-cols-[minmax(0,1fr)_150px_112px]";
 
 const detailGridClass =
-  "grid grid-cols-[minmax(0,1fr)_82px_82px] items-start gap-2 sm:grid-cols-[minmax(0,1fr)_96px_96px] xl:grid-cols-[minmax(0,1fr)_104px_104px]";
+  "grid grid-cols-2 items-start gap-x-2 gap-y-1 min-[430px]:grid-cols-[minmax(0,1fr)_82px_82px] sm:grid-cols-[minmax(0,1fr)_96px_96px] xl:grid-cols-[minmax(0,1fr)_104px_104px]";
 
 const ResultHeaderRow = ({
   columns,
@@ -395,10 +395,10 @@ const ResultHeaderRow = ({
   <div
     className={cn(
       resultGridClass,
-      "pb-1 text-[14px] font-normal text-result-foreground",
+      "pb-1 text-[14px] font-normal text-result-foreground min-[430px]:gap-3",
     )}
   >
-    <div>{columns[0]}</div>
+    <div className="hidden min-[430px]:block">{columns[0]}</div>
     <div className="whitespace-nowrap text-right">{columns[1]}</div>
     <div className="whitespace-nowrap text-right">{columns[2]}</div>
   </div>
@@ -416,13 +416,15 @@ const ResultDataRow = ({
   <div
     className={cn(
       resultGridClass,
-      "min-h-[25px] rounded px-2 py-1",
+      "min-h-[25px] rounded px-2 py-1 min-[430px]:gap-3",
       medium ? "bg-white font-medium" : "bg-[#FFF7F1]",
     )}
   >
-    <div className="min-w-0 xl:whitespace-nowrap">{label}</div>
-    <div className="text-right">{values[0]}</div>
-    <div className="text-right">{values[1]}</div>
+    <div className="col-span-2 min-w-0 min-[430px]:col-span-1 xl:whitespace-nowrap">
+      {label}
+    </div>
+    <div className="whitespace-nowrap text-right tabular-nums">{values[0]}</div>
+    <div className="whitespace-nowrap text-right tabular-nums">{values[1]}</div>
   </div>
 );
 
@@ -464,8 +466,14 @@ const DetailRow = ({
   shaded?: boolean;
 }) => (
   <div className={cn(detailGridClass, "px-2 py-1.5", shaded && "bg-[#EFEFEF]")}>
-    <div className="min-w-0 text-result-foreground/80">{label}</div>
-    <div className="text-right">{money ? formatMoney(m) : formatNumber(m)}</div>
-    <div className="text-right">{money ? formatMoney(j) : formatNumber(j)}</div>
+    <div className="col-span-2 min-w-0 text-result-foreground/80 min-[430px]:col-span-1">
+      {label}
+    </div>
+    <div className="whitespace-nowrap text-right tabular-nums">
+      {money ? formatMoney(m) : formatNumber(m)}
+    </div>
+    <div className="whitespace-nowrap text-right tabular-nums">
+      {money ? formatMoney(j) : formatNumber(j)}
+    </div>
   </div>
 );

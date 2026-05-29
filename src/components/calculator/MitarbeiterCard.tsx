@@ -67,7 +67,7 @@ export const MitarbeiterCard = ({ index }: Props) => {
   const isFilled = isMitarbeiterAdvancedComplete(m, b);
 
   return (
-    <Card className="border-border bg-card px-5 py-3">
+    <Card className="border-border bg-card px-4 py-3 min-[380px]:px-5">
       <div className="flex items-center justify-between gap-3">
         <button
           type="button"
@@ -149,9 +149,9 @@ export const MitarbeiterCard = ({ index }: Props) => {
             />
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 gap-4 min-[430px]:grid-cols-2">
             <div>
-              <label className="mb-1.5 flex items-center gap-1.5 text-sm font-medium">
+              <label className="mb-1.5 flex items-start gap-1.5 text-sm font-medium leading-tight">
                 {tStr("wochenstunden")}
                 <HelpIcon text={tStr("wochenstundenHelp")} />
               </label>
@@ -166,7 +166,7 @@ export const MitarbeiterCard = ({ index }: Props) => {
               />
             </div>
             <div>
-              <label className="mb-1.5 flex items-center gap-1.5 text-sm font-medium">
+              <label className="mb-1.5 flex items-start gap-1.5 text-sm font-medium leading-tight">
                 {tStr("beschaeftigungsmonate")}
                 <HelpIcon text={tStr("beschaeftigungsmonateHelp")} />
               </label>
@@ -183,9 +183,9 @@ export const MitarbeiterCard = ({ index }: Props) => {
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 gap-4 min-[430px]:grid-cols-2">
             <div>
-              <label className="mb-1.5 flex items-center gap-1.5 text-sm font-medium">
+              <label className="mb-1.5 flex items-start gap-1.5 text-sm font-medium leading-tight">
                 {tStr("zusatzkostenMonatlich")}
                 <HelpIcon text={tStr("zusatzkostenMonatlichHelp")} />
               </label>
@@ -201,7 +201,7 @@ export const MitarbeiterCard = ({ index }: Props) => {
               />
             </div>
             <div>
-              <label className="mb-1.5 flex items-center gap-1.5 text-sm font-medium">
+              <label className="mb-1.5 flex items-start gap-1.5 text-sm font-medium leading-tight">
                 {tStr("zusatzkostenJaehrlich")}
                 <HelpIcon text={tStr("zusatzkostenJaehrlichHelp")} />
               </label>
@@ -239,7 +239,7 @@ export const MitarbeiterCard = ({ index }: Props) => {
                   }
                 />
               </h4>
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 gap-4 min-[430px]:grid-cols-2">
                 <div>
                   <label className="mb-1.5 block text-sm font-medium">
                     {tStr("verkaufbareStundenPct")}
