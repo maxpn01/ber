@@ -43,9 +43,13 @@ export const AllgemeinCard = () => {
       <div className="border-t border-dashed border-border pt-4 text-[#A2A4A9]" />
 
       <div className="mb-4">
-        <label className="mb-1.5 flex items-center text-xs font-medium">
+        <label className="mb-1.5 flex flex-wrap items-center text-xs font-medium">
           {tStr("branche")}
-          <HelpIcon text={tStr("brancheHelp")} />
+          <HelpIcon
+            text={tStr("brancheHelp")}
+            inlineContent
+            contentClassName="mt-2 w-full max-w-none sm:max-w-none lg:max-w-none"
+          />
         </label>
         <Select
           value={b}

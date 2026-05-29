@@ -1,17 +1,20 @@
 import { cn } from "@/lib/utils";
+import { X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 
 interface Props {
   text: React.ReactNode;
   className?: string;
   contentClassName?: string;
   iconSrc?: string;
+  inlineContent?: boolean;
+  side?: "top" | "right" | "bottom" | "left";
+  align?: "start" | "center" | "end";
 }
 
 export const HelpIcon = ({
@@ -19,26 +22,22 @@ export const HelpIcon = ({
   className,
   contentClassName,
   iconSrc = "/tooltip_icon.svg",
+  inlineContent = false,
+  side = "top",
+  align = "center",
 }: Props) => {
   const isTitleIcon = iconSrc === "/title_tooltip_icon.svg";
   const [open, setOpen] = useState(false);
-  const pinnedOpenRef = useRef(false);
+  const rootRef = useRef<HTMLSpanElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
-  const contentRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!open || !pinnedOpenRef.current) return;
+    if (!open || !inlineContent) return;
 
     const closeOnOutsidePointer = (event: PointerEvent) => {
       const target = event.target as Node | null;
       if (!target) return;
-      if (
-        triggerRef.current?.contains(target) ||
-        contentRef.current?.contains(target)
-      ) {
-        return;
-      }
-      pinnedOpenRef.current = false;
+      if (rootRef.current?.contains(target)) return;
       triggerRef.current?.blur();
       setOpen(false);
     };
@@ -47,64 +46,83 @@ export const HelpIcon = ({
     return () => {
       document.removeEventListener("pointerdown", closeOnOutsidePointer, true);
     };
-  }, [open]);
+  }, [inlineContent, open]);
 
   const closeTooltip = () => {
-    pinnedOpenRef.current = false;
     triggerRef.current?.blur();
     setOpen(false);
   };
 
-  return (
-    <TooltipProvider delayDuration={150}>
-      <Tooltip
-        open={open}
-        onOpenChange={(nextOpen) => {
-          if (pinnedOpenRef.current && !nextOpen) return;
-          setOpen(nextOpen);
-        }}
+  const trigger = (
+    <button
+      ref={triggerRef}
+      type="button"
+      aria-label="Hilfe"
+      aria-expanded={open}
+      onClick={inlineContent ? () => setOpen((prev) => !prev) : undefined}
+      onKeyDown={(event) => {
+        if (event.key === "Escape") closeTooltip();
+      }}
+      className={cn(
+        "inline-flex items-center justify-center rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
+        isTitleIcon ? "mt-1 h-[26px] w-[26px]" : "h-6 w-6",
+        className,
+      )}
+    >
+      <img
+        src={iconSrc}
+        alt=""
+        className={isTitleIcon ? "h-full w-full" : "h-[12px] w-[12px]"}
+      />
+    </button>
+  );
+
+  const content = (
+    <>
+      <button
+        type="button"
+        aria-label="Hilfe schließen"
+        onClick={closeTooltip}
+        className="absolute right-2 top-2 inline-flex h-5 w-5 items-center justify-center rounded-sm text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70"
       >
-        <TooltipTrigger asChild>
-          <button
-            ref={triggerRef}
-            type="button"
-            aria-label="Hilfe"
-            onPointerDown={(event) => {
-              if (event.pointerType === "mouse") return;
-              event.preventDefault();
-              const nextOpen = !open;
-              pinnedOpenRef.current = nextOpen;
-              setOpen(nextOpen);
-            }}
-            onKeyDown={(event) => {
-              if (event.key === "Escape") closeTooltip();
-            }}
+        <X className="h-3.5 w-3.5" aria-hidden />
+      </button>
+      <div className="pr-5">{text}</div>
+    </>
+  );
+
+  if (inlineContent) {
+    return (
+      <span ref={rootRef} className="contents">
+        {trigger}
+        {open && (
+          <span
             className={cn(
-              "inline-flex items-center justify-center rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
-              isTitleIcon ? "mt-1 h-[26px] w-[26px]" : "h-6 w-6",
-              className,
+              "relative block max-w-[min(calc(100vw-1.5rem),20rem)] whitespace-pre-line rounded-sm border-none bg-[#003C56] px-3 py-2.5 text-xs font-normal leading-relaxed text-white shadow-md sm:max-w-sm sm:px-4 sm:py-3 lg:max-w-md lg:px-5 lg:py-4",
+              contentClassName,
             )}
           >
-            <img
-              src={iconSrc}
-              alt=""
-              className={isTitleIcon ? "h-full w-full" : "h-[12px] w-[12px]"}
-            />
-          </button>
-        </TooltipTrigger>
-        <TooltipContent
-          ref={contentRef}
-          instantClose
-          side="top"
-          collisionPadding={12}
-          className={cn(
-            "max-w-[min(calc(100vw-1.5rem),20rem)] whitespace-pre-line rounded-sm border-none bg-[#003C56] px-3 py-2.5 text-xs font-normal leading-relaxed text-white sm:max-w-sm sm:px-4 sm:py-3 lg:max-w-md lg:px-5 lg:py-4",
-            contentClassName,
-          )}
-        >
-          {text}
-        </TooltipContent>
-      </Tooltip>
-    </TooltipProvider>
+            {content}
+          </span>
+        )}
+      </span>
+    );
+  }
+
+  return (
+    <Popover open={open} onOpenChange={setOpen} modal={false}>
+      <PopoverTrigger asChild>{trigger}</PopoverTrigger>
+      <PopoverContent
+        side={side}
+        align={align}
+        sideOffset={8}
+        className={cn(
+          "relative w-auto max-w-[min(calc(100vw-1.5rem),20rem)] whitespace-pre-line rounded-sm border-none bg-[#003C56] px-3 py-2.5 text-xs font-normal leading-relaxed text-white shadow-md sm:max-w-sm sm:px-4 sm:py-3 lg:max-w-md lg:px-5 lg:py-4",
+          contentClassName,
+        )}
+      >
+        {content}
+      </PopoverContent>
+    </Popover>
   );
 };

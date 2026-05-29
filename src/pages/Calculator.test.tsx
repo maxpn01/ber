@@ -66,6 +66,32 @@ describe("Calculator page", () => {
     );
   });
 
+  it("opens field help on click and closes from the close button or outside click", async () => {
+    const user = userEvent.setup();
+    render(<App />);
+
+    const branchHelp = screen.getAllByRole("button", { name: "Hilfe" })[0];
+    const branchHelpText =
+      /Die Ermittlung des Break-Even-Umsatzes erfolgt je nach angegebener Kategorie unterschiedlich/;
+
+    await user.hover(branchHelp);
+    expect(screen.queryByText(branchHelpText)).not.toBeInTheDocument();
+
+    await user.click(branchHelp);
+    expect(screen.getByText(branchHelpText)).toBeInTheDocument();
+
+    await user.click(screen.getByRole("button", { name: "Hilfe schließen" }));
+    expect(screen.queryByText(branchHelpText)).not.toBeInTheDocument();
+
+    await user.click(branchHelp);
+    expect(screen.getByText(branchHelpText)).toBeInTheDocument();
+
+    await user.click(screen.getByRole("textbox", { name: "Umsatz" }));
+    await waitFor(() => {
+      expect(screen.queryByText(branchHelpText)).not.toBeInTheDocument();
+    });
+  });
+
   it("preselects Dienstleistung and shows all branch options", async () => {
     const user = userEvent.setup();
     render(<App />);
