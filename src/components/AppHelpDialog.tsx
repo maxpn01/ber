@@ -37,7 +37,7 @@ export const AppHelpDialog = ({ open, onOpenChange }: AppHelpDialogProps) => {
         <button
           type="button"
           aria-label="Allgemeine Hilfe öffnen"
-          className="mt-1 inline-flex h-[22px] w-[22px] items-center justify-center rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 min-[760px]:h-[26px] min-[760px]:w-[26px]"
+          className="mt-1 inline-flex h-[24px] w-[24px] items-center justify-center rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
         >
           <img src="/title_tooltip_icon.svg" alt="" className="h-full w-full" />
         </button>
@@ -48,14 +48,14 @@ export const AppHelpDialog = ({ open, onOpenChange }: AppHelpDialogProps) => {
               aria-describedby={undefined}
               className="relative mb-10 grid w-full gap-5 rounded-lg border-none bg-[#003C56] px-8 py-9 text-white shadow-none outline-none sm:px-11"
             >
-              <DialogTitle className="mb-7 pr-12 text-xl font-medium leading-none tracking-normal text-white">
+              <DialogTitle className="mb-7 pr-12 text-[22px] font-medium leading-none tracking-normal text-white">
                 {tStr("appHelpTitle")}
               </DialogTitle>
               <DialogClose className="absolute right-8 top-7 rounded-full bg-white/15 p-1.5 text-white opacity-100 ring-offset-[#003C56] transition-colors hover:bg-white/25 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2">
                 <X className="h-5 w-5" />
                 <span className="sr-only">Close</span>
               </DialogClose>
-              <div className="space-y-9 pr-2 text-sm leading-[1.45] text-white/90">
+              <div className="space-y-9 pr-2 text-[16px] leading-[24px] text-white/90">
                 {text.appHelpSections.map((section) => (
                   <section key={section.title} className="space-y-3">
                     <h2 className="font-medium leading-none text-white">

@@ -8,7 +8,7 @@ export const TrashIcon = ({ className }: TrashIconProps) => (
   <span
     aria-hidden
     className={cn(
-      "inline-flex size-9 items-center justify-center rounded-full border border-black bg-white",
+      "inline-flex size-9 items-center justify-center rounded-full border border-black bg-white h-[47px] w-[47px]",
       className,
     )}
   >

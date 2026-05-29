@@ -6,7 +6,7 @@ const footerLinkClass =
 export const Footer = () => {
   return (
     <footer className="no-print mt-12 bg-wko-section">
-      <div className="mx-auto flex max-w-[1350px] flex-col items-center justify-end gap-2 px-4 py-4 text-xs text-muted-foreground sm:flex-row sm:gap-2 sm:px-6">
+      <div className="mx-auto flex max-w-[1200px] flex-col items-center justify-end gap-2 px-4 py-4 text-xs text-muted-foreground sm:flex-row sm:gap-2 sm:px-6">
         <a
           href="https://www.wko.at/offenlegung-oesterreich"
           className={footerLinkClass}

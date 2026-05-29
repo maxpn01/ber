@@ -35,11 +35,11 @@ export const ErzielbarerGewinnSlider = () => {
         !enabled && "bg-[#003C56]/70 text-slider-foreground/75",
       )}
     >
-      <div className="mb-1 flex items-center gap-1.5 text-xs font-medium">
+      <div className="mb-1 flex items-center gap-1.5 text-[14px] font-medium">
         <span>{tStr("erzielbarerGewinn")}</span>
         {/* <HelpIcon text={tStr("sliderHint")} className="h-5 w-5" /> */}
       </div>
-      <div className="mb-5 text-xl font-medium">
+      <div className="mb-5 text-[24px] font-medium">
         {formatMoney(displayedValue)}
       </div>
       <SliderPrimitive.Root

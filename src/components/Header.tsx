@@ -7,7 +7,7 @@ type HeaderProps = {
 export const Header = ({ title }: HeaderProps) => {
   return (
     <header className="no-print w-full border-b border-border bg-background">
-      <div className="mx-auto flex max-w-[1350px] items-center justify-between gap-3 px-3 py-4 min-[380px]:px-4 sm:px-6">
+      <div className="mx-auto flex max-w-[1200px] items-center justify-between gap-3 px-3 py-4 min-[380px]:px-4 sm:px-6">
         <div className="flex items-center gap-3">
           <a
             href="https://www.wko.at/oe/epu/ein-personen-unternehmen"

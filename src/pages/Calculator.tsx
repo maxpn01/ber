@@ -14,7 +14,7 @@ const Calculator = () => {
   const isMobile = useIsMobile();
 
   const title = (
-    <h1 className="flex items-center gap-2 text-sm font-medium min-[640px]:mb-8 min-[640px]:text-lg">
+    <h1 className="flex items-center gap-2 text-[24px] font-medium min-[640px]:mb-8">
       {tStr("appTitle")}
       <AppHelpDialog open={helpOpen} onOpenChange={setHelpOpen} />
     </h1>
@@ -23,7 +23,7 @@ const Calculator = () => {
   return (
     <div className="flex min-h-screen flex-col bg-background">
       <Header title={isMobile ? title : undefined} />
-      <main className="mx-auto w-full max-w-[1350px] flex-1 px-3 py-3 min-[380px]:px-4 sm:px-6">
+      <main className="mx-auto w-full max-w-[1200px] flex-1 px-3 py-3 min-[380px]:px-4 sm:px-6">
         {!isMobile && title}
         <AppHelpDialogSlot />
 

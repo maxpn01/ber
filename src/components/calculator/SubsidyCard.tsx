@@ -173,7 +173,7 @@ export const SubsidyCard = ({ kind }: Props) => {
         <div className="flex items-center justify-between gap-3">
           <h3
             className={cn(
-              "min-w-0 flex-1 truncate text-lg font-medium",
+              "min-w-0 flex-1 truncate text-[22px] font-medium",
               !isEpu && (cardOn ? "text-subsidy" : "text-foreground"),
             )}
             style={isEpu ? { color: "#003C56" } : undefined}
@@ -209,10 +209,10 @@ export const SubsidyCard = ({ kind }: Props) => {
               }
             }}
             className={cn(
-              "h-5 w-10 cursor-pointer",
+              "h-6 w-12 cursor-pointer",
               isExpanded && "data-[state=checked]:bg-toggle-on",
             )}
-            thumbClassName="h-3.5 w-3.5 data-[state=checked]:translate-x-[calc(2.5rem-0.875rem-4px-0.0625rem)] data-[state=unchecked]:translate-x-[0.0625rem]"
+            thumbClassName="h-[18px] w-[18px] data-[state=checked]:translate-x-[calc(3rem-1.125rem-4px-0.0625rem)] data-[state=unchecked]:translate-x-[0.0625rem]"
             aria-label={tStr(TITLE_KEY[kind])}
           />
         </div>
@@ -227,7 +227,7 @@ export const SubsidyCard = ({ kind }: Props) => {
                   <label
                     key={i}
                     className={cn(
-                      "flex items-center gap-3 rounded-md border border-border bg-muted/40 px-3 py-3 text-sm",
+                      "flex items-center gap-3 rounded-md border border-border bg-muted/40 px-3 py-3 text-[16px]",
                       isEpu && "border-[#E6E6E6] bg-[#F5F5F5]",
                       !isEligible && "cursor-not-allowed opacity-60",
                       isChecked &&
@@ -249,7 +249,7 @@ export const SubsidyCard = ({ kind }: Props) => {
                         isEpu ? "h-4 w-4 stroke-[3.25]" : undefined
                       }
                     />
-                    <span className={cn(isEpu && "text-base")}>
+                    <span className={cn(isEpu && "text-[16px]")}>
                       {isEpu ? "Für Mitarbeiter:in" : tStr("fuerMitarbeiter")}{" "}
                       {i + 1}
                     </span>
@@ -263,7 +263,7 @@ export const SubsidyCard = ({ kind }: Props) => {
               onOpenChange={setConditionsOpen}
               className="rounded-md bg-[#F5F5F5] px-4 py-4"
             >
-              <CollapsibleTrigger className="flex w-full items-center justify-between gap-3 text-left text-sm font-medium">
+              <CollapsibleTrigger className="flex w-full items-center justify-between gap-3 text-left text-[15px] font-medium">
                 <span>Voraussetzungen</span>
                 <ChevronUp
                   className={cn(
@@ -274,10 +274,10 @@ export const SubsidyCard = ({ kind }: Props) => {
                 />
               </CollapsibleTrigger>
               <CollapsibleContent className="pt-7">
-                <h4 className="mb-5 text-lg font-medium leading-snug">
+                <h4 className="mb-5 text-[20px] font-medium leading-snug">
                   {tStr("voraussetzungenTitel")}
                 </h4>
-                <ul className="list-disc space-y-1.5 pl-5 text-sm leading-relaxed text-[#555]">
+                <ul className="list-disc space-y-1.5 pl-5 text-[16px] leading-relaxed text-[#555]">
                   {tList(COND_KEY[kind]).map((c, i) => (
                     <li key={i}>{c}</li>
                   ))}
@@ -285,7 +285,7 @@ export const SubsidyCard = ({ kind }: Props) => {
               </CollapsibleContent>
             </Collapsible>
 
-            <div className="rounded-md bg-[#EFF2F9] px-4 py-3 text-sm leading-relaxed">
+            <div className="rounded-md bg-[#EFF2F9] px-4 py-3 text-[16px] leading-relaxed">
               <span className="font-medium">{tStr("hinweisLabel")}</span>{" "}
               {tStr(HINT_KEY[kind])}
             </div>

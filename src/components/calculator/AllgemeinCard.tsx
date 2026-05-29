@@ -40,11 +40,12 @@ export const AllgemeinCard = () => {
 
   return (
     <Card className="border-border bg-card p-4">
-      <h2 className="mb-2 text-lg font-medium">{tStr("allgemein")}</h2>
-      <div className="border-t border-dashed border-border pt-4 text-[#A2A4A9]" />
+      <h2 className="mb-2 text-[22px] font-medium">{tStr("allgemein")}</h2>
 
-      <div className="mb-4">
-        <div className="relative mb-1.5 flex flex-wrap items-center gap-1 text-xs font-medium">
+      <div className="border-t border-dashed border-border pt-4 text-[#A2A4A9] mb-2" />
+
+      <div className="mb-6">
+        <div className="relative mb-1.5 flex flex-wrap items-center gap-1 text-[14px] font-medium">
           {tStr("branche")}
           <HelpIcon
             text={tStr("brancheHelp")}
@@ -64,7 +65,7 @@ export const AllgemeinCard = () => {
             ref={brancheTriggerRef}
             aria-label={tStr("branche")}
             className={cn(
-              "border-transparent bg-muted",
+              "border-transparent bg-muted text-[16px]",
               "data-[state=open]:border-slider data-[state=open]:bg-slider/5 data-[state=open]:ring-1 data-[state=open]:ring-slider",
             )}
           >
@@ -87,9 +88,9 @@ export const AllgemeinCard = () => {
         </Select>
       </div>
 
-      <div className="border-t border-dashed border-border pt-4" />
+      <div className="border-t border-dashed border-border pt-6" />
 
-      <div className="grid grid-cols-1 gap-4 pb-6 sm:grid-cols-3 sm:items-end">
+      <div className="grid grid-cols-1 gap-4 pb-8 sm:grid-cols-3 sm:items-end">
         <Field label={tStr("umsatz")} help={tStr("umsatzHelp")}>
           <NumberInput
             value={input.umsatz}
@@ -159,9 +160,9 @@ const Field = ({
   children: React.ReactNode;
 }) => (
   <div className="flex flex-col">
-    <div className="mb-1.5 flex items-start gap-1 text-xs font-medium leading-tight">
+    <div className="mb-1.5 flex items-start gap-1 text-[14px] font-medium leading-tight">
       <span>{label}</span>
-      <HelpIcon text={help} className="mt-0.5" />
+      <HelpIcon text={help} className="mt-1" />
     </div>
     {children}
   </div>

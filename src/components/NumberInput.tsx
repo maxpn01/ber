@@ -128,7 +128,7 @@ export const NumberInput = ({
           }
         }}
         className={cn(
-          "border-transparent bg-muted",
+          "border-transparent bg-muted text-[16px] md:text-[16px]",
           invalid && "border-destructive bg-destructive/10 text-destructive",
           computed && !focused && "text-muted-foreground",
           suffix && "pr-8",
@@ -136,7 +136,7 @@ export const NumberInput = ({
         )}
       />
       {suffix && (
-        <span className="pointer-events-none absolute inset-y-0 right-3 flex items-center text-sm text-muted-foreground">
+        <span className="pointer-events-none absolute inset-y-0 right-3 flex items-center text-[16px] text-muted-foreground">
           {suffix}
         </span>
       )}

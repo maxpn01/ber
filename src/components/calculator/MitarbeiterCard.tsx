@@ -74,7 +74,7 @@ export const MitarbeiterCard = ({ index }: Props) => {
       <div className="flex items-center justify-between gap-3">
         <button
           type="button"
-          className="flex min-w-0 flex-1 items-center gap-2 text-left text-lg font-medium"
+          className="flex min-w-0 flex-1 items-center gap-2 text-left text-[22px] font-medium"
           onClick={() => toggleMitarbeiterOpen(index)}
           aria-expanded={isOpen}
         >
@@ -95,17 +95,17 @@ export const MitarbeiterCard = ({ index }: Props) => {
           onClick={() => toggleMitarbeiterOpen(index)}
           aria-label={`${tStr("datenMitarbeiter")} ${index + 1} öffnen oder schließen`}
           className={cn(
-            "h-5 w-10 cursor-pointer",
+            "h-6 w-12 cursor-pointer",
             isIncluded && "data-[state=checked]:bg-toggle-on",
           )}
-          thumbClassName="h-3.5 w-3.5 data-[state=checked]:translate-x-[calc(2.5rem-0.875rem-4px-0.0625rem)] data-[state=unchecked]:translate-x-[0.0625rem]"
+          thumbClassName="h-[18px] w-[18px] data-[state=checked]:translate-x-[calc(3rem-1.125rem-4px-0.0625rem)] data-[state=unchecked]:translate-x-[0.0625rem]"
         />
       </div>
 
       {isOpen && (
-        <div className="mt-4 space-y-4 border-t border-dashed border-border pt-4">
+        <div className="mt-4 space-y-[25px] border-t border-dashed border-border pt-4">
           <div>
-            <div className="mb-1.5 flex items-center gap-1.5 text-sm font-medium">
+            <div className="mb-1.5 flex items-center gap-1.5 text-[14px] font-medium">
               {tStr("beschaeftigungsform")}
               <HelpIcon
                 text={tStr("beschaeftigungsformHelp")}
@@ -130,7 +130,7 @@ export const MitarbeiterCard = ({ index }: Props) => {
                 ref={beschaeftigungsformTriggerRef}
                 aria-label={`${tStr("datenMitarbeiter")} ${index + 1}: ${tStr("beschaeftigungsform")}`}
                 className={cn(
-                  "border-transparent bg-muted",
+                  "border-transparent bg-muted text-[16px]",
                   "data-[state=open]:border-slider data-[state=open]:bg-slider/5 data-[state=open]:ring-1 data-[state=open]:ring-slider",
                 )}
               >
@@ -154,7 +154,7 @@ export const MitarbeiterCard = ({ index }: Props) => {
           </div>
 
           <div>
-            <div className="mb-1.5 flex items-center gap-1.5 text-sm font-medium">
+            <div className="mb-1.5 flex items-center gap-1.5 text-[14px] font-medium">
               {tStr("bruttogehalt")}
               <HelpIcon text={tStr("bruttogehaltHelp")} className="mt-[3px]" />
             </div>
@@ -169,7 +169,7 @@ export const MitarbeiterCard = ({ index }: Props) => {
 
           <div className="grid grid-cols-1 gap-4 min-[430px]:grid-cols-2">
             <div>
-              <div className="mb-1.5 flex items-start gap-1.5 text-sm font-medium leading-tight">
+              <div className="mb-1.5 flex items-start gap-1.5 text-[14px] font-medium leading-tight">
                 {tStr("wochenstunden")}
                 <HelpIcon
                   text={tStr("wochenstundenHelp")}
@@ -187,7 +187,7 @@ export const MitarbeiterCard = ({ index }: Props) => {
               />
             </div>
             <div>
-              <div className="mb-1.5 flex items-start gap-1.5 text-sm font-medium leading-tight">
+              <div className="mb-1.5 flex items-start gap-1.5 text-[14px] font-medium leading-tight">
                 {tStr("beschaeftigungsmonate")}
                 <HelpIcon
                   text={tStr("beschaeftigungsmonateHelp")}
@@ -209,7 +209,7 @@ export const MitarbeiterCard = ({ index }: Props) => {
 
           <div className="grid grid-cols-1 gap-4 min-[430px]:grid-cols-2">
             <div>
-              <div className="mb-1.5 flex items-start gap-1.5 text-sm font-medium leading-tight">
+              <div className="mb-1.5 flex items-start gap-1.5 text-[14px] font-medium leading-tight">
                 {tStr("zusatzkostenMonatlich")}
                 <HelpIcon
                   text={tStr("zusatzkostenMonatlichHelp")}
@@ -228,7 +228,7 @@ export const MitarbeiterCard = ({ index }: Props) => {
               />
             </div>
             <div>
-              <div className="mb-1.5 flex items-start gap-1.5 text-sm font-medium leading-tight">
+              <div className="mb-1.5 flex items-start gap-1.5 text-[14px] font-medium leading-tight">
                 {tStr("zusatzkostenJaehrlich")}
                 <HelpIcon
                   text={tStr("zusatzkostenJaehrlichHelp")}
@@ -250,9 +250,9 @@ export const MitarbeiterCard = ({ index }: Props) => {
 
           {showsVerkaufbareStunden(b) && (
             <div className="border-t border-dashed border-border pt-4">
-              <h4 className="mb-3 flex items-center gap-1.5 text-base font-semibold">
+              <h4 className="mb-3 flex items-center gap-1.5 text-[20px] font-semibold">
                 {tStr("verkaufbareStunden")}
-                <HelpIcon
+                {/* <HelpIcon
                   text={
                     <>
                       <span className="underline">
@@ -268,11 +268,11 @@ export const MitarbeiterCard = ({ index }: Props) => {
                     </>
                   }
                   className="mt-[4px]"
-                />
+                /> */}
               </h4>
               <div className="grid grid-cols-1 gap-4 min-[430px]:grid-cols-2">
                 <div>
-                  <label className="mb-1.5 block text-sm font-medium">
+                  <label className="mb-1.5 block text-[14px] font-medium">
                     {tStr("verkaufbareStundenPct")}
                   </label>
                   <NumberInput
@@ -287,7 +287,7 @@ export const MitarbeiterCard = ({ index }: Props) => {
                   />
                 </div>
                 <div>
-                  <label className="mb-1.5 block text-sm font-medium">
+                  <label className="mb-1.5 block text-[14px] font-medium">
                     {tStr("stundensatz")}
                   </label>
                   <NumberInput
@@ -308,7 +308,7 @@ export const MitarbeiterCard = ({ index }: Props) => {
                 {tStr("potenzielleUmsatzsteigerung")}
                 <HelpIcon text={tStr("potenzielleUmsatzsteigerungHelp")} />
               </h4>
-              <label className="mb-1.5 block text-sm font-medium">
+              <label className="mb-1.5 block text-[14px] font-medium">
                 {tStr("umsatzsteigerung")}
               </label>
               <NumberInput
@@ -324,11 +324,11 @@ export const MitarbeiterCard = ({ index }: Props) => {
             </div>
           )}
 
-          <div className="flex items-center gap-4 pt-2">
+          <div className="flex items-center gap-4 py-4">
             <Button
               variant="outline"
               size="sm"
-              className="rounded-full border-black bg-transparent px-5 py-4 font-medium hover:bg-transparent hover:opacity-70"
+              className="rounded-full border-black text-base bg-transparent px-6 py-5 font-medium hover:bg-transparent hover:opacity-70"
               onClick={() => resetMitarbeiter(index)}
             >
               {tStr("zuruecksetzen")}
@@ -336,7 +336,7 @@ export const MitarbeiterCard = ({ index }: Props) => {
             <Button
               variant="outline"
               size="icon"
-              className="h-9 w-9 rounded-full bg-transparent p-0 shadow-none hover:opacity-70"
+              className="h-[47px] w-[47px] rounded-full bg-transparent p-0 shadow-none hover:opacity-70"
               onClick={() => deleteMitarbeiter(index)}
               aria-label={tStr("loeschen")}
             >

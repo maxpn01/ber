@@ -71,9 +71,12 @@ export const ResultPanel = () => {
     <div className="h-full rounded-lg bg-result px-3 py-6 text-result-foreground min-[380px]:px-4 sm:px-8">
       <section className="mb-8">
         <div className="mb-3 flex flex-wrap items-center justify-between gap-3 min-[430px]:flex-nowrap min-[430px]:gap-4">
-          <h3 className="flex min-w-0 items-start gap-1.5 text-base font-medium leading-tight xl:whitespace-nowrap">
+          <h3 className="flex min-w-0 items-start gap-1.5 text-[18px] font-medium leading-tight xl:whitespace-nowrap">
             {tStr("potenzialTitle")}
-            <HelpIcon text={tStr("potenzialHelp")} className="mt-[8px]" />
+            <HelpIcon
+              text={tStr("potenzialHelp")}
+              className="mt-[6px] h-[12px] w-[12px]"
+            />
           </h3>
           <EmployeeIcons
             activeCount={activeMitarbeiterCount}
@@ -89,11 +92,11 @@ export const ResultPanel = () => {
                 {tStr("potenzialInkl")}
                 <HelpIcon
                   text={potenzialInputHelp}
-                  className="h-4 w-4 shrink-0"
+                  className="shrink-0"
                   contentClassName="text-left"
                 />
               </span>,
-              tStr("breakEven"),
+              <span className="font-medium">{tStr("breakEven")}</span>,
             ]}
           />
           <ResultDataRow
@@ -127,7 +130,7 @@ export const ResultPanel = () => {
       </section>
 
       <section className="mb-8">
-        <h3 className="mb-3 text-lg font-medium leading-tight">
+        <h3 className="mb-3 text-[18px] font-medium leading-tight">
           {tStr("umsatzInklTitle")}
         </h3>
         <SectionDivider />
@@ -140,7 +143,7 @@ export const ResultPanel = () => {
                 {tStr("jaehrlich")}
                 <HelpIcon
                   text={tStr("jaehrlichHelp")}
-                  className="h-4 w-4 shrink-0"
+                  className="shrink-0 mt-0.5"
                 />
               </span>,
             ]}
@@ -196,19 +199,21 @@ export const ResultPanel = () => {
           />
           <ResultDataRow
             label={
-              <span className="flex items-center gap-1">
-                - {tStr("personalkosten")}
-                {hasPersonnelDetails && (
+              hasPersonnelDetails ? (
+                <span className="flex min-w-0 items-center gap-1">
+                  <span>- {tStr("personalkosten")}</span>
                   <button
                     type="button"
                     onClick={() => setDetailsOpen((p) => !p)}
-                    className="inline-flex items-center text-[12px] font-medium underline underline-offset-2"
+                    className="inline-flex shrink-0 items-center px-1 text-[12px] font-medium underline underline-offset-2"
                     aria-expanded={detailsOpen}
                   >
                     ➔ {tStr("details")}
                   </button>
-                )}
-              </span>
+                </span>
+              ) : (
+                `- ${tStr("personalkosten")}`
+              )
             }
             values={[
               empty
@@ -238,7 +243,7 @@ export const ResultPanel = () => {
                         money: true,
                       },
                       {
-                        label: m.foerderungText,
+                        label: tStr("foerderung"),
                         m: m.foerderung.monat,
                         j: m.foerderung.jahr,
                         money: true,
@@ -256,7 +261,7 @@ export const ResultPanel = () => {
                     ];
 
                     return (
-                      <div key={index} className="text-xs">
+                      <div key={index} className="text-[13px]">
                         <div className="flex min-h-8 items-center justify-between px-2 font-medium">
                           <span>
                             {tStr("mitarbeiter")} {index + 1}
@@ -313,7 +318,7 @@ export const ResultPanel = () => {
       </section>
 
       <section>
-        <h3 className="mb-3 text-lg font-medium leading-tight">
+        <h3 className="mb-3 text-[18px] font-medium leading-tight">
           {tStr("ausgangssituation")}
         </h3>
         <SectionDivider />
@@ -378,14 +383,14 @@ const SectionDivider = () => (
 );
 
 const ResultRows = ({ children }: { children: ReactNode }) => (
-  <div className="space-y-2 text-[14px] leading-tight">{children}</div>
+  <div className="space-y-2 text-[15px] leading-tight">{children}</div>
 );
 
 const resultGridClass =
-  "grid grid-cols-2 items-center gap-x-3 gap-y-1 min-[430px]:grid-cols-[minmax(0,1fr)_132px_96px] xl:grid-cols-[minmax(0,1fr)_150px_112px]";
+  "grid grid-cols-2 items-center gap-x-3 gap-y-1 min-[1180px]:grid-cols-[minmax(0,1fr)_140px_140px]";
 
 const detailGridClass =
-  "grid grid-cols-2 items-start gap-x-2 gap-y-1 min-[430px]:grid-cols-[minmax(0,1fr)_82px_82px] sm:grid-cols-[minmax(0,1fr)_96px_96px] xl:grid-cols-[minmax(0,1fr)_104px_104px]";
+  "grid grid-cols-2 items-start gap-x-2 gap-y-1 min-[1180px]:grid-cols-[minmax(0,1fr)_132px_132px]";
 
 const ResultHeaderRow = ({
   columns,
@@ -395,10 +400,10 @@ const ResultHeaderRow = ({
   <div
     className={cn(
       resultGridClass,
-      "pb-1 text-[14px] font-normal text-result-foreground min-[430px]:gap-3",
+      "px-2 pb-1 text-[14px] font-normal text-result-foreground",
     )}
   >
-    <div className="hidden min-[430px]:block">{columns[0]}</div>
+    <div className="hidden min-[1180px]:block">{columns[0]}</div>
     <div className="whitespace-nowrap text-right">{columns[1]}</div>
     <div className="whitespace-nowrap text-right">{columns[2]}</div>
   </div>
@@ -416,15 +421,19 @@ const ResultDataRow = ({
   <div
     className={cn(
       resultGridClass,
-      "min-h-[25px] rounded px-2 py-1 min-[430px]:gap-3",
+      "min-h-[25px] rounded px-2 py-1",
       medium ? "bg-white font-medium" : "bg-[#FFF7F1]",
     )}
   >
-    <div className="col-span-2 min-w-0 min-[430px]:col-span-1 xl:whitespace-nowrap">
+    <div className="col-span-2 min-w-0 min-[1180px]:col-span-1 xl:whitespace-nowrap">
       {label}
     </div>
-    <div className="whitespace-nowrap text-right tabular-nums">{values[0]}</div>
-    <div className="whitespace-nowrap text-right tabular-nums">{values[1]}</div>
+    <div className="min-w-0 whitespace-nowrap text-right text-[clamp(12px,3.2vw,15px)] tabular-nums">
+      {values[0]}
+    </div>
+    <div className="min-w-0 whitespace-nowrap text-right text-[clamp(12px,3.2vw,15px)] tabular-nums">
+      {values[1]}
+    </div>
   </div>
 );
 
@@ -466,13 +475,13 @@ const DetailRow = ({
   shaded?: boolean;
 }) => (
   <div className={cn(detailGridClass, "px-2 py-1.5", shaded && "bg-[#EFEFEF]")}>
-    <div className="col-span-2 min-w-0 text-result-foreground/80 min-[430px]:col-span-1">
+    <div className="col-span-2 min-w-0 text-result-foreground/80 min-[1180px]:col-span-1">
       {label}
     </div>
-    <div className="whitespace-nowrap text-right tabular-nums">
+    <div className="min-w-0 whitespace-nowrap text-right text-[clamp(11px,3vw,13px)] tabular-nums">
       {money ? formatMoney(m) : formatNumber(m)}
     </div>
-    <div className="whitespace-nowrap text-right tabular-nums">
+    <div className="min-w-0 whitespace-nowrap text-right text-[clamp(11px,3vw,13px)] tabular-nums">
       {money ? formatMoney(j) : formatNumber(j)}
     </div>
   </div>
