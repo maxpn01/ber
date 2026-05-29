@@ -104,7 +104,7 @@ export const MitarbeiterCard = ({ index }: Props) => {
           <div>
             <label className="mb-1.5 flex items-center gap-1.5 text-sm font-medium">
               {tStr("beschaeftigungsform")}
-              <HelpIcon text={tStr("beschaeftigungsform")} />
+              <HelpIcon text={tStr("beschaeftigungsformHelp")} />
             </label>
             <Select
               value={m.beschaeftigungsform}
@@ -138,7 +138,7 @@ export const MitarbeiterCard = ({ index }: Props) => {
           <div>
             <label className="mb-1.5 flex items-center gap-1.5 text-sm font-medium">
               {tStr("bruttogehalt")}
-              <HelpIcon text={tStr("bruttogehalt")} />
+              <HelpIcon text={tStr("bruttogehaltHelp")} />
             </label>
             <NumberInput
               value={m.bruttogehaltProMonat}
@@ -153,7 +153,7 @@ export const MitarbeiterCard = ({ index }: Props) => {
             <div>
               <label className="mb-1.5 flex items-center gap-1.5 text-sm font-medium">
                 {tStr("wochenstunden")}
-                <HelpIcon text={tStr("wochenstunden")} />
+                <HelpIcon text={tStr("wochenstundenHelp")} />
               </label>
               <NumberInput
                 value={m.anzahlWochenstunden}
@@ -168,7 +168,7 @@ export const MitarbeiterCard = ({ index }: Props) => {
             <div>
               <label className="mb-1.5 flex items-center gap-1.5 text-sm font-medium">
                 {tStr("beschaeftigungsmonate")}
-                <HelpIcon text={tStr("beschaeftigungsmonate")} />
+                <HelpIcon text={tStr("beschaeftigungsmonateHelp")} />
               </label>
               <NumberInput
                 value={m.anzahlBeschaeftigungsmonate}
@@ -187,7 +187,7 @@ export const MitarbeiterCard = ({ index }: Props) => {
             <div>
               <label className="mb-1.5 flex items-center gap-1.5 text-sm font-medium">
                 {tStr("zusatzkostenMonatlich")}
-                <HelpIcon text={tStr("zusatzkostenMonatlich")} />
+                <HelpIcon text={tStr("zusatzkostenMonatlichHelp")} />
               </label>
               <NumberInput
                 value={m.zusatzkostenMonatlich}
@@ -200,7 +200,7 @@ export const MitarbeiterCard = ({ index }: Props) => {
             <div>
               <label className="mb-1.5 flex items-center gap-1.5 text-sm font-medium">
                 {tStr("zusatzkostenJaehrlich")}
-                <HelpIcon text={tStr("zusatzkostenJaehrlich")} />
+                <HelpIcon text={tStr("zusatzkostenJaehrlichHelp")} />
               </label>
               <NumberInput
                 value={m.zusatzkostenJaehrlich}
@@ -216,7 +216,22 @@ export const MitarbeiterCard = ({ index }: Props) => {
             <div className="border-t border-dashed border-border pt-4">
               <h4 className="mb-3 flex items-center gap-1.5 text-base font-semibold">
                 {tStr("verkaufbareStunden")}
-                <HelpIcon text={tStr("verkaufbareStundenHelp")} />
+                <HelpIcon
+                  text={
+                    <>
+                      <span className="underline">
+                        Verkaufbare Stunden in %:
+                      </span>
+                      {
+                        "\nGeben Sie hier den Prozentsatz an, den Ihr Mitarbeiter mit produktiven Tätigkeiten beschäftigt ist. Beachten Sie bitte, dass Sie die Arbeitszeit für nicht-produktive Tätigkeiten (etwa für Akquisition, Offerterstellung, Büroarbeit, uä) dem Kunden nicht verrechnen können, weshalb es auch zu einer Reduktion der verkaufbaren Stunden kommt. Die durchschnittlich zur Verfügung stehenden Arbeitsstunden ergeben sich aus den maximal möglichen Leistungsstunden eines Mitarbeiters gekürzt um die Nicht-Leistungszeiten wie Urlaub, Krankenstand und Feiertage. Bei der Beschäftigungsform „Freier Dienstvertrag“ erfolgt keine Berücksichtigung der Nicht-Leistungszeiten.\n\n"
+                      }
+                      <span className="underline">Stundensatz:</span>
+                      {
+                        "\nGeben Sie hier jenen Stundensatz an, mit dem Sie Leistungen Ihres Mitarbeiters verrechnen möchten. Bedenken Sie dabei, dass in vielen Fällen nicht derselbe Stundensatz verwendet werden kann, den Sie für Ihre eigene Leistungserbringung verrechnen.\nBitte beachten Sie den Stundensatz auch hier netto anzugeben, sofern Sie umsatzsteuerpflichtig sind."
+                      }
+                    </>
+                  }
+                />
               </h4>
               <div className="grid grid-cols-2 gap-4">
                 <div>
@@ -272,19 +287,19 @@ export const MitarbeiterCard = ({ index }: Props) => {
             </div>
           )}
 
-          <div className="flex items-center gap-2 pt-2">
+          <div className="flex items-center gap-4 pt-2">
             <Button
               variant="outline"
               size="sm"
-              className="rounded-full"
+              className="rounded-full border-black bg-transparent px-5 py-4 font-medium hover:bg-transparent hover:opacity-70"
               onClick={() => resetMitarbeiter(index)}
             >
               {tStr("zuruecksetzen")}
             </Button>
             <Button
-              variant="default"
+              variant="outline"
               size="icon"
-              className="h-9 w-9 rounded-full bg-transparent p-0 shadow-none hover:opacity-80"
+              className="h-9 w-9 rounded-full bg-transparent p-0 shadow-none hover:opacity-70"
               onClick={() => deleteMitarbeiter(index)}
               aria-label={tStr("loeschen")}
             >

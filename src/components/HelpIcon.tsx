@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/tooltip";
 
 interface Props {
-  text: string;
+  text: React.ReactNode;
   className?: string;
   contentClassName?: string;
   iconSrc?: string;

@@ -80,8 +80,20 @@ export const text = {
   verkaufbareStundenPct: "Verkaufbare Stunden in %",
   stundensatz: "Stundensatz",
   umsatzsteigerung: "Geschätzte Umsatzsteigerung in %",
+  beschaeftigungsformHelp:
+    "Wählen Sie hier die Beschäftigungsform des Mitarbeiters aus. Detailinformationen zu den einzelnen Formen finden Sie in der allgemeinen Hilfe (siehe i-Icon links oben neben der Rechnerüberschrift).",
+  bruttogehaltHelp:
+    "Bitte geben Sie hier das Bruttogehalt an, welches Sie Ihrem Mitarbeiter pro Monat zahlen möchten.",
+  wochenstundenHelp:
+    "Bitte geben Sie hier die Anzahl der Wochenstunden an, die Ihr Mitarbeiter in Ihrem Unternehmen tätig sein wird.",
+  beschaeftigungsmonateHelp:
+    "Bitte geben Sie hier die Anzahl der Monate an, die Sie Ihren Mitarbeiter in einem Kalenderjahr beschäftigen möchten.",
+  zusatzkostenMonatlichHelp:
+    "Bitte geben Sie hier die personenabhängigen Zusatzkosten an, die sich durch die Einstellung des Mitarbeiters monatlich ergeben.\n\nTypischerweise fallen folgende Zusatzkosten an:\n– für die Einrichtung eines zusätzlichen Arbeitsplatzes\n– für die Schaffung der notwendigen Infrastruktur\n– für die Anschaffung zusätzlicher Arbeitsgeräte\n– durch erhöhte Telefonkosten\n– durch den Druck von Visitenkarten\n\nDie angegebenen monatlichen Kosten werden auf die jeweilige Anzahl der Beschäftigungsmonate hochgerechnet. Füllen Sie bitte entweder nur die Monats- oder nur die Jahresspalte aus.",
+  zusatzkostenJaehrlichHelp:
+    "Bitte geben Sie hier die personenabhängigen Zusatzkosten an, die sich durch die Einstellung des Mitarbeiters in einem Jahr ergeben.\n\nTypischerweise fallen folgende Zusatzkosten an:\n– für die Einrichtung eines zusätzlichen Arbeitsplatzes\n– für die Schaffung der notwendigen Infrastruktur\n– für die Anschaffung zusätzlicher Arbeitsgeräte\n– durch erhöhte Telefonkosten\n– durch den Druck von Visitenkarten\n\nDie in diesem Feld angegebenen Kosten werden für die jeweilige Anzahl der Beschäftigungsmonate berechnet. Füllen Sie bitte entweder nur die Monats- oder nur die Jahresspalte aus.",
   verkaufbareStundenHelp:
-    "Verkaufbare Stunden in %:\nGeben Sie hier den Prozentsatz an, den Ihr Mitarbeiter mit produktiven Tätigkeiten beschäftigt ist. Beachten Sie bitte, dass Sie die Arbeitszeit für nicht-produktive Tätigkeiten nicht verrechnen können.\n\nStundensatz:\nGeben Sie hier jenen Stundensatz an, mit dem Sie Leistungen Ihres Mitarbeiters verrechnen möchten. Bitte beachten Sie den Stundensatz netto anzugeben, sofern Sie umsatzsteuerpflichtig sind.",
+    "Verkaufbare Stunden in %:\nGeben Sie hier den Prozentsatz an, den Ihr Mitarbeiter mit produktiven Tätigkeiten beschäftigt ist. Beachten Sie bitte, dass Sie die Arbeitszeit für nicht-produktive Tätigkeiten (etwa für Akquisition, Offerterstellung, Büroarbeit, uä) dem Kunden nicht verrechnen können, weshalb es auch zu einer Reduktion der verkaufbaren Stunden kommt. Die durchschnittlich zur Verfügung stehenden Arbeitsstunden ergeben sich aus den maximal möglichen Leistungsstunden eines Mitarbeiters gekürzt um die Nicht-Leistungszeiten wie Urlaub, Krankenstand und Feiertage. Bei der Beschäftigungsform „Freier Dienstvertrag“ erfolgt keine Berücksichtigung der Nicht-Leistungszeiten.\n\nStundensatz:\nGeben Sie hier jenen Stundensatz an, mit dem Sie Leistungen Ihres Mitarbeiters verrechnen möchten. Bedenken Sie dabei, dass in vielen Fällen nicht derselbe Stundensatz verwendet werden kann, den Sie für Ihre eigene Leistungserbringung verrechnen.\nBitte beachten Sie den Stundensatz auch hier netto anzugeben, sofern Sie umsatzsteuerpflichtig sind.",
   potenzielleUmsatzsteigerungHelp:
     "Geschätzte Umsatzsteigerung in %:\nGeben Sie die Umsatzsteigerung, die Sie durch den Mitarbeiter schätzungsweise erzielen können, ein.",
   zuruecksetzen: "Zurücksetzen",
