@@ -29,6 +29,7 @@ import {
 import type { Dienstverhaeltnis } from "@/lib/calculator/types";
 import { tStr, type TextKey } from "@/lib/text";
 import { cn } from "@/lib/utils";
+import { useRef } from "react";
 
 const dvLabelKey = (d: Dienstverhaeltnis): TextKey => {
   const map: Record<Dienstverhaeltnis, TextKey> = {
@@ -54,6 +55,8 @@ export const MitarbeiterCard = ({ index }: Props) => {
     resetMitarbeiter,
     deleteMitarbeiter,
   } = useCalculator();
+  const beschaeftigungsformTriggerRef = useRef<HTMLButtonElement>(null);
+  const blurBeschaeftigungsformAfterSelectRef = useRef(false);
   const m = [
     input.mitarbeiter1,
     input.mitarbeiter2,
@@ -112,6 +115,7 @@ export const MitarbeiterCard = ({ index }: Props) => {
             <Select
               value={m.beschaeftigungsform}
               onValueChange={(v) => {
+                blurBeschaeftigungsformAfterSelectRef.current = true;
                 const beschaeftigungsform = v as Dienstverhaeltnis;
                 patchMitarbeiter(index, {
                   beschaeftigungsform,
@@ -123,12 +127,23 @@ export const MitarbeiterCard = ({ index }: Props) => {
               }}
             >
               <SelectTrigger
+                ref={beschaeftigungsformTriggerRef}
                 aria-label={`${tStr("datenMitarbeiter")} ${index + 1}: ${tStr("beschaeftigungsform")}`}
-                className="border-transparent bg-muted"
+                className={cn(
+                  "border-transparent bg-muted",
+                  "data-[state=open]:border-slider data-[state=open]:bg-slider/5 data-[state=open]:ring-1 data-[state=open]:ring-slider",
+                )}
               >
                 <SelectValue />
               </SelectTrigger>
-              <SelectContent>
+              <SelectContent
+                onCloseAutoFocus={(event) => {
+                  if (!blurBeschaeftigungsformAfterSelectRef.current) return;
+                  event.preventDefault();
+                  blurBeschaeftigungsformAfterSelectRef.current = false;
+                  beschaeftigungsformTriggerRef.current?.blur();
+                }}
+              >
                 {dienstverhaeltnisse.map((d) => (
                   <SelectItem key={d} value={d}>
                     {tStr(dvLabelKey(d))}
