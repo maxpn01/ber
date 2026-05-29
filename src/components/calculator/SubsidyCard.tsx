@@ -109,15 +109,15 @@ export const SubsidyCard = ({ kind }: Props) => {
     const m = all[i];
     if (!isMitarbeiterBasicComplete(m)) return false;
 
-    if (kind === "epu") {
-      return true;
-    }
-
     if (
       m.beschaeftigungsform !== "angestellter" &&
       m.beschaeftigungsform !== "arbeiter"
     )
       return false;
+
+    if (kind === "epu") {
+      return true;
+    }
 
     if (kind === "bonus") {
       const usedCount = all.filter((x) => x.foerderungBonus).length;
@@ -244,7 +244,9 @@ export const SubsidyCard = ({ kind }: Props) => {
                           ? "h-6 w-6 rounded-[4px] border-[#BDBCDB] bg-white text-white data-[state=checked]:border-[#003C56] data-[state=checked]:bg-[#003C56] data-[state=unchecked]:bg-white"
                           : "data-[state=checked]:border-toggle-on data-[state=checked]:bg-toggle-on",
                       )}
-                      iconClassName={isEpu ? "h-4 w-4 stroke-[3.25]" : undefined}
+                      iconClassName={
+                        isEpu ? "h-4 w-4 stroke-[3.25]" : undefined
+                      }
                     />
                     <span className={cn(isEpu && "text-base")}>
                       {isEpu ? "Für Mitarbeiter:in" : tStr("fuerMitarbeiter")}{" "}

@@ -1,11 +1,16 @@
-import { ArrowLeft, Printer } from "lucide-react";
+import { useEffect, useState } from "react";
+import { ArrowLeft, Printer, X } from "lucide-react";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { useCalculator } from "@/lib/calculator/CalculatorContext";
 import { formatMoney, formatNumber } from "@/lib/format";
-import { showsProvision, showsStunden, showsWareneinsatz } from "@/lib/calculator/branche";
+import {
+  showsProvision,
+  showsStunden,
+  showsWareneinsatz,
+} from "@/lib/calculator/branche";
 import { tStr, type TextKey } from "@/lib/text";
 import type { Branche } from "@/lib/calculator/types";
 
@@ -26,10 +31,24 @@ interface Props {
 
 const Summary = ({ onBack }: Props) => {
   const { input, result } = useCalculator();
+  const [detailsOpen, setDetailsOpen] = useState(false);
   const b = input.branche;
   const showWE = showsWareneinsatz(b);
   const showStunden = showsStunden(b);
   const showProv = showsProvision(b);
+  const personnelDetails =
+    !result || result.fehlermeldung
+      ? []
+      : result.breakEven.mitarbeiter
+          .map((mitarbeiter, index) => ({ mitarbeiter, index }))
+          .filter(({ mitarbeiter }) => mitarbeiter.brutto.jahr > 0);
+  const hasPersonnelDetails = personnelDetails.length > 0;
+
+  useEffect(() => {
+    if (!hasPersonnelDetails) {
+      setDetailsOpen(false);
+    }
+  }, [hasPersonnelDetails]);
 
   if (!result || result.fehlermeldung) {
     return (
@@ -37,7 +56,9 @@ const Summary = ({ onBack }: Props) => {
         <Header />
         <main className="mx-auto w-full max-w-3xl flex-1 px-4 py-12 text-center">
           <h1 className="mb-4 text-2xl font-bold">{tStr("summaryTitle")}</h1>
-          <p className="mb-6 text-muted-foreground">Noch keine Berechnung verfügbar.</p>
+          <p className="mb-6 text-muted-foreground">
+            Noch keine Berechnung verfügbar.
+          </p>
           <Button onClick={onBack} variant="outline">
             <ArrowLeft className="mr-2 h-4 w-4" />
             {tStr("zurueck")}
@@ -57,7 +78,10 @@ const Summary = ({ onBack }: Props) => {
             <ArrowLeft className="mr-2 h-4 w-4" />
             {tStr("zurueck")}
           </Button>
-          <Button onClick={() => window.print()} className="bg-wko-red hover:bg-wko-red-dark">
+          <Button
+            onClick={() => window.print()}
+            className="bg-wko-red hover:bg-wko-red-dark"
+          >
             <Printer className="mr-2 h-4 w-4" />
             {tStr("drucken")}
           </Button>
@@ -69,11 +93,17 @@ const Summary = ({ onBack }: Props) => {
           <h2 className="mb-3 text-lg font-semibold">{tStr("stammdaten")}</h2>
           <div className="grid grid-cols-1 gap-3 text-sm sm:grid-cols-3">
             <div>
-              <div className="text-muted-foreground">{tStr("nameUnternehmen")}</div>
-              <div className="font-medium">{input.nameDesUnternehmens || "—"}</div>
+              <div className="text-muted-foreground">
+                {tStr("nameUnternehmen")}
+              </div>
+              <div className="font-medium">
+                {input.nameDesUnternehmens || "—"}
+              </div>
             </div>
             <div>
-              <div className="text-muted-foreground">{tStr("gruendungsjahr")}</div>
+              <div className="text-muted-foreground">
+                {tStr("gruendungsjahr")}
+              </div>
               <div className="font-medium">{input.gruendungsjahr || "—"}</div>
             </div>
             <div>
@@ -84,9 +114,15 @@ const Summary = ({ onBack }: Props) => {
         </Card>
 
         <Card className="mb-6 bg-result p-6 text-result-foreground">
-          <h2 className="mb-3 text-lg font-semibold">{tStr("potenzialTitle")}</h2>
+          <h2 className="mb-3 text-lg font-semibold">
+            {tStr("potenzialTitle")}
+          </h2>
           <Table>
-            <Row label="" cols={[tStr("potenzialInkl"), tStr("breakEven")]} muted />
+            <Row
+              label=""
+              cols={[tStr("potenzialInkl"), tStr("breakEven")]}
+              muted
+            />
             <Row
               label={tStr("gesamtumsatzpotenzial")}
               cols={[
@@ -107,17 +143,26 @@ const Summary = ({ onBack }: Props) => {
         </Card>
 
         <Card className="mb-6 bg-result p-6 text-result-foreground">
-          <h2 className="mb-3 text-lg font-semibold">{tStr("umsatzInklTitle")}</h2>
+          <h2 className="mb-3 text-lg font-semibold">
+            {tStr("umsatzInklTitle")}
+          </h2>
           <Table>
             <Row label="" cols={[tStr("monatlich"), tStr("jaehrlich")]} muted />
             {showProv && (
               <Row
                 label={tStr("gesamtumsatz")}
-                cols={[formatMoney(result.breakEven.gesamtumsatz.monat), formatMoney(result.breakEven.gesamtumsatz.jahr)]}
+                cols={[
+                  formatMoney(result.breakEven.gesamtumsatz.monat),
+                  formatMoney(result.breakEven.gesamtumsatz.jahr),
+                ]}
               />
             )}
             <Row
-              label={showProv ? tStr("breakEvenProvisionsumsatz") : tStr("breakEvenUmsatz")}
+              label={
+                showProv
+                  ? tStr("breakEvenProvisionsumsatz")
+                  : tStr("breakEvenUmsatz")
+              }
               cols={[
                 formatMoney(result.breakEven.breakEvenUmsatz.monat),
                 formatMoney(result.breakEven.breakEvenUmsatz.jahr),
@@ -127,45 +172,104 @@ const Summary = ({ onBack }: Props) => {
             {showWE && (
               <Row
                 label={`− ${tStr("wareneinsatz")}`}
-                cols={[formatMoney(result.breakEven.wareneinsatz.monat), formatMoney(result.breakEven.wareneinsatz.jahr)]}
+                cols={[
+                  formatMoney(result.breakEven.wareneinsatz.monat),
+                  formatMoney(result.breakEven.wareneinsatz.jahr),
+                ]}
               />
             )}
             <Row
               label={`− ${tStr("aufwand")}`}
-              cols={[formatMoney(result.breakEven.aufwand.monat), formatMoney(result.breakEven.aufwand.jahr)]}
+              cols={[
+                formatMoney(result.breakEven.aufwand.monat),
+                formatMoney(result.breakEven.aufwand.jahr),
+              ]}
             />
             <Row
-              label={`− ${tStr("personalkosten")}`}
+              label={
+                <span className="flex items-center gap-1">
+                  − {tStr("personalkosten")}
+                  {hasPersonnelDetails && (
+                    <button
+                      type="button"
+                      onClick={() => setDetailsOpen((p) => !p)}
+                      className="inline-flex items-center text-[10px] font-medium underline underline-offset-2"
+                      aria-expanded={detailsOpen}
+                    >
+                      ➔ {tStr("details")}
+                    </button>
+                  )}
+                </span>
+              }
               cols={[
                 formatMoney(result.breakEven.personalkosten.monat),
                 formatMoney(result.breakEven.personalkosten.jahr),
               ]}
             />
-            {result.breakEven.mitarbeiter.map((m, i) =>
-              m.brutto.jahr > 0 ? (
-                <div key={i} className="col-span-3 my-2 rounded bg-result-strong p-3 text-xs">
-                  <div className="mb-1 font-semibold">{tStr("datenMitarbeiter")} {i + 1}</div>
-                  <SubHeader />
-                  <SubRow label={tStr("bruttoEntgelt")} m={formatMoney(m.brutto.monat)} j={formatMoney(m.brutto.jahr)} />
-                  <SubRow
-                    label={tStr("bruttoEntgeltInkl")}
-                    m={formatMoney(m.bruttoInklLohnnebenkosten.monat)}
-                    j={formatMoney(m.bruttoInklLohnnebenkosten.jahr)}
-                  />
-                  <SubRow
-                    label={m.foerderungText}
-                    m={formatMoney(m.foerderung.monat)}
-                    j={formatMoney(m.foerderung.jahr)}
-                  />
-                  {showStunden && (
-                    <SubRow
-                      label={tStr("arbeitsstunden")}
-                      m={formatNumber(m.arbeitsstunden.monat)}
-                      j={formatNumber(m.arbeitsstunden.jahr)}
-                    />
+            {detailsOpen && hasPersonnelDetails && (
+              <div className="col-span-3 my-2 overflow-hidden rounded bg-white text-xs">
+                <div className="space-y-4 py-2">
+                  {personnelDetails.map(
+                    ({ mitarbeiter: m, index }, detailIndex) => {
+                      const rows = [
+                        {
+                          label: tStr("bruttoEntgelt"),
+                          m: formatMoney(m.brutto.monat),
+                          j: formatMoney(m.brutto.jahr),
+                        },
+                        {
+                          label: tStr("bruttoEntgeltInkl"),
+                          m: formatMoney(m.bruttoInklLohnnebenkosten.monat),
+                          j: formatMoney(m.bruttoInklLohnnebenkosten.jahr),
+                        },
+                        {
+                          label: m.foerderungText,
+                          m: formatMoney(m.foerderung.monat),
+                          j: formatMoney(m.foerderung.jahr),
+                        },
+                        ...(showStunden
+                          ? [
+                              {
+                                label: tStr("arbeitsstunden"),
+                                m: formatNumber(m.arbeitsstunden.monat),
+                                j: formatNumber(m.arbeitsstunden.jahr),
+                              },
+                            ]
+                          : []),
+                      ];
+
+                      return (
+                        <div key={index}>
+                          <div className="flex min-h-8 items-center justify-between px-2 font-semibold">
+                            <span>
+                              {tStr("mitarbeiter")} {index + 1}
+                            </span>
+                            {detailIndex === 0 && (
+                              <button
+                                type="button"
+                                onClick={() => setDetailsOpen(false)}
+                                className="inline-flex size-5 shrink-0 items-center justify-center rounded-full border border-result-foreground text-result-foreground"
+                                aria-label={tStr("detailsAusblenden")}
+                              >
+                                <X className="h-3 w-3" aria-hidden />
+                              </button>
+                            )}
+                          </div>
+                          {rows.map((row, rowIndex) => (
+                            <SubRow
+                              key={row.label}
+                              label={row.label}
+                              m={row.m}
+                              j={row.j}
+                              shaded={rowIndex % 2 === 0}
+                            />
+                          ))}
+                        </div>
+                      );
+                    },
                   )}
                 </div>
-              ) : null,
+              </div>
             )}
             <Row
               label={`+ ${tStr("foerderungenGesamt")}`}
@@ -176,19 +280,27 @@ const Summary = ({ onBack }: Props) => {
             />
             <Row
               label={`= ${tStr("gewinn")}`}
-              cols={[formatMoney(result.breakEven.gewinn.monat), formatMoney(result.breakEven.gewinn.jahr)]}
+              cols={[
+                formatMoney(result.breakEven.gewinn.monat),
+                formatMoney(result.breakEven.gewinn.jahr),
+              ]}
               bold
             />
           </Table>
         </Card>
 
         <Card className="mb-6 bg-result p-6 text-result-foreground">
-          <h2 className="mb-3 text-lg font-semibold">{tStr("ausgangssituation")}</h2>
+          <h2 className="mb-3 text-lg font-semibold">
+            {tStr("ausgangssituation")}
+          </h2>
           <Table>
             <Row label="" cols={[tStr("monatlich"), tStr("jaehrlich")]} muted />
             <Row
               label={showProv ? tStr("provisionsumsatz") : tStr("umsatz")}
-              cols={[formatMoney(result.ausgangssituation.umsatz.monat), formatMoney(result.ausgangssituation.umsatz.jahr)]}
+              cols={[
+                formatMoney(result.ausgangssituation.umsatz.monat),
+                formatMoney(result.ausgangssituation.umsatz.jahr),
+              ]}
             />
             {showWE && (
               <Row
@@ -201,11 +313,17 @@ const Summary = ({ onBack }: Props) => {
             )}
             <Row
               label={`− ${tStr("aufwand")}`}
-              cols={[formatMoney(result.ausgangssituation.aufwand.monat), formatMoney(result.ausgangssituation.aufwand.jahr)]}
+              cols={[
+                formatMoney(result.ausgangssituation.aufwand.monat),
+                formatMoney(result.ausgangssituation.aufwand.jahr),
+              ]}
             />
             <Row
               label={`= ${tStr("gewinn")}`}
-              cols={[formatMoney(result.ausgangssituation.gewinn.monat), formatMoney(result.ausgangssituation.gewinn.jahr)]}
+              cols={[
+                formatMoney(result.ausgangssituation.gewinn.monat),
+                formatMoney(result.ausgangssituation.gewinn.jahr),
+              ]}
               bold
             />
           </Table>
@@ -226,35 +344,43 @@ const Row = ({
   muted,
   bold,
 }: {
-  label: string;
+  label: React.ReactNode;
   cols: [string, string];
   muted?: boolean;
   bold?: boolean;
 }) => (
   <>
     <div className={bold ? "font-semibold" : ""}>{label}</div>
-    <div className={`text-right ${muted ? "text-muted-foreground" : ""} ${bold ? "font-semibold" : ""}`}>
+    <div
+      className={`text-right ${muted ? "text-muted-foreground" : ""} ${bold ? "font-semibold" : ""}`}
+    >
       {cols[0]}
     </div>
-    <div className={`text-right ${muted ? "text-muted-foreground" : ""} ${bold ? "font-semibold" : ""}`}>
+    <div
+      className={`text-right ${muted ? "text-muted-foreground" : ""} ${bold ? "font-semibold" : ""}`}
+    >
       {cols[1]}
     </div>
   </>
 );
 
-const SubRow = ({ label, m, j }: { label: string; m: string; j: string }) => (
-  <div className="grid grid-cols-3 gap-2 py-0.5">
-    <div className="text-muted-foreground">{label}</div>
+const SubRow = ({
+  label,
+  m,
+  j,
+  shaded = false,
+}: {
+  label: string;
+  m: string;
+  j: string;
+  shaded?: boolean;
+}) => (
+  <div
+    className={`grid grid-cols-3 gap-2 px-2 py-1.5 ${shaded ? "bg-[#EFEFEF]" : ""}`}
+  >
+    <div className="text-result-foreground/80">{label}</div>
     <div className="text-right">{m}</div>
     <div className="text-right">{j}</div>
-  </div>
-);
-
-const SubHeader = () => (
-  <div className="grid grid-cols-3 gap-2 pb-1 text-[11px] font-semibold">
-    <div />
-    <div className="text-right">{tStr("monatlich")}</div>
-    <div className="text-right">{tStr("jaehrlich")}</div>
   </div>
 );
 

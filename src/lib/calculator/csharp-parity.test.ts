@@ -1040,6 +1040,43 @@ describe("calculator parity with original .NET BreakEvenCalculator", () => {
     );
   });
 
+  it("matches original behavior: EPU subsidy is not calculated for Freier Dienstvertrag", () => {
+    assertParity(
+      inputFor("dienstleistung", {
+        gruendungsjahr: 2024,
+        umsatz: 90000,
+        aufwand: 20000,
+        stunden: 1200,
+        mitarbeiter1: employee("dienstleistung", {
+          beschaeftigungsform: "dienstvertrag" as EmploymentType,
+          bruttogehaltProMonat: 2200,
+          anzahlWochenstunden: 38.5,
+          verkaufbareStunden: 0,
+          stundensatz: 0,
+          foerderung: true,
+        }),
+      }),
+    );
+  });
+
+  it("matches original behavior: EPU subsidy is capped at the SV maximum base", () => {
+    assertParity(
+      inputFor("dienstleistung", {
+        gruendungsjahr: 2024,
+        umsatz: 300000,
+        aufwand: 60000,
+        stunden: 1800,
+        mitarbeiter1: employee("dienstleistung", {
+          bruttogehaltProMonat: 9000,
+          anzahlWochenstunden: 38.5,
+          verkaufbareStunden: 0,
+          stundensatz: 0,
+          foerderung: true,
+        }),
+      }),
+    );
+  });
+
   it("matches original behavior: bonus subsidy can drift by one cent from C# decimal rounding", () => {
     assertParity(
       inputFor("dienstleistung", {

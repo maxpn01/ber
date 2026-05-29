@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { ReactNode } from "react";
+import { X } from "lucide-react";
 import { HelpIcon } from "@/components/HelpIcon";
 import { EmployeeIcon } from "@/components/icons/EmployeeIcon";
 import {
@@ -27,6 +28,18 @@ export const ResultPanel = () => {
 
   const empty = !result || !!result.fehlermeldung;
   const emptyValue = "-";
+  const personnelDetails = empty
+    ? []
+    : result!.breakEven.mitarbeiter
+        .map((mitarbeiter, index) => ({ mitarbeiter, index }))
+        .filter(({ mitarbeiter }) => mitarbeiter.brutto.jahr > 0);
+  const hasPersonnelDetails = personnelDetails.length > 0;
+
+  useEffect(() => {
+    if (!hasPersonnelDetails) {
+      setDetailsOpen(false);
+    }
+  }, [hasPersonnelDetails]);
 
   if (!hasCalculatedOnce && !result) {
     return (
@@ -184,13 +197,16 @@ export const ResultPanel = () => {
             label={
               <span className="flex items-center gap-1">
                 - {tStr("personalkosten")}
-                <button
-                  type="button"
-                  onClick={() => setDetailsOpen((p) => !p)}
-                  className="inline-flex items-center text-[10px] font-medium underline underline-offset-2"
-                >
-                  ➔ {tStr("details")}
-                </button>
+                {hasPersonnelDetails && (
+                  <button
+                    type="button"
+                    onClick={() => setDetailsOpen((p) => !p)}
+                    className="inline-flex items-center text-[10px] font-medium underline underline-offset-2"
+                    aria-expanded={detailsOpen}
+                  >
+                    ➔ {tStr("details")}
+                  </button>
+                )}
               </span>
             }
             values={[
@@ -202,42 +218,76 @@ export const ResultPanel = () => {
                 : formatMoney(result!.breakEven.personalkosten.jahr),
             ]}
           />
-          {detailsOpen && !empty && (
-            <div className="my-1 space-y-3 rounded bg-white/45 p-3">
-              {result!.breakEven.mitarbeiter.map((m, i) => {
-                if (m.brutto.jahr === 0) return null;
-                return (
-                  <div key={i} className="text-xs">
-                    <div className="mb-1 font-semibold">
-                      {tStr("datenMitarbeiter")} {i + 1}
-                    </div>
-                    <DetailHeaderRow />
-                    <DetailRow
-                      label={tStr("bruttoEntgelt")}
-                      m={m.brutto.monat}
-                      j={m.brutto.jahr}
-                    />
-                    <DetailRow
-                      label={tStr("bruttoEntgeltInkl")}
-                      m={m.bruttoInklLohnnebenkosten.monat}
-                      j={m.bruttoInklLohnnebenkosten.jahr}
-                    />
-                    <DetailRow
-                      label={m.foerderungText}
-                      m={m.foerderung.monat}
-                      j={m.foerderung.jahr}
-                    />
-                    {showStunden && (
-                      <DetailRow
-                        label={tStr("arbeitsstunden")}
-                        m={m.arbeitsstunden.monat}
-                        j={m.arbeitsstunden.jahr}
-                        money={false}
-                      />
-                    )}
-                  </div>
-                );
-              })}
+          {detailsOpen && hasPersonnelDetails && (
+            <div className="my-1 overflow-hidden rounded bg-white text-result-foreground">
+              <div>
+                {personnelDetails.map(
+                  ({ mitarbeiter: m, index }, detailIndex) => {
+                    const rows = [
+                      {
+                        label: tStr("bruttoEntgelt"),
+                        m: m.brutto.monat,
+                        j: m.brutto.jahr,
+                        money: true,
+                      },
+                      {
+                        label: tStr("bruttoEntgeltInkl"),
+                        m: m.bruttoInklLohnnebenkosten.monat,
+                        j: m.bruttoInklLohnnebenkosten.jahr,
+                        money: true,
+                      },
+                      {
+                        label: m.foerderungText,
+                        m: m.foerderung.monat,
+                        j: m.foerderung.jahr,
+                        money: true,
+                      },
+                      ...(showStunden
+                        ? [
+                            {
+                              label: tStr("arbeitsstunden"),
+                              m: m.arbeitsstunden.monat,
+                              j: m.arbeitsstunden.jahr,
+                              money: false,
+                            },
+                          ]
+                        : []),
+                    ];
+
+                    return (
+                      <div key={index} className="text-xs">
+                        <div className="flex min-h-8 items-center justify-between px-2 font-medium">
+                          <span>
+                            {tStr("mitarbeiter")} {index + 1}
+                          </span>
+                          {detailIndex === 0 && (
+                            <button
+                              type="button"
+                              onClick={() => setDetailsOpen(false)}
+                              className="inline-flex size-4 shrink-0 items-center justify-center rounded-full border border-result-foreground text-result-foreground"
+                              aria-label={tStr("detailsAusblenden")}
+                            >
+                              <X className="h-2 w-2" aria-hidden />
+                            </button>
+                          )}
+                        </div>
+                        <div>
+                          {rows.map((row, rowIndex) => (
+                            <DetailRow
+                              key={row.label}
+                              label={row.label}
+                              m={row.m}
+                              j={row.j}
+                              money={row.money}
+                              shaded={rowIndex % 2 === 0}
+                            />
+                          ))}
+                        </div>
+                      </div>
+                    );
+                  },
+                )}
+              </div>
             </div>
           )}
           <ResultDataRow
@@ -404,23 +454,17 @@ const DetailRow = ({
   m,
   j,
   money = true,
+  shaded = false,
 }: {
   label: string;
   m: number;
   j: number;
   money?: boolean;
+  shaded?: boolean;
 }) => (
-  <div className={cn(detailGridClass, "py-0.5")}>
-    <div className="min-w-0 text-muted-foreground">{label}</div>
+  <div className={cn(detailGridClass, "px-2 py-1.5", shaded && "bg-[#EFEFEF]")}>
+    <div className="min-w-0 text-result-foreground/80">{label}</div>
     <div className="text-right">{money ? formatMoney(m) : formatNumber(m)}</div>
     <div className="text-right">{money ? formatMoney(j) : formatNumber(j)}</div>
-  </div>
-);
-
-const DetailHeaderRow = () => (
-  <div className={cn(detailGridClass, "pb-1 text-[11px] font-semibold")}>
-    <div />
-    <div className="text-right">{tStr("monatlich")}</div>
-    <div className="text-right">{tStr("jaehrlich")}</div>
   </div>
 );

@@ -164,6 +164,7 @@ export const text = {
   details: "Details",
   detailsEinblenden: "Details einblenden",
   detailsAusblenden: "Details ausblenden",
+  mitarbeiter: "Mitarbeiter",
   bruttoEntgelt: "Bruttoentgelt",
   bruttoEntgeltInkl: "Bruttoentgelt inkl. Lohnnebenkosten",
   arbeitsstunden: "Durchschnittlich zur Verfügung stehende Arbeitsstunden",

@@ -134,6 +134,65 @@ describe("Calculator page", () => {
     });
   });
 
+  it("does not offer personnel cost details when no employee data is included", async () => {
+    const user = userEvent.setup();
+    render(<App />);
+
+    await user.click(screen.getByRole("button", { name: "Löschen" }));
+
+    await user.click(screen.getByRole("textbox", { name: "Umsatz" }));
+    await user.keyboard("100000");
+
+    await user.click(screen.getByRole("textbox", { name: "Aufwand" }));
+    await user.keyboard("20000");
+
+    await user.click(
+      screen.getByRole("textbox", { name: "Verrechnete Stunden" }),
+    );
+    await user.keyboard("1000");
+    await user.tab();
+
+    await waitFor(() => {
+      expect(screen.getByText("- Personalkosten")).toBeInTheDocument();
+      expect(
+        screen.queryByRole("button", { name: /Details/ }),
+      ).not.toBeInTheDocument();
+    });
+  });
+
+  it("opens and closes personnel cost details for included employees", async () => {
+    const user = userEvent.setup();
+    render(<App />);
+
+    await user.click(screen.getByRole("textbox", { name: "Umsatz" }));
+    await user.keyboard("100000");
+
+    await user.click(screen.getByRole("textbox", { name: "Aufwand" }));
+    await user.keyboard("20000");
+
+    await user.click(
+      screen.getByRole("textbox", { name: "Verrechnete Stunden" }),
+    );
+    await user.keyboard("1000");
+    await user.tab();
+
+    const details = await screen.findByRole("button", { name: /Details/ });
+    await user.click(details);
+
+    expect(screen.getByText("Mitarbeiter 1")).toBeInTheDocument();
+    expect(
+      screen.getByText("Bruttoentgelt inkl. Lohnnebenkosten"),
+    ).toBeInTheDocument();
+
+    await user.click(
+      screen.getAllByRole("button", { name: "Details ausblenden" })[0],
+    );
+
+    await waitFor(() => {
+      expect(screen.queryByText("Mitarbeiter 1")).not.toBeInTheDocument();
+    });
+  });
+
   it("updates branch input fields when desired profit changes by keyboard", async () => {
     const user = userEvent.setup();
     render(<App />);
