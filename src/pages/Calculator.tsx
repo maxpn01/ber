@@ -29,7 +29,7 @@ const Calculator = () => {
 
         {!helpOpen && (
           <div className="rounded-xl bg-wko-section p-3 min-[380px]:p-4 sm:p-6">
-            <div className="grid grid-cols-1 gap-5 sm:gap-6 lg:grid-cols-2">
+            <div className="grid grid-cols-1 gap-5 sm:gap-6 min-[1120px]:grid-cols-2">
               <div className="space-y-4">
                 <AllgemeinCard />
                 <MitarbeiterCard index={0} />
@@ -41,7 +41,7 @@ const Calculator = () => {
                 {/* <SubsidyCard kind="bonus" />
               <SubsidyCard kind="startup" /> */}
               </div>
-              <div className="h-full lg:sticky lg:top-6 lg:self-stretch">
+              <div className="h-full min-[1120px]:sticky min-[1120px]:top-6 min-[1120px]:self-stretch">
                 <ResultPanel />
               </div>
             </div>

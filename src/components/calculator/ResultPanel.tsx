@@ -68,10 +68,10 @@ export const ResultPanel = () => {
   }
 
   return (
-    <div className="h-full rounded-lg bg-result px-3 py-6 text-result-foreground min-[380px]:px-4 sm:px-8">
+    <div className="h-full rounded-lg bg-result px-3 py-6 text-result-foreground min-[380px]:px-4 min-[1180px]:px-8">
       <section className="mb-8">
         <div className="mb-3 flex flex-wrap items-center justify-between gap-3 min-[430px]:flex-nowrap min-[430px]:gap-4">
-          <h3 className="flex min-w-0 items-start gap-1.5 text-[18px] font-medium leading-tight xl:whitespace-nowrap">
+          <h3 className="flex min-w-0 items-start gap-1.5 text-[18px] font-medium leading-tight min-[1120px]:whitespace-nowrap">
             {tStr("potenzialTitle")}
             <HelpIcon
               text={tStr("potenzialHelp")}
@@ -200,12 +200,12 @@ export const ResultPanel = () => {
           <ResultDataRow
             label={
               hasPersonnelDetails ? (
-                <span className="flex min-w-0 items-center gap-1">
-                  <span>- {tStr("personalkosten")}</span>
+                <span className="flex min-w-0 items-center gap-0.5 whitespace-nowrap text-[14px] min-[1180px]:gap-1 min-[1180px]:text-[15px]">
+                  <span className="shrink-0">- {tStr("personalkosten")}</span>
                   <button
                     type="button"
                     onClick={() => setDetailsOpen((p) => !p)}
-                    className="inline-flex shrink-0 items-center px-1 text-[12px] font-medium underline underline-offset-2"
+                    className="inline-flex shrink-0 items-center px-0.5 text-[12px] font-medium underline underline-offset-2 min-[1180px]:px-1"
                     aria-expanded={detailsOpen}
                   >
                     ➔ {tStr("details")}
@@ -387,10 +387,10 @@ const ResultRows = ({ children }: { children: ReactNode }) => (
 );
 
 const resultGridClass =
-  "grid grid-cols-2 items-center gap-x-3 gap-y-1 min-[1180px]:grid-cols-[minmax(0,1fr)_140px_140px]";
+  "grid grid-cols-2 items-center gap-x-2 gap-y-1 sm:max-[1119px]:grid-cols-[minmax(0,1fr)_minmax(8rem,13rem)_minmax(8rem,13rem)] min-[1120px]:grid-cols-[minmax(0,1fr)_minmax(8rem,30%)_minmax(8rem,30%)] min-[1180px]:grid-cols-[minmax(0,1fr)_140px_140px] min-[1180px]:gap-x-3";
 
 const detailGridClass =
-  "grid grid-cols-2 items-start gap-x-2 gap-y-1 min-[1180px]:grid-cols-[minmax(0,1fr)_132px_132px]";
+  "grid grid-cols-2 items-start gap-x-2 gap-y-1 sm:max-[1119px]:grid-cols-[minmax(0,1fr)_minmax(7.5rem,12rem)_minmax(7.5rem,12rem)] min-[1120px]:grid-cols-[minmax(0,1fr)_minmax(7.5rem,29%)_minmax(7.5rem,29%)] min-[1180px]:grid-cols-[minmax(0,1fr)_132px_132px]";
 
 const ResultHeaderRow = ({
   columns,
@@ -403,7 +403,9 @@ const ResultHeaderRow = ({
       "px-2 pb-1 text-[14px] font-normal text-result-foreground",
     )}
   >
-    <div className="hidden min-[1180px]:block">{columns[0]}</div>
+    <div className="hidden sm:max-[1119px]:invisible sm:max-[1119px]:block min-[1120px]:block">
+      {columns[0]}
+    </div>
     <div className="whitespace-nowrap text-right">{columns[1]}</div>
     <div className="whitespace-nowrap text-right">{columns[2]}</div>
   </div>
@@ -425,10 +427,10 @@ const ResultDataRow = ({
       medium ? "bg-white font-medium" : "bg-[#FFF7F1]",
     )}
   >
-    <div className="col-span-2 min-w-0 min-[1180px]:col-span-1 xl:whitespace-nowrap">
+    <div className="col-span-2 min-w-0 sm:max-[1119px]:col-span-3 min-[1120px]:col-span-1">
       {label}
     </div>
-    <div className="min-w-0 whitespace-nowrap text-right text-[clamp(12px,3.2vw,15px)] tabular-nums">
+    <div className="min-w-0 whitespace-nowrap text-right text-[clamp(12px,3.2vw,15px)] tabular-nums sm:max-[1119px]:col-start-2">
       {values[0]}
     </div>
     <div className="min-w-0 whitespace-nowrap text-right text-[clamp(12px,3.2vw,15px)] tabular-nums">
@@ -475,10 +477,10 @@ const DetailRow = ({
   shaded?: boolean;
 }) => (
   <div className={cn(detailGridClass, "px-2 py-1.5", shaded && "bg-[#EFEFEF]")}>
-    <div className="col-span-2 min-w-0 text-result-foreground/80 min-[1180px]:col-span-1">
+    <div className="col-span-2 min-w-0 text-result-foreground/80 sm:max-[1119px]:col-span-3 min-[1120px]:col-span-1">
       {label}
     </div>
-    <div className="min-w-0 whitespace-nowrap text-right text-[clamp(11px,3vw,13px)] tabular-nums">
+    <div className="min-w-0 whitespace-nowrap text-right text-[clamp(11px,3vw,13px)] tabular-nums sm:max-[1119px]:col-start-2">
       {money ? formatMoney(m) : formatNumber(m)}
     </div>
     <div className="min-w-0 whitespace-nowrap text-right text-[clamp(11px,3vw,13px)] tabular-nums">
