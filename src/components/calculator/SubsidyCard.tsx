@@ -165,7 +165,7 @@ export const SubsidyCard = ({ kind }: Props) => {
       <Card
         className={cn(
           "bg-card transition-colors",
-          isEpu ? "px-5 py-3" : "border-l-4 p-5",
+          isEpu ? "px-3 py-3 sm:px-5" : "border-l-4 p-3 sm:p-5",
           !isEpu && (cardOn ? "border-l-subsidy" : "border-l-subsidy/50"),
         )}
         style={isEpu ? { borderColor: epuBorderColor } : undefined}
@@ -173,7 +173,7 @@ export const SubsidyCard = ({ kind }: Props) => {
         <div className="flex items-center justify-between gap-3">
           <h3
             className={cn(
-              "min-w-0 flex-1 truncate text-[22px] font-medium",
+              "min-w-0 flex-1 truncate text-[18px] font-medium sm:text-[22px]",
               !isEpu && (cardOn ? "text-subsidy" : "text-foreground"),
             )}
             style={isEpu ? { color: "#003C56" } : undefined}

@@ -68,14 +68,14 @@ export const ResultPanel = () => {
   }
 
   return (
-    <div className="h-full rounded-lg bg-result px-3 py-6 text-result-foreground min-[380px]:px-4 min-[1180px]:px-8">
+    <div className="h-full rounded-lg bg-result px-3 py-6 text-[14px] text-result-foreground min-[380px]:px-4 min-[1120px]:px-8 min-[1120px]:text-[15px]">
       <section className="mb-8">
         <div className="mb-3 flex flex-wrap items-center justify-between gap-3 min-[430px]:flex-nowrap min-[430px]:gap-4">
-          <h3 className="flex min-w-0 items-start gap-1.5 text-[18px] font-medium leading-tight min-[1120px]:whitespace-nowrap">
+          <h3 className="flex min-w-0 items-start gap-1.5 whitespace-nowrap text-[18px] font-medium leading-tight">
             {tStr("potenzialTitle")}
             <HelpIcon
               text={tStr("potenzialHelp")}
-              className="mt-[6px] h-[12px] w-[12px]"
+              className="mt-[6px] h-[12px] w-[12px] shrink-0"
             />
           </h3>
           <EmployeeIcons
@@ -200,12 +200,12 @@ export const ResultPanel = () => {
           <ResultDataRow
             label={
               hasPersonnelDetails ? (
-                <span className="flex min-w-0 items-center gap-0.5 whitespace-nowrap text-[14px] min-[1180px]:gap-1 min-[1180px]:text-[15px]">
+                <span className="flex min-w-0 items-center gap-0.5 whitespace-nowrap text-[14px] min-[1120px]:gap-1 min-[1120px]:text-[15px]">
                   <span className="shrink-0">- {tStr("personalkosten")}</span>
                   <button
                     type="button"
                     onClick={() => setDetailsOpen((p) => !p)}
-                    className="inline-flex shrink-0 items-center px-0.5 text-[12px] font-medium underline underline-offset-2 min-[1180px]:px-1"
+                    className="inline-flex shrink-0 items-center px-0.5 text-[12px] font-medium underline underline-offset-2 min-[1120px]:px-1"
                     aria-expanded={detailsOpen}
                   >
                     ➔ {tStr("details")}
@@ -383,14 +383,16 @@ const SectionDivider = () => (
 );
 
 const ResultRows = ({ children }: { children: ReactNode }) => (
-  <div className="space-y-2 text-[15px] leading-tight">{children}</div>
+  <div className="space-y-2 text-[14px] leading-tight min-[1120px]:text-[15px]">
+    {children}
+  </div>
 );
 
 const resultGridClass =
-  "grid grid-cols-2 items-center gap-x-2 gap-y-1 sm:max-[1119px]:grid-cols-[minmax(0,1fr)_minmax(8rem,13rem)_minmax(8rem,13rem)] min-[1120px]:grid-cols-[minmax(0,1fr)_minmax(8rem,30%)_minmax(8rem,30%)] min-[1180px]:grid-cols-[minmax(0,1fr)_140px_140px] min-[1180px]:gap-x-3";
+  "grid grid-cols-[minmax(0,1fr)_minmax(5.25rem,max-content)_minmax(5.25rem,max-content)] items-center gap-x-4 gap-y-1 sm:max-[1119px]:grid-cols-[minmax(0,1fr)_minmax(8rem,10.5rem)_minmax(8rem,10.5rem)] sm:gap-x-2 min-[1120px]:grid-cols-[minmax(0,1fr)_140px_140px] min-[1120px]:gap-x-3";
 
 const detailGridClass =
-  "grid grid-cols-2 items-start gap-x-2 gap-y-1 sm:max-[1119px]:grid-cols-[minmax(0,1fr)_minmax(7.5rem,12rem)_minmax(7.5rem,12rem)] min-[1120px]:grid-cols-[minmax(0,1fr)_minmax(7.5rem,29%)_minmax(7.5rem,29%)] min-[1180px]:grid-cols-[minmax(0,1fr)_132px_132px]";
+  "grid grid-cols-[minmax(0,1fr)_minmax(5.25rem,max-content)_minmax(5.25rem,max-content)] items-start gap-x-4 gap-y-1 sm:max-[1119px]:grid-cols-[minmax(0,1fr)_minmax(7.5rem,10.5rem)_minmax(7.5rem,10.5rem)] sm:gap-x-2 min-[1120px]:grid-cols-[minmax(0,1fr)_132px_132px]";
 
 const ResultHeaderRow = ({
   columns,
@@ -403,7 +405,7 @@ const ResultHeaderRow = ({
       "px-2 pb-1 text-[14px] font-normal text-result-foreground",
     )}
   >
-    <div className="hidden sm:max-[1119px]:invisible sm:max-[1119px]:block min-[1120px]:block">
+    <div className="invisible sm:max-[1119px]:block min-[1120px]:block">
       {columns[0]}
     </div>
     <div className="whitespace-nowrap text-right">{columns[1]}</div>
@@ -422,19 +424,20 @@ const ResultDataRow = ({
 }) => (
   <div
     className={cn(
-      resultGridClass,
-      "min-h-[25px] rounded px-2 py-1",
+      "min-h-[25px] overflow-x-auto rounded [scrollbar-color:rgba(0,60,86,0.35)_rgba(0,60,86,0.08)] [scrollbar-width:thin] sm:overflow-visible [&::-webkit-scrollbar]:h-1 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-[#003C56]/35 [&::-webkit-scrollbar-track]:rounded-full [&::-webkit-scrollbar-track]:bg-[#003C56]/10",
       medium ? "bg-white font-medium" : "bg-[#FFF7F1]",
     )}
   >
-    <div className="col-span-2 min-w-0 sm:max-[1119px]:col-span-3 min-[1120px]:col-span-1">
-      {label}
-    </div>
-    <div className="min-w-0 whitespace-nowrap text-right text-[clamp(12px,3.2vw,15px)] tabular-nums sm:max-[1119px]:col-start-2">
-      {values[0]}
-    </div>
-    <div className="min-w-0 whitespace-nowrap text-right text-[clamp(12px,3.2vw,15px)] tabular-nums">
-      {values[1]}
+    <div className={cn(resultGridClass, "w-max min-w-full px-2 py-1 sm:w-full")}>
+      <div className="min-w-0 max-sm:overflow-hidden max-sm:text-ellipsis">
+        {label}
+      </div>
+      <div className="min-w-0 whitespace-nowrap text-right text-[14px] tabular-nums min-[1120px]:text-[15px]">
+        {values[0]}
+      </div>
+      <div className="min-w-0 whitespace-nowrap text-right text-[14px] tabular-nums min-[1120px]:text-[15px]">
+        {values[1]}
+      </div>
     </div>
   </div>
 );
@@ -455,6 +458,7 @@ const EmployeeIcons = ({
       <EmployeeIcon
         key={i}
         className={cn(
+          "h-4 w-4 min-[1120px]:h-[25px] min-[1120px]:w-[25px]",
           i < activeCount ? activeClassName : "text-muted-foreground/50",
         )}
         aria-hidden
@@ -476,15 +480,22 @@ const DetailRow = ({
   money?: boolean;
   shaded?: boolean;
 }) => (
-  <div className={cn(detailGridClass, "px-2 py-1.5", shaded && "bg-[#EFEFEF]")}>
-    <div className="col-span-2 min-w-0 text-result-foreground/80 sm:max-[1119px]:col-span-3 min-[1120px]:col-span-1">
-      {label}
-    </div>
-    <div className="min-w-0 whitespace-nowrap text-right text-[clamp(11px,3vw,13px)] tabular-nums sm:max-[1119px]:col-start-2">
-      {money ? formatMoney(m) : formatNumber(m)}
-    </div>
-    <div className="min-w-0 whitespace-nowrap text-right text-[clamp(11px,3vw,13px)] tabular-nums">
-      {money ? formatMoney(j) : formatNumber(j)}
+  <div
+    className={cn(
+      "overflow-x-auto [scrollbar-color:rgba(0,60,86,0.35)_rgba(0,60,86,0.08)] [scrollbar-width:thin] sm:overflow-visible [&::-webkit-scrollbar]:h-1 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-[#003C56]/35 [&::-webkit-scrollbar-track]:rounded-full [&::-webkit-scrollbar-track]:bg-[#003C56]/10",
+      shaded && "bg-[#EFEFEF]",
+    )}
+  >
+    <div className={cn(detailGridClass, "w-max min-w-full px-2 py-1.5 sm:w-full")}>
+      <div className="min-w-0 text-result-foreground/80 max-sm:overflow-hidden max-sm:text-ellipsis">
+        {label}
+      </div>
+      <div className="min-w-0 whitespace-nowrap text-right text-[14px] tabular-nums min-[1120px]:text-[13px]">
+        {money ? formatMoney(m) : formatNumber(m)}
+      </div>
+      <div className="min-w-0 whitespace-nowrap text-right text-[14px] tabular-nums min-[1120px]:text-[13px]">
+        {money ? formatMoney(j) : formatNumber(j)}
+      </div>
     </div>
   </div>
 );

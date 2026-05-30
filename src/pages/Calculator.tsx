@@ -14,7 +14,7 @@ const Calculator = () => {
   const isMobile = useIsMobile();
 
   const title = (
-    <h1 className="flex items-center gap-2 text-[24px] font-medium min-[640px]:mb-8">
+    <h1 className="flex items-center gap-2 text-[17px] font-medium sm:text-[24px] min-[640px]:mb-8">
       {tStr("appTitle")}
       <AppHelpDialog open={helpOpen} onOpenChange={setHelpOpen} />
     </h1>
@@ -28,24 +28,33 @@ const Calculator = () => {
         <AppHelpDialogSlot />
 
         {!helpOpen && (
-          <div className="rounded-xl bg-wko-section p-3 min-[380px]:p-4 sm:p-6">
-            <div className="grid grid-cols-1 gap-5 sm:gap-6 min-[1120px]:grid-cols-2">
-              <div className="space-y-4">
-                <AllgemeinCard />
-                <MitarbeiterCard index={0} />
-                <MitarbeiterCard index={1} />
-                <MitarbeiterCard index={2} />
-                <MitarbeiterCard index={3} />
-                <SubsidyCard kind="epu" />
-                {/* INTENTIONALLY HIDDEN IN THE ORIGINAL CODE */}
-                {/* <SubsidyCard kind="bonus" />
+          <>
+            <div className="rounded-xl bg-wko-section p-2 sm:p-4">
+              <div className="grid grid-cols-1 gap-5 sm:gap-6 min-[1120px]:grid-cols-2">
+                <div className="space-y-4">
+                  <AllgemeinCard />
+                  <MitarbeiterCard index={0} />
+                  <MitarbeiterCard index={1} />
+                  <MitarbeiterCard index={2} />
+                  <MitarbeiterCard index={3} />
+                  <SubsidyCard kind="epu" />
+                  {/* INTENTIONALLY HIDDEN IN THE ORIGINAL CODE */}
+                  {/* <SubsidyCard kind="bonus" />
               <SubsidyCard kind="startup" /> */}
-              </div>
-              <div className="h-full min-[1120px]:sticky min-[1120px]:top-6 min-[1120px]:self-stretch">
-                <ResultPanel />
+                </div>
+                {!isMobile && (
+                  <div className="h-full min-[1120px]:sticky min-[1120px]:top-6 min-[1120px]:self-stretch">
+                    <ResultPanel />
+                  </div>
+                )}
               </div>
             </div>
-          </div>
+            {isMobile && (
+              <div className="mt-4">
+                <ResultPanel />
+              </div>
+            )}
+          </>
         )}
       </main>
       <Footer />

@@ -70,11 +70,11 @@ export const MitarbeiterCard = ({ index }: Props) => {
   const isFilled = isMitarbeiterAdvancedComplete(m, b);
 
   return (
-    <Card className="border-border bg-card px-4 py-3 min-[380px]:px-5">
+    <Card className="border-border bg-card px-3 py-3 sm:px-5">
       <div className="flex items-center justify-between gap-3">
         <button
           type="button"
-          className="flex min-w-0 flex-1 items-center gap-2 text-left text-[22px] font-medium"
+          className="flex min-w-0 flex-1 items-center gap-2 text-left text-[18px] font-medium sm:text-[22px]"
           onClick={() => toggleMitarbeiterOpen(index)}
           aria-expanded={isOpen}
         >
@@ -250,7 +250,7 @@ export const MitarbeiterCard = ({ index }: Props) => {
 
           {showsVerkaufbareStunden(b) && (
             <div className="border-t border-dashed border-border pt-4">
-              <h4 className="mb-3 flex items-center gap-1.5 text-[20px] font-semibold">
+              <h4 className="mb-3 flex items-center gap-1.5 text-[18px] font-semibold">
                 {tStr("verkaufbareStunden")}
                 {/* <HelpIcon
                   text={
@@ -328,7 +328,7 @@ export const MitarbeiterCard = ({ index }: Props) => {
             <Button
               variant="outline"
               size="sm"
-              className="rounded-full border-black text-base bg-transparent px-6 py-5 font-medium hover:bg-transparent hover:opacity-70"
+              className="w-4/5 rounded-full border-black bg-transparent px-6 py-5 text-base font-medium hover:bg-transparent hover:opacity-70 sm:w-auto"
               onClick={() => resetMitarbeiter(index)}
             >
               {tStr("zuruecksetzen")}

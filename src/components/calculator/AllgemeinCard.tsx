@@ -39,8 +39,10 @@ export const AllgemeinCard = () => {
   const b = input.branche;
 
   return (
-    <Card className="border-border bg-card p-4">
-      <h2 className="mb-2 text-[22px] font-medium">{tStr("allgemein")}</h2>
+    <Card className="border-border bg-card p-3 sm:p-4">
+      <h2 className="mb-2 text-[18px] font-medium sm:text-[22px]">
+        {tStr("allgemein")}
+      </h2>
 
       <div className="border-t border-dashed border-border pt-4 text-[#A2A4A9] mb-2" />
 
@@ -65,7 +67,7 @@ export const AllgemeinCard = () => {
             ref={brancheTriggerRef}
             aria-label={tStr("branche")}
             className={cn(
-              "border-transparent bg-muted text-[16px]",
+              "border-transparent bg-muted text-[15px] sm:text-[16px]",
               "data-[state=open]:border-slider data-[state=open]:bg-slider/5 data-[state=open]:ring-1 data-[state=open]:ring-slider",
             )}
           >
