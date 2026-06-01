@@ -30,7 +30,7 @@ const Calculator = () => {
         {!helpOpen && (
           <>
             <div className="rounded-xl bg-wko-section p-2 sm:p-4">
-              <div className="grid grid-cols-1 gap-5 sm:gap-6 min-[1120px]:grid-cols-2">
+              <div className="grid grid-cols-1 gap-5 sm:gap-6 min-[1150px]:grid-cols-2">
                 <div className="space-y-4">
                   <AllgemeinCard />
                   <MitarbeiterCard index={0} />
@@ -43,7 +43,7 @@ const Calculator = () => {
               <SubsidyCard kind="startup" /> */}
                 </div>
                 {!isMobile && (
-                  <div className="h-full min-[1120px]:sticky min-[1120px]:top-6 min-[1120px]:self-stretch">
+                  <div className="h-full min-[1150px]:sticky min-[1150px]:top-6 min-[1150px]:self-stretch">
                     <ResultPanel />
                   </div>
                 )}

@@ -68,7 +68,7 @@ export const ResultPanel = () => {
   }
 
   return (
-    <div className="h-full rounded-lg bg-result px-3 py-6 text-[14px] text-result-foreground min-[380px]:px-4 min-[1120px]:px-8 min-[1120px]:text-[15px]">
+    <div className="h-full rounded-lg bg-result px-3 py-6 text-[14px] text-result-foreground min-[380px]:px-4 sm:px-8 sm:text-[15px]">
       <section className="mb-8">
         <div className="mb-3 flex flex-wrap items-center justify-between gap-3 min-[430px]:flex-nowrap min-[430px]:gap-4">
           <h3 className="flex min-w-0 items-start gap-1.5 whitespace-nowrap text-[18px] font-medium leading-tight">
@@ -143,7 +143,7 @@ export const ResultPanel = () => {
                 {tStr("jaehrlich")}
                 <HelpIcon
                   text={tStr("jaehrlichHelp")}
-                  className="shrink-0 mt-0.5"
+                  className="mt-0.5 shrink-0"
                 />
               </span>,
             ]}
@@ -200,12 +200,12 @@ export const ResultPanel = () => {
           <ResultDataRow
             label={
               hasPersonnelDetails ? (
-                <span className="flex min-w-0 items-center gap-0.5 whitespace-nowrap text-[14px] min-[1120px]:gap-1 min-[1120px]:text-[15px]">
+                <span className="flex min-w-0 items-center gap-0.5 whitespace-nowrap text-[13px] sm:gap-1 sm:text-[15px]">
                   <span className="shrink-0">- {tStr("personalkosten")}</span>
                   <button
                     type="button"
                     onClick={() => setDetailsOpen((p) => !p)}
-                    className="inline-flex shrink-0 items-center px-0.5 text-[12px] font-medium underline underline-offset-2 min-[1120px]:px-1"
+                    className="inline-flex shrink-0 items-center px-0.5 text-[12px] font-medium underline underline-offset-2 sm:px-1"
                     aria-expanded={detailsOpen}
                   >
                     ➔ {tStr("details")}
@@ -383,16 +383,16 @@ const SectionDivider = () => (
 );
 
 const ResultRows = ({ children }: { children: ReactNode }) => (
-  <div className="space-y-2 text-[14px] leading-tight min-[1120px]:text-[15px]">
+  <div className="space-y-2 text-[13px] leading-tight sm:text-[15px]">
     {children}
   </div>
 );
 
 const resultGridClass =
-  "grid grid-cols-[minmax(0,1fr)_minmax(5.25rem,max-content)_minmax(5.25rem,max-content)] items-center gap-x-4 gap-y-1 sm:max-[1119px]:grid-cols-[minmax(0,1fr)_minmax(8rem,10.5rem)_minmax(8rem,10.5rem)] sm:gap-x-2 min-[1120px]:grid-cols-[minmax(0,1fr)_140px_140px] min-[1120px]:gap-x-3";
+  "grid grid-cols-[minmax(0,1fr)_minmax(4.75rem,max-content)_minmax(4.75rem,max-content)] items-center gap-x-1 gap-y-1 sm:grid-cols-[minmax(0,1fr)_140px_140px] sm:gap-x-0";
 
 const detailGridClass =
-  "grid grid-cols-[minmax(0,1fr)_minmax(5.25rem,max-content)_minmax(5.25rem,max-content)] items-start gap-x-4 gap-y-1 sm:max-[1119px]:grid-cols-[minmax(0,1fr)_minmax(7.5rem,10.5rem)_minmax(7.5rem,10.5rem)] sm:gap-x-2 min-[1120px]:grid-cols-[minmax(0,1fr)_132px_132px]";
+  "grid grid-cols-[minmax(0,1fr)_minmax(4.75rem,max-content)_minmax(4.75rem,max-content)] items-start gap-x-1 gap-y-1 sm:grid-cols-[minmax(0,1fr)_132px_132px] sm:gap-x-2";
 
 const ResultHeaderRow = ({
   columns,
@@ -402,12 +402,10 @@ const ResultHeaderRow = ({
   <div
     className={cn(
       resultGridClass,
-      "px-2 pb-1 text-[14px] font-normal text-result-foreground",
+      "px-2 pb-1 text-[13px] font-normal text-result-foreground sm:text-[14px]",
     )}
   >
-    <div className="invisible sm:max-[1119px]:block min-[1120px]:block">
-      {columns[0]}
-    </div>
+    <div className="invisible sm:block">{columns[0]}</div>
     <div className="whitespace-nowrap text-right">{columns[1]}</div>
     <div className="whitespace-nowrap text-right">{columns[2]}</div>
   </div>
@@ -428,14 +426,14 @@ const ResultDataRow = ({
       medium ? "bg-white font-medium" : "bg-[#FFF7F1]",
     )}
   >
-    <div className={cn(resultGridClass, "w-max min-w-full px-2 py-1 sm:w-full")}>
+    <div className={cn(resultGridClass, "w-full min-w-0 px-2 py-1")}>
       <div className="min-w-0 max-sm:overflow-hidden max-sm:text-ellipsis">
         {label}
       </div>
-      <div className="min-w-0 whitespace-nowrap text-right text-[14px] tabular-nums min-[1120px]:text-[15px]">
+      <div className="min-w-0 whitespace-nowrap text-right text-[13px] tabular-nums sm:text-[15px]">
         {values[0]}
       </div>
-      <div className="min-w-0 whitespace-nowrap text-right text-[14px] tabular-nums min-[1120px]:text-[15px]">
+      <div className="min-w-0 whitespace-nowrap text-right text-[13px] tabular-nums sm:text-[15px]">
         {values[1]}
       </div>
     </div>
@@ -458,7 +456,7 @@ const EmployeeIcons = ({
       <EmployeeIcon
         key={i}
         className={cn(
-          "h-4 w-4 min-[1120px]:h-[25px] min-[1120px]:w-[25px]",
+          "h-4 w-4 sm:h-[25px] sm:w-[25px]",
           i < activeCount ? activeClassName : "text-muted-foreground/50",
         )}
         aria-hidden
@@ -486,14 +484,14 @@ const DetailRow = ({
       shaded && "bg-[#EFEFEF]",
     )}
   >
-    <div className={cn(detailGridClass, "w-max min-w-full px-2 py-1.5 sm:w-full")}>
+    <div className={cn(detailGridClass, "w-full min-w-0 px-2 py-1.5")}>
       <div className="min-w-0 text-result-foreground/80 max-sm:overflow-hidden max-sm:text-ellipsis">
         {label}
       </div>
-      <div className="min-w-0 whitespace-nowrap text-right text-[14px] tabular-nums min-[1120px]:text-[13px]">
+      <div className="min-w-0 whitespace-nowrap text-right text-[13px] tabular-nums">
         {money ? formatMoney(m) : formatNumber(m)}
       </div>
-      <div className="min-w-0 whitespace-nowrap text-right text-[14px] tabular-nums min-[1120px]:text-[13px]">
+      <div className="min-w-0 whitespace-nowrap text-right text-[13px] tabular-nums">
         {money ? formatMoney(j) : formatNumber(j)}
       </div>
     </div>
