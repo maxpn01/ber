@@ -200,7 +200,7 @@ export const ResultPanel = () => {
           <ResultDataRow
             label={
               hasPersonnelDetails ? (
-                <span className="flex min-w-0 items-center gap-0.5 whitespace-nowrap text-[13px] sm:gap-1 sm:text-[15px]">
+                <span className="flex min-w-0 flex-wrap items-center gap-x-0.5 gap-y-0 whitespace-normal text-[13px] sm:flex-nowrap sm:gap-1 sm:whitespace-nowrap sm:text-[15px]">
                   <span className="shrink-0">- {tStr("personalkosten")}</span>
                   <button
                     type="button"
