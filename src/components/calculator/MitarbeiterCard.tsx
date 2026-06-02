@@ -165,7 +165,7 @@ export const MitarbeiterCard = ({ index }: Props) => {
             />
           </div>
 
-          <div className="grid grid-cols-1 gap-4 min-[430px]:grid-cols-2">
+          <div className="grid grid-cols-1 gap-4 min-[520px]:grid-cols-2">
             <div>
               <div className="mb-1.5 flex items-start gap-1.5 text-[14px] font-medium leading-tight">
                 {tStr("wochenstunden")}
@@ -185,11 +185,11 @@ export const MitarbeiterCard = ({ index }: Props) => {
               />
             </div>
             <div>
-              <div className="mb-1.5 flex items-start gap-1.5 text-[14px] font-medium leading-tight">
-                {tStr("beschaeftigungsmonate")}
+              <div className="mb-1.5 text-[14px] font-medium leading-tight">
+                <span>{tStr("beschaeftigungsmonate")}</span>
                 <HelpIcon
                   text={tStr("beschaeftigungsmonateHelp")}
-                  className="mt-[4px]"
+                  className="ml-1.5 align-middle"
                 />
               </div>
               <NumberInput
@@ -205,7 +205,7 @@ export const MitarbeiterCard = ({ index }: Props) => {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 gap-4 min-[430px]:grid-cols-2">
+          <div className="grid grid-cols-1 gap-4 min-[520px]:grid-cols-2">
             <div>
               <div className="mb-1.5 flex items-start gap-1.5 text-[14px] font-medium leading-tight">
                 {tStr("zusatzkostenMonatlich")}
@@ -255,7 +255,7 @@ export const MitarbeiterCard = ({ index }: Props) => {
                   className="mt-[4px]"
                 />
               </h4>
-              <div className="grid grid-cols-1 gap-4 min-[430px]:grid-cols-2">
+              <div className="grid grid-cols-1 gap-4 min-[520px]:grid-cols-2">
                 <div>
                   <label className="mb-1.5 block text-[14px] font-medium">
                     {tStr("verkaufbareStundenPct")}

@@ -64,7 +64,7 @@ export const HelpIcon = ({
         if (event.key === "Escape") closeTooltip();
       }}
       className={cn(
-        "inline-flex items-center justify-center rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
+        "inline-flex shrink-0 items-center justify-center rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
         isTitleIcon ? "mt-1 h-[24px] w-[24px]" : "h-[10px] w-[10px]",
         className,
       )}
