@@ -146,7 +146,7 @@ export const text = {
   ],
 
   // Results
-  landingInfoTitle: "Was kosten Ihre ersten\nMitarbeiter:innen?",
+  landingInfoTitle: "Was kosten Ihre ersten Mitarbeiter:innen?",
   landingInfoIntro:
     "Mit diesem Tool können Ein-Personen-Unternehmer:innen sehr einfach berechnen, mit welchen Kosten sie im Zuge der Einstellung der ersten Mitarbeiter:innen rechnen müssen. Das Berechnungstool bietet dabei verschiedene alternative Beschäftigungsformen an und ist für einzelne Branchen optimiert.",
   landingInfoNoticeTitle: "Bitte beachten Sie folgende Hinweise:",

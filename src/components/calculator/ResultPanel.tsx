@@ -45,8 +45,8 @@ export const ResultPanel = () => {
     return (
       <div className="h-full min-h-[520px] rounded-lg bg-result p-3 text-result-foreground min-[380px]:p-4">
         <div className="rounded bg-card p-4 shadow-sm">
-          <div className="mb-3 flex items-start justify-between gap-3">
-            <h3 className="whitespace-pre-line text-[18px] font-semibold leading-snug">
+          <div className="mb-3 flex flex-wrap items-end justify-between gap-x-3 gap-y-2">
+            <h3 className="text-[17px] font-semibold leading-snug min-[420px]:whitespace-nowrap min-[640px]:text-[18px]">
               {tStr("landingInfoTitle")}
             </h3>
             <EmployeeIcons
