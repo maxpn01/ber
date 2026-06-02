@@ -72,14 +72,15 @@ export const CalculatorProvider = ({ children }: { children: ReactNode }) => {
   const [openMitarbeiterIndex, setOpenMitarbeiterIndex] =
     useState<MitarbeiterIndex | null>(0);
   const inputComplete = useMemo(() => isReadyToCalculate(input), [input]);
+  const shouldCalculateResult = inputComplete || input.erzielbarerGewinn > 0;
 
   // Compute result reactively (synchronously is fine; calc is cheap)
   const result = useMemo(() => {
-    if (!inputComplete) {
+    if (!shouldCalculateResult) {
       return null;
     }
     return calculate(input);
-  }, [input, inputComplete]);
+  }, [input, shouldCalculateResult]);
   const hasValidationError = !!result?.fehlermeldung;
   const hasValidResult = !!result && !hasValidationError;
 

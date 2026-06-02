@@ -273,6 +273,43 @@ describe("Calculator page", () => {
     });
   });
 
+  it("keeps desired profit slider enabled when slider-derived hours round to zero", async () => {
+    const user = userEvent.setup();
+    render(<App />);
+
+    const [umsatz, aufwand, stunden] = screen.getAllByRole("textbox");
+
+    await user.click(umsatz);
+    await user.keyboard("1000");
+
+    await user.click(aufwand);
+    await user.keyboard("13");
+
+    await user.click(stunden);
+    await user.keyboard("14");
+    await user.keyboard("{Enter}");
+
+    const slider = screen.getByRole("slider", { name: "Erzielbarer Gewinn" });
+    await waitFor(() => {
+      expect(slider).not.toHaveAttribute("aria-disabled", "true");
+    });
+
+    slider.focus();
+    await user.keyboard("{Home}");
+
+    await waitFor(() => {
+      expect(slider).toHaveAttribute("aria-valuenow", "1");
+      expect(slider).not.toHaveAttribute("aria-disabled", "true");
+      expect(
+        (
+          screen.getByRole("textbox", {
+            name: "Verrechnete Stunden",
+          }) as HTMLInputElement
+        ).value,
+      ).toBe("0,00");
+    });
+  });
+
   it("commits numeric input with Enter and recalculates", async () => {
     const user = userEvent.setup();
     render(<App />);

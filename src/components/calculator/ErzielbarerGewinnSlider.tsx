@@ -12,10 +12,15 @@ const KEYBOARD_STEP = 100;
 const POINTER_STEP = 6_000;
 
 export const ErzielbarerGewinnSlider = () => {
-  const { result, sliderValue, setSliderValue, hasValidResult } =
-    useCalculator();
+  const {
+    result,
+    sliderValue,
+    setSliderValue,
+    hasValidResult,
+    hasCalculatedOnce,
+  } = useCalculator();
   const pointerActiveRef = useRef(false);
-  const enabled = hasValidResult;
+  const enabled = hasValidResult || (hasCalculatedOnce && sliderValue > 0);
   const displayedValue =
     sliderValue > 0
       ? sliderValue
