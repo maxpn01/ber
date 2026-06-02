@@ -86,10 +86,11 @@ export const ResultPanel = () => {
         <SectionDivider />
         <ResultRows>
           <ResultHeaderRow
+            wideSecondColumn
             columns={[
               "",
-              <span className="inline-flex items-center justify-end gap-1">
-                {tStr("potenzialInkl")}
+              <span className="flex min-w-0 items-center justify-end gap-1">
+                <span>{tStr("potenzialInkl")}</span>
                 <HelpIcon
                   text={potenzialInputHelp}
                   className="shrink-0"
@@ -112,6 +113,8 @@ export const ResultPanel = () => {
                 : formatMoney(result!.potenzial.umsatzpotenzialBreakEven.jahr),
             ]}
             medium
+            wrapLabel
+            wrapValues
           />
           {showStunden && (
             <ResultDataRow
@@ -389,15 +392,17 @@ const ResultRows = ({ children }: { children: ReactNode }) => (
 );
 
 const resultGridClass =
-  "grid grid-cols-[minmax(0,1fr)_minmax(4.75rem,max-content)_minmax(4.75rem,max-content)] items-center gap-x-1 gap-y-1 sm:grid-cols-[minmax(0,1fr)_140px_140px] sm:gap-x-0";
+  "grid grid-cols-[minmax(0,1.45fr)_minmax(0,1fr)_minmax(0,1fr)] items-center gap-x-2 gap-y-1 sm:grid-cols-[minmax(0,1fr)_140px_140px] sm:gap-x-0";
 
 const detailGridClass =
   "grid grid-cols-[minmax(0,1fr)_minmax(4.75rem,max-content)_minmax(4.75rem,max-content)] items-start gap-x-1 gap-y-1 sm:grid-cols-[minmax(0,1fr)_132px_132px] sm:gap-x-2";
 
 const ResultHeaderRow = ({
   columns,
+  wideSecondColumn = false,
 }: {
   columns: [ReactNode, ReactNode, ReactNode];
+  wideSecondColumn?: boolean;
 }) => (
   <div
     className={cn(
@@ -405,9 +410,24 @@ const ResultHeaderRow = ({
       "px-2 pb-1 text-[13px] font-normal text-result-foreground sm:text-[14px]",
     )}
   >
-    <div className="invisible sm:block">{columns[0]}</div>
-    <div className="whitespace-nowrap text-right">{columns[1]}</div>
-    <div className="whitespace-nowrap text-right">{columns[2]}</div>
+    <div
+      className={cn(
+        "min-w-0",
+        wideSecondColumn
+          ? "col-span-2 flex justify-end whitespace-nowrap text-right"
+          : "invisible sm:block",
+      )}
+    >
+      {wideSecondColumn ? columns[1] : columns[0]}
+    </div>
+    {!wideSecondColumn && (
+      <div className="flex min-w-0 justify-end whitespace-nowrap text-right">
+        {columns[1]}
+      </div>
+    )}
+    <div className="flex min-w-0 justify-end whitespace-nowrap text-right">
+      {columns[2]}
+    </div>
   </div>
 );
 
@@ -415,10 +435,14 @@ const ResultDataRow = ({
   label,
   values,
   medium = false,
+  wrapLabel = false,
+  wrapValues = false,
 }: {
   label: ReactNode;
   values: [ReactNode, ReactNode];
   medium?: boolean;
+  wrapLabel?: boolean;
+  wrapValues?: boolean;
 }) => (
   <div
     className={cn(
@@ -427,13 +451,32 @@ const ResultDataRow = ({
     )}
   >
     <div className={cn(resultGridClass, "w-full min-w-0 px-2 py-1")}>
-      <div className="min-w-0 max-sm:overflow-hidden max-sm:text-ellipsis">
+      <div
+        className={cn(
+          "min-w-0",
+          wrapLabel && "break-words leading-tight [overflow-wrap:anywhere]",
+        )}
+      >
         {label}
       </div>
-      <div className="min-w-0 whitespace-nowrap text-right text-[13px] tabular-nums sm:text-[15px]">
+      <div
+        className={cn(
+          "min-w-0 text-right text-[13px] tabular-nums sm:text-[15px]",
+          wrapValues
+            ? "whitespace-normal break-words leading-tight [overflow-wrap:anywhere]"
+            : "whitespace-normal break-words leading-tight [overflow-wrap:anywhere] sm:whitespace-nowrap",
+        )}
+      >
         {values[0]}
       </div>
-      <div className="min-w-0 whitespace-nowrap text-right text-[13px] tabular-nums sm:text-[15px]">
+      <div
+        className={cn(
+          "min-w-0 text-right text-[13px] tabular-nums sm:text-[15px]",
+          wrapValues
+            ? "whitespace-normal break-words leading-tight [overflow-wrap:anywhere]"
+            : "whitespace-normal break-words leading-tight [overflow-wrap:anywhere] sm:whitespace-nowrap",
+        )}
+      >
         {values[1]}
       </div>
     </div>
