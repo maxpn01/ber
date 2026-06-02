@@ -172,6 +172,52 @@ describe("Calculator page", () => {
     });
   });
 
+  it("waits for Wareneinsatz before calculating Gewerbe-Handel-Dienstleistung/Handwerk", async () => {
+    const user = userEvent.setup();
+    render(<App />);
+
+    await user.click(screen.getByRole("combobox", { name: "Branche" }));
+    await user.click(
+      await screen.findByRole("option", {
+        name: "Gewerbe-Handel-Dienstleistung/Handwerk",
+      }),
+    );
+
+    await user.click(screen.getByRole("textbox", { name: "Umsatz" }));
+    await user.keyboard("100000");
+
+    await user.click(screen.getByRole("textbox", { name: "Aufwand" }));
+    await user.keyboard("20000");
+
+    await user.click(
+      screen.getByRole("textbox", { name: "Verrechnete Stunden" }),
+    );
+    await user.keyboard("1000");
+    await user.tab();
+
+    await waitFor(() => {
+      expect(
+        screen.getByText(/Was kosten Ihre ersten\s+Mitarbeiter:innen/),
+      ).toBeInTheDocument();
+      expect(
+        screen.getByRole("slider", { name: "Erzielbarer Gewinn" }),
+      ).toHaveAttribute("data-disabled", "");
+    });
+
+    await user.click(screen.getByRole("textbox", { name: "Wareneinsatz" }));
+    await user.keyboard("10000");
+    await user.tab();
+
+    await waitFor(() => {
+      expect(
+        screen.getByText("Potenzial inkl. neuer Mitarbeiter"),
+      ).toBeInTheDocument();
+      expect(
+        screen.getByRole("slider", { name: "Erzielbarer Gewinn" }),
+      ).not.toHaveAttribute("data-disabled");
+    });
+  });
+
   it("does not offer personnel cost details when no employee data is included", async () => {
     const user = userEvent.setup();
     render(<App />);

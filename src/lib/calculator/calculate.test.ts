@@ -73,6 +73,30 @@ describe("calculator", () => {
     expect(isReadyToCalculate(defaultInput("dienstleistung"))).toBe(false);
   });
 
+  it("requires Wareneinsatz for Gewerbe-Handel-Dienstleistung/Handwerk", () => {
+    expect(
+      isReadyToCalculate(
+        branchInput("gewerbe", {
+          umsatz: 100000,
+          aufwand: 20000,
+          stunden: 1000,
+          wareneinsatz: 0,
+        }),
+      ),
+    ).toBe(false);
+
+    expect(
+      isReadyToCalculate(
+        branchInput("gewerbe", {
+          umsatz: 100000,
+          aufwand: 20000,
+          stunden: 1000,
+          wareneinsatz: 10000,
+        }),
+      ),
+    ).toBe(true);
+  });
+
   it("validates umsatz must be > aufwand", () => {
     const i = defaultInput("dienstleistung");
     i.umsatz = 100;
