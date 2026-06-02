@@ -14,7 +14,7 @@ describe("Calculator page", () => {
     );
 
     const dialog = await screen.findByRole("dialog", {
-      name: "Break Even Rechner - Allgemeine Hilfe",
+      name: "Kostencheck Allgemeine Hilfe",
     });
 
     expect(within(dialog).getByText("Einführung")).toBeInTheDocument();
@@ -44,16 +44,16 @@ describe("Calculator page", () => {
 
   it("has original-site help text for branch and dynamic general fields", () => {
     expect(tStr("brancheHelp")).toContain(
-      "Die Ermittlung des Break-Even-Umsatzes erfolgt je nach angegebener Kategorie unterschiedlich",
+      "Die Ermittlung des Mindestumsatzes erfolgt je nach angegebener Kategorie unterschiedlich",
     );
     expect(tStr("brancheHelp")).toContain(
-      "(z.B. Textileinzelhändler:in, Möbelhandel)",
+      "(z.B. Textileinzelhandel, Möbelhandel)",
     );
     expect(tStr("brancheHelp")).toContain(
       "(z.B. ein/e Friseur:in mit angeschlossenem Friseurbedarfshandel oder ein/e EDV-Dienstleister:in mit Computerhandel)",
     );
     expect(tStr("brancheHelp")).toContain(
-      "(z.B. ein Tischler:in oder Spengler:in)",
+      "(z.B. Tischler:in oder Spengler:in)",
     );
     expect(tStr("brancheHelp")).toContain(
       "(z.B. Handelsagent:in, Direktvertrieb)",
@@ -84,7 +84,7 @@ describe("Calculator page", () => {
 
     const branchHelp = screen.getAllByRole("button", { name: "Hilfe" })[0];
     const branchHelpText =
-      /Die Ermittlung des Break-Even-Umsatzes erfolgt je nach angegebener Kategorie unterschiedlich/;
+      /Die Ermittlung des Mindestumsatzes erfolgt je nach angegebener Kategorie unterschiedlich/;
 
     await user.hover(branchHelp);
     expect(screen.queryByText(branchHelpText)).not.toBeInTheDocument();
@@ -154,7 +154,7 @@ describe("Calculator page", () => {
     await user.keyboard("1000");
 
     expect(
-      screen.getByText("Was kosten Ihre Ersten Mitarbeiter?"),
+      screen.getByText(/Was kosten Ihre ersten\s+Mitarbeiter:innen/),
     ).toBeInTheDocument();
 
     await user.tab();
@@ -164,7 +164,7 @@ describe("Calculator page", () => {
         screen.getByText("Potenzial inkl. neuer Mitarbeiter"),
       ).toBeInTheDocument();
       expect(
-        screen.queryByText("Was kosten Ihre Ersten Mitarbeiter?"),
+        screen.queryByText(/Was kosten Ihre ersten\s+Mitarbeiter:innen/),
       ).not.toBeInTheDocument();
       const slider = screen.getByRole("slider", { name: "Erzielbarer Gewinn" });
       expect(slider).toHaveAttribute("aria-valuenow", "80000");
@@ -615,7 +615,7 @@ describe("Calculator page", () => {
       ).value,
     ).toBe("40,00");
     expect(
-      screen.queryByText("Was kosten Ihre Ersten Mitarbeiter?"),
+      screen.queryByText(/Was kosten Ihre ersten\s+Mitarbeiter:innen/),
     ).not.toBeInTheDocument();
     expect(
       screen.getByText("Potenzial inkl. neuer Mitarbeiter"),

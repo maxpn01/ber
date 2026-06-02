@@ -1,33 +1,32 @@
 export const text = {
   // Header
-  appTitle: "Break-Even-Rechner",
+  appTitle: "Kostencheck",
   appShortDesc:
     "Mit dem Break-Even-Rechner können Ein-Personen-Unternehmer mittels weniger Eingaben sehr einfach ausrechnen, mit welchen Kosten für die Einstellung der ersten 4 Mitarbeiter zu rechnen ist.",
-  appHelpTitle: "Break Even Rechner - Allgemeine Hilfe",
+  appHelpTitle: "Kostencheck Allgemeine Hilfe",
   appHelpSections: [
     {
       title: "Einführung",
       paragraphs: [
-        "Mit dem Break-Even-Rechner können Ein-Personen-Unternehmer mittels weniger Eingaben sehr einfach ausrechnen, mit welchen Kosten für die Einstellung der ersten 4 Mitarbeiter zu rechnen ist.",
-        "Im Tool sind verschiedene Beschäftigungsformen beinhaltet, sodass sich Unternehmer unterschiedliche alterative Szenarien für die Mitarbeiterplanung ansehen können und die für sie optimalste Variante bestimmen können.",
+        "Mit dem Kostencheck können Ein-Personen-Unternehmer:innen mittels weniger Eingaben sehr einfach ausrechnen, mit welchen Kosten für die Einstellung der ersten 4 Mitarbeiter:innen zu rechnen ist.",
+        "Im Tool sind verschiedene Beschäftigungsformen enthalten, sodass sich Unternehmer:innen unterschiedliche alternative Szenarien für die Mitarbeiterplanung ansehen können und die für sie optimalste Variante bestimmen können.",
       ],
     },
     {
       title: "Allgemein",
       paragraphs: [
-        "Der Break-Even-Rechner ist einfach und intuitiv aufgebaut, sodass mittels weniger Basiseingaben bereits Ergebnisse ermittelt werden. Die Ergebnisse werden zentral im Rechner dargestellt und die Berechnung erfolgt dynamisch. Sobald Eingabebereiche bearbeitet werden, sind die Auswirkungen im Ergebnisbereich sofort sichtbar. Zu den einzelnen Eingabebereichen bzw. Eingabefeldern sind direkt im Rechner kontextbezogene Hilfe-Optionen integriert, die mit Klick auf die ?-Icons aufgerufen werden können.",
-        "Es können maximal 4 Mitarbeiter erfasst und berechnet werden. Die Eingaben des ersten Mitarbeiters sind bereits mit Defaultwerten vorbefüllt, die jederzeit individuell angepasst werden können. Die Defaultwerte orientieren sich an Branchen-Kollektivverträgen und sollen nur eine grobe Richtgröße geben. Details zu aktuellen Kollektivverträgen sind unter https://www.wko.at/service/kollektivvertraege.html zu finden. Bei der Ermittlung der Lohnnebenkosten wird mit dem reduzierten Dienstgeberbeitrag von 3,7% gerechnet. Nähere Informationen dazu sind unter: https://www.wko.at/service/steuern/senkung-des-dienstgeberbeitrags.html zu finden.",
-        "Die erstmalige Berechnung wird basierend auf den Eingaben zu Stammdaten, Jahresdaten (Umsatz, Aufwand, etc.) sowie Defaultwerten für den ersten Mitarbeiter ermittelt. Die individuellen Mitarbeiterdaten können jederzeit im Bereich Mitarbeiter geändert und angepasst werden. Die Berechnung passt sich automatisch an die Eingabewerte an, sodass der Ergebnisbereich laufend aktuell ist.",
-        "Im Tool gibt es die Möglichkeit, Lohnnebenkostenförderungen für die einzelnen Mitarbeiter zu berücksichtigten und sich die Auswirkungen der Förderung zu berechnen. Welche Voraussetzungen für die Inanspruchnahme der Förderung gelten, ist direkt aus der Checkliste im Rechner ersichtlich.",
+        "Der Kostencheck ist einfach und intuitiv aufgebaut, sodass mittels weniger Basiseingaben bereits Ergebnisse ermittelt werden. Die Ergebnisse werden zentral im Rechner dargestellt und die Berechnung erfolgt dynamisch. Sobald Eingabebereiche bearbeitet werden, sind die Auswirkungen im Ergebnisbereich sofort sichtbar. Zu den einzelnen Eingabebereichen bzw. Eingabefeldern sind direkt im Rechner kontextbezogene Hilfe-Optionen integriert, die mit Klick auf die i-Icons aufgerufen werden können.",
+        "Es können maximal 4 Mitarbeiter:innen erfasst und berechnet werden. Die Eingaben des/r ersten Mitarbeiters:in sind bereits mit Defaultwerten vorbefüllt, die jederzeit individuell angepasst werden können. Die Defaultwerte orientieren sich an Branchen-Kollektivverträgen und sollen nur eine grobe Richtgröße geben. Details zu aktuellen Kollektivverträgen sind unter https://www.wko.at/service/kollektivvertraege.html zu finden. Bei der Ermittlung der Lohnnebenkosten wird mit dem reduzierten Dienstgeberbeitrag von 3,7% gerechnet.",
+        "Die erstmalige Berechnung wird basierend auf den Eingaben zu Jahresdaten (Umsatz, Aufwand, etc.) sowie Defaultwerten für den/die erste/n Mitarbeiter:in ermittelt. Die individuellen Mitarbeiterdaten können jederzeit im Bereich Mitarbeiter:in geändert und angepasst werden. Die Berechnung passt sich automatisch an die Eingabewerte an, sodass der Ergebnisbereich laufend aktuell ist.",
+        "Im Tool gibt es die Möglichkeit, Lohnnebenkostenförderungen für die einzelnen Mitarbeiter:innen zu berücksichtigen und sich die Auswirkungen der Förderung zu berechnen. Welche Voraussetzungen für die Inanspruchnahme der Förderung gelten, ist direkt aus der Checkliste im Rechner ersichtlich.",
         "Nach der erstmaligen Berechnung gibt es auch die Zusatzoption, den ermittelten Gewinn (Feld erzielbarer Gewinn) nachträglich anzupassen und sich die Basisdaten (Umsatz, Stunden, WES, etc.) vom Rechner neu ermitteln zu lassen. Auf diese Art und Weise kann beispielsweise der Wunschgewinn eingegeben werden und der Rechner ermittelt unter anderem, wie viel Umsatz notwendig wäre, um diesen Gewinn zu erzielen.",
-        "Der Break-Even-Rechner ermöglicht somit die Eingabe und Berechnung unterschiedlicher Szenarien und unterstützt bei der Personalplanung.",
+        "Der Kostencheck ermöglicht somit die Eingabe und Berechnung unterschiedlicher Szenarien und unterstützt bei der Personalplanung.",
       ],
     },
     {
       title: "Hinweise",
       paragraphs: [
-        "Im Interesse der besseren Lesbarkeit wurde auf die Schreibweise der weiblichen Form (z. B. Mitarbeiterin) verzichtet. Wir legen jedoch Wert auf die Feststellung, dass der Rechner weiblichen und männlichen Benutzern gleichermaßen gerecht wird.",
-        "Ihre Daten gehen nach dem Schließen des Browserfensters verloren und stehen für spätere Aufrufe nicht mehr zur Verfügung. Natürlich haben Sie die Möglichkeit, das Ergebnis der Berechnung auszudrucken oder zu speichern (z.B. via Free-PDF).",
+        "Ihre Daten gehen nach dem Schließen des Browserfensters verloren und stehen für spätere Aufrufe nicht mehr zur Verfügung. Sie können sich einen Screenshot der Eingaben bzw. Ergebnisse machen und diese lokal abspeichern oder die Browser-Druckfunktion zum Ausdrucken nutzen.",
         "Dieses Produkt wurde mit einem Höchstmaß an Sorgfalt erstellt und ausgiebigen Qualitätskontrollen unterzogen. Aufgrund der Komplexität interaktiver Medien lassen sich Fehler aber nur sehr schwer ausschließen. Es kann keine Haftung für Schäden oder Folgeschäden übernommen werden, die auf die Anwendung dieser Seite oder darauf enthaltenen Angaben zurückgehen.",
       ],
     },
@@ -35,12 +34,12 @@ export const text = {
       title: "Beschäftigungsformen",
       paragraphs: [
         "Nachstehend sind Informationen zu den einzelnen Beschäftigungsformtypen zu finden:",
-        "Angestellte: Für Angestellte gelten zwingend die Bestimmungen des Angestelltengesetzes. Es kann also kein Arbeitnehmer, der eine Angestelltentätigkeit ausübt, als Arbeiter beschäftigt werden. Als Angestellte gelten z. B. alle Bürokräfte, Sachbearbeiter, Ein- und Verkäufer, Buchhalter, Programmierer, Lohnverrechner, Ordinationshilfen, Rezeptionisten, etc.",
-        "Arbeiter: Es existiert keine eigene gesetzliche Regelung, die festlegt, wer Arbeiter ist. Arbeitertätigkeiten sind sowohl einfache manuelle Hilfstätigkeiten als auch hochqualifizierte manuelle Tätigkeiten, die eine mehrjährige Ausbildung (Facharbeiter) voraussetzen.",
+        "Angestellte:r: Für Angestellte gelten zwingend die Bestimmungen des Angestelltengesetzes. Es kann also kein Arbeitnehmer:in, der eine Angestelltentätigkeit ausübt, als Arbeiter:in beschäftigt werden. Als Angestellte gelten z. B. alle Bürokräfte, Sachbearbeiter:innen, Ein- und Verkäufer:innen, Buchhalter:innen, Programmierer:innen, Lohnverrechner:innen, Ordinationshilfen, Rezeptionist:innen, etc.",
+        "Arbeiter:in: Es existiert keine eigene gesetzliche Regelung, die festlegt, wer Arbeiter:in ist. Arbeitertätigkeiten sind sowohl einfache manuelle Hilfstätigkeiten als auch hochqualifizierte manuelle Tätigkeiten, die eine mehrjährige Ausbildung (Facharbeiter:in) voraussetzen.",
         "Geringfügiges Dienstverhältnis: Unter einer geringfügigen Beschäftigung versteht man ein Beschäftigungsverhältnis, in dem das Bruttomonatsgehalt die sozialversicherungsrechtliche Geringfügigkeitsgrenze in Höhe von derzeit EUR 551,10 nicht überschreitet.",
         "Im arbeitsrechtlichen Bereich gibt es zwischen normalen und geringfügigen Beschäftigungsverhältnissen nahezu keine Unterschiede. Eine geringfügige Beschäftigung ist als eine Form von Teilzeitarbeit anzusehen.",
-        "Aus diesem Grund hat auch der geringfügig Beschäftigte Anspruch auf:\n- kollektivvertraglichen Mindestlohn,\n- Sonderzahlungen im Sinne des Kollektivvertrages,\n- Entgeltfortzahlung im Krankenstand,\n- Entgeltfortzahlung bei sonstigen Dienstverhinderungsgründen,\n- Pflegefreistellung,\n- Urlaub und\n- auf betriebliche Mitarbeitervorsorge.",
-        "Freier Dienstvertrag: Ein freier Dienstvertrag liegt vor, wenn sich jemand gegen Entgelt verpflichtet, für einen anderen (=Auftraggeber) seine Arbeitskraft zur Verfügung zu stellen, ohne sich in persönliche Abhängigkeit zu begeben. Diese persönliche Unabhängigkeit besteht vor allem darin, dass keine Bindung an Arbeitszeit und Arbeitsort und keine Kontrolle durch den Auftraggeber gegeben ist. Möglich ist auch eine Vereinbarung, dass sich der freie Dienstnehmer vertreten lassen kann. Freie Dienstnehmer haben keine Ansprüche aus arbeitsrechtlichen Bestimmungen (z.B. keinen Anspruch auf Urlaub, Krankenentgelt, etc.). Sehr wohl ist aber eine Kündigungsfrist einzuhalten. Der Auftraggeber hat den freien Dienstnehmer bei der Gebietskrankenkasse anzumelden. Freie Dienstnehmer sind pensions-, kranken- und unfallversichert. Sie haben Anspruch auf Geldleistungen aus der Krankenversicherung. Sie haben seit 1.1.2008 Anspruch auf Geldleistungen aus der Krankenversicherung (Wochengeld, Krankengeld), die nach den gleichen Regeln wie für echte Dienstnehmer berechnet werden. Weiters sind freie Dienstnehmer seit 1.1.2008 gegen Arbeitslosigkeit versichert und genießen Insolvenzausfallschutz. Die Tätigkeit als freier Dienstnehmer muss strikt von einem echten Dienstverhältnis (persönliche Abhängigkeit, Weisungsgebundenheit) unterschieden werden.",
+        "Aus diesem Grund haben auch geringfügig Beschäftigte Anspruch auf:\n- kollektivvertraglichen Mindestlohn,\n- Sonderzahlungen im Sinne des Kollektivvertrages,\n- Entgeltfortzahlung im Krankenstand,\n- Entgeltfortzahlung bei sonstigen Dienstverhinderungsgründen,\n- Pflegefreistellung,\n- Urlaub und\n- auf betriebliche Mitarbeitervorsorge.",
+        "Freier Dienstvertrag: Ein freier Dienstvertrag liegt vor, wenn sich jemand gegen Entgelt verpflichtet, für einen anderen (=Auftraggeber:in) seine Arbeitskraft zur Verfügung zu stellen, ohne sich in persönliche Abhängigkeit zu begeben. Diese persönliche Unabhängigkeit besteht vor allem darin, dass keine Bindung an Arbeitszeit und Arbeitsort und keine Kontrolle durch den Auftraggeber:in gegeben ist. Möglich ist auch eine Vereinbarung, dass sich der/die freie Dienstnehmer:in vertreten lassen kann. Freie Dienstnehmer:innen haben keine Ansprüche aus arbeitsrechtlichen Bestimmungen (z.B. keinen Anspruch auf Urlaub, Krankenentgelt, etc.). Sehr wohl ist aber eine Kündigungsfrist einzuhalten. Der/Die Auftraggeber:in hat den freien Dienstnehmer bei der Gebietskrankenkasse anzumelden. Freie Dienstnehmer:innen sind pensions-, kranken- und unfallversichert. Sie haben Anspruch auf Geldleistungen aus der Krankenversicherung. Sie haben seit 1.1.2008 Anspruch auf Geldleistungen aus der Krankenversicherung (Wochengeld, Krankengeld), die nach den gleichen Regeln wie für echte Dienstnehmer:innen berechnet werden. Weiters sind freie Dienstnehmer:innen seit 1.1.2008 gegen Arbeitslosigkeit versichert und genießen Insolvenzausfallschutz. Die Tätigkeit als freier Dienstnehmer:in muss strikt von einem echten Dienstverhältnis (persönliche Abhängigkeit, Weisungsgebundenheit) unterschieden werden.",
       ],
     },
   ],
@@ -57,7 +56,7 @@ export const text = {
   erzielbarerGewinn: "Erzielbarer Gewinn",
 
   brancheHelp:
-    "Die Ermittlung des Break-Even-Umsatzes erfolgt je nach angegebener Kategorie unterschiedlich, weshalb hier anzugeben ist, in welcher Branche Sie tätig sind.\n\nWenn Sie Ihre Umsätze z.B. durch Beratung oder Softwareerstellung erzielen, wählen Sie bitte die Kategorie Dienstleistung. Sollten Sie zusätzlich Handelswaren verkaufen, wählen Sie bitte die Kategorie Gewerbe-Handel-Dienstleistung/Handwerk. Bei Gastronomieumsätzen wählen Sie bitte ebenfalls diese Kategorie aus. Wenn Sie Ihre Umsätze durch den Verkauf von Handelswaren erzielen (z.B. Textileinzelhändler:in, Möbelhandel), wählen Sie bitte die Kategorie Handel aus. Sollten Sie Ihre Umsätze durch die Erbringung von Dienstleistung und gleichzeitigem Verkauf von Handelswaren (z.B. ein/e Friseur:in mit angeschlossenem Friseurbedarfshandel oder ein/e EDV-Dienstleister:in mit Computerhandel), oder durch handwerkliche Leistungserstellung (z.B. ein Tischler:in oder Spengler:in) erzielen, wählen Sie bitte die Kategorie Gewerbe-Handel-Dienstleistung/Handwerk. Für alle Tätigkeiten, die auf Provisionsbasis entlohnt werden (z.B. Handelsagent:in, Direktvertrieb), ist die Kategorie Provisionen zu wählen.",
+    "Die Ermittlung des Mindestumsatzes erfolgt je nach angegebener Kategorie unterschiedlich, weshalb hier anzugeben ist, in welcher Branche Sie tätig sind.\n\nWenn Sie Ihre Umsätze z.B. durch Beratung oder Softwareerstellung erzielen, wählen Sie bitte die Kategorie Dienstleistung. Sollten Sie zusätzlich Handelswaren verkaufen, wählen Sie bitte die Kategorie Gewerbe-Handel-Dienstleistung/Handwerk. Bei Gastronomieumsätzen wählen Sie bitte ebenfalls diese Kategorie aus. Wenn Sie Ihre Umsätze durch den Verkauf von Handelswaren erzielen (z.B. Textileinzelhandel, Möbelhandel), wählen Sie bitte die Kategorie Handel aus. Sollten Sie Ihre Umsätze durch die Erbringung von Dienstleistung und gleichzeitigem Verkauf von Handelswaren (z.B. ein/e Friseur:in mit angeschlossenem Friseurbedarfshandel oder ein/e EDV-Dienstleister:in mit Computerhandel), oder durch handwerkliche Leistungserstellung (z.B. Tischler:in oder Spengler:in) erzielen, wählen Sie bitte die Kategorie Gewerbe-Handel-Dienstleistung/Handwerk. Für alle Tätigkeiten, die auf Provisionsbasis entlohnt werden (z.B. Handelsagent:in, Direktvertrieb), ist die Kategorie Provisionen zu wählen.",
   umsatzHelp: "Dieses Feld ist für die Höhe Ihres Jahresumsatzes vorgesehen.",
   aufwandHelp:
     "In diesem Feld ist die Höhe Ihres derzeitigen Aufwands als Jahressumme anzuführen.",
@@ -93,7 +92,7 @@ export const text = {
   zusatzkostenJaehrlichHelp:
     "Bitte geben Sie hier die personenabhängigen Zusatzkosten an, die sich durch die Einstellung des Mitarbeiters in einem Jahr ergeben.\n\nTypischerweise fallen folgende Zusatzkosten an:\n– für die Einrichtung eines zusätzlichen Arbeitsplatzes\n– für die Schaffung der notwendigen Infrastruktur\n– für die Anschaffung zusätzlicher Arbeitsgeräte\n– durch erhöhte Telefonkosten\n– durch den Druck von Visitenkarten\n\nDie in diesem Feld angegebenen Kosten werden für die jeweilige Anzahl der Beschäftigungsmonate berechnet. Wenn Sie hier einen Wert eingeben, wird der monatliche Wert automatisch berechnet.",
   verkaufbareStundenHelp:
-    "Verkaufbare Stunden in %:\nGeben Sie hier den Prozentsatz an, den Ihr Mitarbeiter mit produktiven Tätigkeiten beschäftigt ist. Beachten Sie bitte, dass Sie die Arbeitszeit für nicht-produktive Tätigkeiten (etwa für Akquisition, Offerterstellung, Büroarbeit, uä) dem Kunden nicht verrechnen können, weshalb es auch zu einer Reduktion der verkaufbaren Stunden kommt. Die durchschnittlich zur Verfügung stehenden Arbeitsstunden ergeben sich aus den maximal möglichen Leistungsstunden eines Mitarbeiters gekürzt um die Nicht-Leistungszeiten wie Urlaub, Krankenstand und Feiertage. Bei der Beschäftigungsform „Freier Dienstvertrag“ erfolgt keine Berücksichtigung der Nicht-Leistungszeiten.\n\nStundensatz:\nGeben Sie hier jenen Stundensatz an, mit dem Sie Leistungen Ihres Mitarbeiters verrechnen möchten. Bedenken Sie dabei, dass in vielen Fällen nicht derselbe Stundensatz verwendet werden kann, den Sie für Ihre eigene Leistungserbringung verrechnen.\nBitte beachten Sie den Stundensatz auch hier netto anzugeben, sofern Sie umsatzsteuerpflichtig sind.",
+    "Verkaufbare Stunden in %:\nGeben Sie hier den Prozentsatz an, den Ihr/e Mitarbeiter:in mit produktiven Tätigkeiten beschäftigt ist. Beachten Sie bitte, dass Sie die Arbeitszeit für nicht-produktive Tätigkeiten (etwa für Akquisition, Offerterstellung, Büroarbeit, uä) dem/der Kunden:in nicht verrechnen können, weshalb es auch zu einer Reduktion der verkaufbaren Stunden kommt. Die durchschnittlich zur Verfügung stehenden Arbeitsstunden ergeben sich aus den maximal möglichen Leistungsstunden eines/er Mitarbeiters:in gekürzt um die Nicht-Leistungszeiten wie Urlaub, Krankenstand und Feiertage. Bei der Beschäftigungsform „Freier Dienstvertrag“ erfolgt keine Berücksichtigung der Nicht-Leistungszeiten.\n\nStundensatz:\nGeben Sie hier jenen Stundensatz an, mit dem Sie Leistungen des/der Mitarbeiters:in verrechnen möchten. Bedenken Sie dabei, dass in vielen Fällen nicht derselbe Stundensatz verwendet werden kann, den Sie für Ihre eigene Leistungserbringung verrechnen.\nBitte beachten Sie den Stundensatz auch hier netto anzugeben, sofern Sie umsatzsteuerpflichtig sind.",
   potenzielleUmsatzsteigerungHelp:
     "Geschätzte Umsatzsteigerung in %:\nGeben Sie die Umsatzsteigerung, die Sie durch den Mitarbeiter schätzungsweise erzielen können, ein.",
   zuruecksetzen: "Zurücksetzen",
@@ -147,15 +146,15 @@ export const text = {
   ],
 
   // Results
-  landingInfoTitle: "Was kosten Ihre Ersten Mitarbeiter?",
+  landingInfoTitle: "Was kosten Ihre ersten\nMitarbeiter:innen?",
   landingInfoIntro:
-    "Mit diesem Tool können Ein-Personen-Unternehmer sehr einfach berechnen, mit welchen Kosten sie im Zuge der Einstellung der ersten Mitarbeiter rechnen müssen. Das Berechnungstool bietet dabei verschiedene alternative Beschäftigungsformen an und ist für einzelne Branchen optimiert.",
+    "Mit diesem Tool können Ein-Personen-Unternehmer:innen sehr einfach berechnen, mit welchen Kosten sie im Zuge der Einstellung der ersten Mitarbeiter:innen rechnen müssen. Das Berechnungstool bietet dabei verschiedene alternative Beschäftigungsformen an und ist für einzelne Branchen optimiert.",
   landingInfoNoticeTitle: "Bitte beachten Sie folgende Hinweise:",
   landingInfoNotice:
     "Sämtliche Beträge sind als Nettobeträge, d.h. ohne Umsatzsteuer einzugeben, wenn Sie umsatzsteuerpflichtig sind. Sofern Sie unter die Kleinunternehmerregelung fallen, geben Sie die Umsätze ohne Umsatzsteuer, die Aufwände inkl. Vorsteuer an.",
   potenzialTitle: "Potenzial inkl. neuer Mitarbeiter",
   potenzialHelp:
-    "In diesem Bereich ist das Zusatzpotential, das sich durch die Mitarbeiter:innen ergibt, auf einem Blick zusammengefasst. Sie sehen den Break-Even-Umsatz und die Break-Even-Stunden (= Gesamtstunden, die im Jahr verrechnet werden müssen, um den Break-Even-Umsatz zu erreichen). Darüber hinaus sehen Sie das zusätzliche Umsatzpotenzial, das sich aufgrund der verkaufbaren Stunden der Mitarbeiter:innen ergibt und die zusätzlich verrechenbaren Stunden, die sich aufgrund der Mitarbeiter:innen ergeben.",
+    "In diesem Bereich ist das Zusatzpotential, das sich durch die Mitarbeiter:innen ergibt, auf einem Blick zusammengefasst. Sie sehen den Mindestumsatz und die Mindeststundenanzahl (= Gesamtstunden, die im Jahr verrechnet werden müssen, um den Mindestumsatz zu erreichen). Darüber hinaus sehen Sie das zusätzliche Umsatzpotenzial, das sich aufgrund der verkaufbaren Stunden der Mitarbeiter:innen ergibt und die zusätzlich verrechenbaren Stunden, die sich aufgrund der Mitarbeiter:innen ergeben.",
   potenzialInputVerkaufbareStundenHelp:
     "Die Eingaben zum Potenzial der Mitarbeiter können in den einzelnen Mitarbeiterdetailmasken im Bereich „Verkaufbare Stunden“ erfasst werden.",
   potenzialInputUmsatzsteigerungHelp:
@@ -168,7 +167,7 @@ export const text = {
   monatlich: "monatlich",
   jaehrlich: "jährlich",
   jaehrlichHelp:
-    "In diesem Bereich finden Sie die detaillierten Break-Even-Ergebnisse inkl. der neuen Mitarbeiter.",
+    "In diesem Bereich finden Sie die detaillierten Mindestumsatz-Ergebnisse inkl. der neuen Mitarbeiter:innen.",
   breakEvenUmsatz: "Break-Even-Umsatz",
   breakEvenProvisionsumsatz: "Break-Even-Provisionsumsatz",
   gesamtumsatz: "Gesamtumsatz",

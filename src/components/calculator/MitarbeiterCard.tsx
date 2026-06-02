@@ -250,23 +250,10 @@ export const MitarbeiterCard = ({ index }: Props) => {
             <div className="border-t border-dashed border-border pt-4">
               <h4 className="mb-3 flex items-center gap-1.5 text-[18px] font-semibold">
                 {tStr("verkaufbareStunden")}
-                {/* <HelpIcon
-                  text={
-                    <>
-                      <span className="underline">
-                        Verkaufbare Stunden in %:
-                      </span>
-                      {
-                        "\nGeben Sie hier den Prozentsatz an, den Ihr Mitarbeiter mit produktiven Tätigkeiten beschäftigt ist. Beachten Sie bitte, dass Sie die Arbeitszeit für nicht-produktive Tätigkeiten (etwa für Akquisition, Offerterstellung, Büroarbeit, uä) dem Kunden nicht verrechnen können, weshalb es auch zu einer Reduktion der verkaufbaren Stunden kommt. Die durchschnittlich zur Verfügung stehenden Arbeitsstunden ergeben sich aus den maximal möglichen Leistungsstunden eines Mitarbeiters gekürzt um die Nicht-Leistungszeiten wie Urlaub, Krankenstand und Feiertage. Bei der Beschäftigungsform „Freier Dienstvertrag“ erfolgt keine Berücksichtigung der Nicht-Leistungszeiten.\n\n"
-                      }
-                      <span className="underline">Stundensatz:</span>
-                      {
-                        "\nGeben Sie hier jenen Stundensatz an, mit dem Sie Leistungen Ihres Mitarbeiters verrechnen möchten. Bedenken Sie dabei, dass in vielen Fällen nicht derselbe Stundensatz verwendet werden kann, den Sie für Ihre eigene Leistungserbringung verrechnen.\nBitte beachten Sie den Stundensatz auch hier netto anzugeben, sofern Sie umsatzsteuerpflichtig sind."
-                      }
-                    </>
-                  }
+                <HelpIcon
+                  text={tStr("verkaufbareStundenHelp")}
                   className="mt-[4px]"
-                /> */}
+                />
               </h4>
               <div className="grid grid-cols-1 gap-4 min-[430px]:grid-cols-2">
                 <div>

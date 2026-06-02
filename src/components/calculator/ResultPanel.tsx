@@ -46,7 +46,7 @@ export const ResultPanel = () => {
       <div className="h-full min-h-[520px] rounded-lg bg-result p-3 text-result-foreground min-[380px]:p-4">
         <div className="rounded bg-card p-4 shadow-sm">
           <div className="mb-3 flex items-start justify-between gap-3">
-            <h3 className="text-[18px] font-semibold leading-snug">
+            <h3 className="whitespace-pre-line text-[18px] font-semibold leading-snug">
               {tStr("landingInfoTitle")}
             </h3>
             <EmployeeIcons

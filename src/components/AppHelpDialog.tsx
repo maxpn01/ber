@@ -11,8 +11,8 @@ import {
 import { text, tStr } from "@/lib/text";
 
 const accentedPrefixes = [
-  "Angestellte:",
-  "Arbeiter:",
+  "Angestellte:r:",
+  "Arbeiter:in:",
   "Geringfügiges Dienstverhältnis:",
   "Freier Dienstvertrag:",
 ];
