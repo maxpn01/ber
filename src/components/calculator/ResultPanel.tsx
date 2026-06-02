@@ -101,7 +101,7 @@ export const ResultPanel = () => {
             ]}
           />
           <ResultDataRow
-            label={tStr("gesamtumsatzpotenzial")}
+            label={<GesamtumsatzpotenzialLabel />}
             values={[
               empty
                 ? emptyValue
@@ -454,7 +454,7 @@ const ResultDataRow = ({
       <div
         className={cn(
           "min-w-0",
-          wrapLabel && "break-words leading-tight [overflow-wrap:anywhere]",
+          wrapLabel && "break-words leading-tight [overflow-wrap:normal]",
         )}
       >
         {label}
@@ -481,6 +481,14 @@ const ResultDataRow = ({
       </div>
     </div>
   </div>
+);
+
+const GesamtumsatzpotenzialLabel = () => (
+  <>
+    <span className="whitespace-nowrap">Gesamtumsatz</span>
+    <wbr />
+    <span className="whitespace-nowrap">potenzial</span>
+  </>
 );
 
 const EmployeeIcons = ({

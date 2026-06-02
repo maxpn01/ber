@@ -124,7 +124,7 @@ const Summary = ({ onBack }: Props) => {
               muted
             />
             <Row
-              label={tStr("gesamtumsatzpotenzial")}
+              label={<GesamtumsatzpotenzialLabel />}
               cols={[
                 formatMoney(result.potenzial.umsatzpotenzialMitarbeiter.jahr),
                 formatMoney(result.potenzial.umsatzpotenzialBreakEven.jahr),
@@ -338,6 +338,14 @@ const Table = ({ children }: { children: React.ReactNode }) => (
   <div className="grid grid-cols-2 gap-x-3 gap-y-2 text-sm min-[430px]:grid-cols-[minmax(0,1fr)_132px_96px] sm:grid-cols-3 sm:gap-x-4">
     {children}
   </div>
+);
+
+const GesamtumsatzpotenzialLabel = () => (
+  <>
+    <span className="whitespace-nowrap">Gesamtumsatz</span>
+    <wbr />
+    <span className="whitespace-nowrap">potenzial</span>
+  </>
 );
 
 const Row = ({
