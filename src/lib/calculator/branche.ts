@@ -11,9 +11,9 @@ export const branchen: Branche[] = [
 export const dienstverhaeltnisse: Dienstverhaeltnis[] = [
   "angestellter",
   "arbeiter",
+  "dienstvertrag",
   "geringfuegig",
   "lehrling",
-  "dienstvertrag",
 ];
 
 export interface BrancheDefaults {

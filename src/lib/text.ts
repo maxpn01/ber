@@ -70,7 +70,7 @@ export const text = {
 
   datenMitarbeiter: "Daten Mitarbeiter",
   beschaeftigungsform: "Beschäftigungsform",
-  bruttogehalt: "Bruttogehalt pro Monat",
+  bruttogehalt: "Bruttoentgelt pro Monat",
   wochenstunden: "Anzahl Wochenstunden",
   beschaeftigungsmonate: "Anzahl Beschäftigungsmonate",
   zusatzkostenMonatlich: "Zusatzkosten monatlich",

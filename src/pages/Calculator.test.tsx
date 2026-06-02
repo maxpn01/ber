@@ -365,12 +365,12 @@ describe("Calculator page", () => {
 
     expect(
       screen.getByRole("textbox", {
-        name: "Daten Mitarbeiter 1: Bruttogehalt pro Monat",
+        name: "Daten Mitarbeiter 1: Bruttoentgelt pro Monat",
       }),
     ).toBeInTheDocument();
     expect(
       screen.queryByRole("textbox", {
-        name: "Daten Mitarbeiter 2: Bruttogehalt pro Monat",
+        name: "Daten Mitarbeiter 2: Bruttoentgelt pro Monat",
       }),
     ).not.toBeInTheDocument();
 
@@ -380,12 +380,12 @@ describe("Calculator page", () => {
 
     expect(
       screen.queryByRole("textbox", {
-        name: "Daten Mitarbeiter 1: Bruttogehalt pro Monat",
+        name: "Daten Mitarbeiter 1: Bruttoentgelt pro Monat",
       }),
     ).not.toBeInTheDocument();
     expect(
       screen.getByRole("textbox", {
-        name: "Daten Mitarbeiter 2: Bruttogehalt pro Monat",
+        name: "Daten Mitarbeiter 2: Bruttoentgelt pro Monat",
       }),
     ).toBeInTheDocument();
   });
@@ -424,7 +424,7 @@ describe("Calculator page", () => {
     expect(
       (
         screen.getByRole("textbox", {
-          name: "Daten Mitarbeiter 1: Bruttogehalt pro Monat",
+          name: "Daten Mitarbeiter 1: Bruttoentgelt pro Monat",
         }) as HTMLInputElement
       ).value,
     ).toBe("0,00 €");
@@ -452,7 +452,7 @@ describe("Calculator page", () => {
       name: "Daten Mitarbeiter 1: Beschäftigungsform",
     });
     const salary = screen.getByRole("textbox", {
-      name: "Daten Mitarbeiter 1: Bruttogehalt pro Monat",
+      name: "Daten Mitarbeiter 1: Bruttoentgelt pro Monat",
     }) as HTMLInputElement;
     const hours = screen.getByRole("textbox", {
       name: "Daten Mitarbeiter 1: Anzahl Wochenstunden",
@@ -603,7 +603,7 @@ describe("Calculator page", () => {
     expect(
       (
         screen.getByRole("textbox", {
-          name: "Daten Mitarbeiter 1: Bruttogehalt pro Monat",
+          name: "Daten Mitarbeiter 1: Bruttoentgelt pro Monat",
         }) as HTMLInputElement
       ).value,
     ).toBe("1.500,00 €");
@@ -663,7 +663,7 @@ describe("Calculator page", () => {
     expect(
       (
         screen.getByRole("textbox", {
-          name: "Daten Mitarbeiter 1: Bruttogehalt pro Monat",
+          name: "Daten Mitarbeiter 1: Bruttoentgelt pro Monat",
         }) as HTMLInputElement
       ).value,
     ).toBe("1.800,00 €");
@@ -689,7 +689,7 @@ describe("Calculator page", () => {
     expect(
       (
         screen.getByRole("textbox", {
-          name: "Daten Mitarbeiter 2: Bruttogehalt pro Monat",
+          name: "Daten Mitarbeiter 2: Bruttoentgelt pro Monat",
         }) as HTMLInputElement
       ).value,
     ).toBe("0,00 €");
