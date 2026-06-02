@@ -80,17 +80,17 @@ export const text = {
   stundensatz: "Stundensatz",
   umsatzsteigerung: "Geschätzte Umsatzsteigerung in %",
   beschaeftigungsformHelp:
-    "Wählen Sie hier die Beschäftigungsform des Mitarbeiters aus. Detailinformationen zu den einzelnen Formen finden Sie in der allgemeinen Hilfe (siehe i-Icon links oben neben der Rechnerüberschrift).",
+    "Wählen Sie hier die Beschäftigungsform des/der Mitarbeiters:in aus. Detailinformationen zu den einzelnen Formen finden Sie in der allgemeinen Hilfe (siehe i-Icon oben neben der Rechnerüberschrift).",
   bruttogehaltHelp:
-    "Bitte geben Sie hier das Bruttogehalt an, welches Sie Ihrem Mitarbeiter pro Monat zahlen möchten.",
+    "Bitte geben Sie hier das Bruttogehalt an, welches Sie Ihrem/Ihrer Mitarbeiter:in pro Monat zahlen möchten.",
   wochenstundenHelp:
-    "Bitte geben Sie hier die Anzahl der Wochenstunden an, die Ihr Mitarbeiter in Ihrem Unternehmen tätig sein wird.",
+    "Bitte geben Sie hier die Anzahl der Wochenstunden an, die Ihr/e Mitarbeiter:in in Ihrem Unternehmen tätig sein wird.",
   beschaeftigungsmonateHelp:
-    "Bitte geben Sie hier die Anzahl der Monate an, die Sie Ihren Mitarbeiter in einem Kalenderjahr beschäftigen möchten.",
+    "Bitte geben Sie hier die Anzahl der Monate an, die Sie Ihren/Ihre Mitarbeiter:in in einem Kalenderjahr beschäftigen möchten.",
   zusatzkostenMonatlichHelp:
-    "Bitte geben Sie hier die personenabhängigen Zusatzkosten an, die sich durch die Einstellung des Mitarbeiters monatlich ergeben.\n\nTypischerweise fallen folgende Zusatzkosten an:\n– für die Einrichtung eines zusätzlichen Arbeitsplatzes\n– für die Schaffung der notwendigen Infrastruktur\n– für die Anschaffung zusätzlicher Arbeitsgeräte\n– durch erhöhte Telefonkosten\n– durch den Druck von Visitenkarten\n\nDie angegebenen monatlichen Kosten werden auf die jeweilige Anzahl der Beschäftigungsmonate hochgerechnet. Wenn Sie hier einen Wert eingeben, wird der jährliche Wert automatisch berechnet.",
+    "Bitte geben Sie hier die personenabhängigen Zusatzkosten an,  die sich durch die Einstellung des/der Mitarbeiters:in monatlich ergeben.\n\nTypischerweise fallen folgende Zusatzkosten an:\n– für die Einrichtung eines zusätzlichen Arbeitsplatzes\n– für die Schaffung der notwendigen Infrastruktur\n– für die Anschaffung zusätzlicher Arbeitsgeräte\n– durch erhöhte Telefonkosten\n– durch den Druck von Visitenkarten\n\nDie angegebenen monatlichen Kosten werden auf die jeweilige Anzahl der Beschäftigungsmonate hochgerechnet. Füllen Sie bitte entweder nur die Monats- oder nur die Jahresspalte aus.",
   zusatzkostenJaehrlichHelp:
-    "Bitte geben Sie hier die personenabhängigen Zusatzkosten an, die sich durch die Einstellung des Mitarbeiters in einem Jahr ergeben.\n\nTypischerweise fallen folgende Zusatzkosten an:\n– für die Einrichtung eines zusätzlichen Arbeitsplatzes\n– für die Schaffung der notwendigen Infrastruktur\n– für die Anschaffung zusätzlicher Arbeitsgeräte\n– durch erhöhte Telefonkosten\n– durch den Druck von Visitenkarten\n\nDie in diesem Feld angegebenen Kosten werden für die jeweilige Anzahl der Beschäftigungsmonate berechnet. Wenn Sie hier einen Wert eingeben, wird der monatliche Wert automatisch berechnet.",
+    "Bitte geben Sie hier die personenabhängigen Zusatzkosten an, die sich durch die Einstellung des/der Mitarbeiters:in in einem Jahr ergeben.\n\nTypischerweise fallen folgende Zusatzkosten an:\n– für die Einrichtung eines zusätzlichen Arbeitsplatzes\n– für die Schaffung der notwendigen Infrastruktur\n– für die Anschaffung zusätzlicher Arbeitsgeräte\n– durch erhöhte Telefonkosten\n– durch den Druck von Visitenkarten\n\nDie in diesem Feld angegebenen Kosten werden für die jeweilige Anzahl der Beschäftigungsmonate berechnet. Füllen Sie bitte entweder nur die Monats- oder nur die Jahresspalte aus.",
   verkaufbareStundenHelp:
     "Verkaufbare Stunden in %:\nGeben Sie hier den Prozentsatz an, den Ihr/e Mitarbeiter:in mit produktiven Tätigkeiten beschäftigt ist. Beachten Sie bitte, dass Sie die Arbeitszeit für nicht-produktive Tätigkeiten (etwa für Akquisition, Offerterstellung, Büroarbeit, uä) dem/der Kunden:in nicht verrechnen können, weshalb es auch zu einer Reduktion der verkaufbaren Stunden kommt. Die durchschnittlich zur Verfügung stehenden Arbeitsstunden ergeben sich aus den maximal möglichen Leistungsstunden eines/er Mitarbeiters:in gekürzt um die Nicht-Leistungszeiten wie Urlaub, Krankenstand und Feiertage. Bei der Beschäftigungsform „Freier Dienstvertrag“ erfolgt keine Berücksichtigung der Nicht-Leistungszeiten.\n\nStundensatz:\nGeben Sie hier jenen Stundensatz an, mit dem Sie Leistungen des/der Mitarbeiters:in verrechnen möchten. Bedenken Sie dabei, dass in vielen Fällen nicht derselbe Stundensatz verwendet werden kann, den Sie für Ihre eigene Leistungserbringung verrechnen.\nBitte beachten Sie den Stundensatz auch hier netto anzugeben, sofern Sie umsatzsteuerpflichtig sind.",
   potenzielleUmsatzsteigerungHelp:
@@ -107,7 +107,7 @@ export const text = {
     "Anspruch ist gegeben, wenn nachstehende Voraussetzungen erfüllt sind:",
   hinweisLabel: "Hinweis:",
   hinweisEpu:
-    "Die Förderung beträgt ein Viertel des laufenden Bruttoentgelts und wird für die Dauer von einem Jahr gewährt.",
+    "Die Förderung beträgt rund ein Viertel des laufenden Bruttoentgelts und wird für die Dauer von einem Jahr gewährt. Erfragen Sie gerne weitere Details direkt bei Ihrem/er AMS-Berater:in.",
   hinweisBonus:
     "Die Förderung beträgt 50 % der Lohnnebenkosten und kann für maximal 3 Jahre beansprucht werden. Mit dem Rechner kann die Förderung für das laufende Jahr berechnet werden.",
   hinweisStartUp:
@@ -116,16 +116,17 @@ export const text = {
     "Die Unternehmensgründung liegt länger als 5 Jahre zurück, daher steht diese Förderungsoption nicht zur Verfügung.",
 
   epuConditions: [
-    "Maximal für den/die 1. MA anwendbar.",
-    "Einzelunternehmer / Geschäftsführer seit mehr als 3 Monaten GSVG (kranken-, unfall- und pensionsversichert) versichert.",
-    "Innerhalb der letzten 5 Jahre wurde kein/e Mitarbeiter/in (MA) oder freie/r Dienstnehmer/in (über der Geringfügigkeitsgrenze) für länger als 2 Monate beschäftigt. Der/die 1. MA ist seit mind. 2 Wochen arbeitslos gemeldet; oder hat zuvor eine Ausbildung abgeschlossen und ist arbeitssuchend vorgemerkt.",
+    "Maximal für den /die 1. MA anwendbar.",
+    "Einzelunternehmer:in / Geschäftsführer:in seit mehr als 3 Monaten GSVG (kranken-, unfall- und pensionsversichert) versichert.",
+    "Innerhalb der letzten 5 Jahre wurde kein/e Mitarbeiter:in (MA) oder freie/r Dienstnehmer:in (über der Geringfügigkeitsgrenze) für länger als 2 Monate beschäftigt. Der/die 1. MA ist seit mind. 2 Wochen arbeitslos gemeldet; oder hat zuvor eine Ausbildung abgeschlossen und ist arbeitssuchend vorgemerkt.",
     "Verwandtschaftsverhältnis (Eltern, Großeltern, Stiefeltern und Adoptiveltern, Kinder, Enkel-, Stief- und Adoptivkinder, Geschwister, Schwager/Schwägerinnen, Ehegatten, Lebensgefährten) bei dem/der 1. MA liegt nicht vor.",
-    "Der 1. MA zählt nicht zu folgenden Gruppen: Lehrlinge, Werkvertragsnehmer, neue Selbständige, freie Dienstnehmer.",
+    "Der/die 1. MA zählt nicht zu folgenden Gruppen: Lehrlinge, Werkvertragsnehmer:innen, neue Selbständige:innen, freie Dienstnehmer:innen.",
     "Die Arbeitszeit beträgt mindestens 50% der gesetzlichen/kollektivvertraglichen Wochenstunden.",
     "Das Arbeitsverhältnis wird länger als 2 Monate dauern.",
     "Der/die 1. MA wird in einem echten (vollversicherungspflichtigen) Arbeitsverhältnis beschäftigt.",
     "Das Arbeitsverhältnis wurde noch nicht begonnen bzw. der Beginn liegt nicht länger als 6 Wochen zurück.",
     "Es wird keine andere Lohnnebenkosten-Förderung in Anspruch genommen.",
+    "Geschäftsführende Organe und Gesellschaften bürgerlichen Rechts sind ausgeschlossen.",
   ],
   bonusConditions: [
     "Es liegt ein Normal- oder Teilzeitarbeitsverhältnis vor.",
