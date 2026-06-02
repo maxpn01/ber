@@ -200,7 +200,7 @@ export const text = {
   close: "Schließen",
   ok: "OK",
   sliderHint:
-    "Sie können den erzielbaren Gewinn auf Ihren Wunschgewinn verändern und sich für dieses Szenario vom Rechner die Basisdaten (Gesamtumsatz, Provisionsumsatz, usw.) berechnen lassen.\n\nHinweis: Der eingegebene Aufwand und die Provision in % werden als bleibende Größe für die Neuberechnung angenommen.",
+    "Sie können den erzielbaren Gewinn auf Ihren Wunschgewinn verändern und sich für dieses Szenario vom Rechner die Basisdaten (Umsatz, Stunden, usw.) berechnen lassen.\n\nHinweis: Der eingegebene Aufwand wird als bleibende Größe für die Neuberechnung angenommen.",
   sliderLocked: "Verfügbar nach erfolgreicher Berechnung.",
   addMitarbeiter: "Mitarbeiter hinzufügen",
   helpAria: "Hilfe",
