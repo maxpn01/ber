@@ -246,7 +246,7 @@ export const ResultPanel = () => {
                         money: true,
                       },
                       {
-                        label: tStr("foerderung"),
+                        label: m.foerderungText,
                         m: m.foerderung.monat,
                         j: m.foerderung.jahr,
                         money: true,

@@ -202,6 +202,15 @@ describe("Calculator page", () => {
     const user = userEvent.setup();
     render(<App />);
 
+    await user.click(
+      screen.getByRole("switch", {
+        name: "EPU Lohnnebenkostenförderung",
+      }),
+    );
+    await user.click(
+      screen.getByRole("checkbox", { name: "Für Mitarbeiter:in 1" }),
+    );
+
     await user.click(screen.getByRole("textbox", { name: "Umsatz" }));
     await user.keyboard("100000");
 
@@ -221,6 +230,7 @@ describe("Calculator page", () => {
     expect(
       screen.getByText("Bruttoentgelt inkl. Lohnnebenkosten"),
     ).toBeInTheDocument();
+    expect(screen.getAllByText("EPU Lohnnebenkostenförderung")).toHaveLength(2);
 
     await user.click(
       screen.getAllByRole("button", { name: "Details ausblenden" })[0],
