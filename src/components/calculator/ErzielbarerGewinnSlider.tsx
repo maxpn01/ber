@@ -44,8 +44,7 @@ export const ErzielbarerGewinnSlider = () => {
         <span>{tStr("erzielbarerGewinn")}</span>
         <HelpIcon
           text={tStr("sliderHint")}
-          iconSrc="/title_tooltip_icon.svg"
-          className="mt-0 h-[22px] w-[22px] [&_img]:invert"
+          className="mt-0 h-[12px] w-[12px] [&_img]:brightness-0 [&_img]:invert"
         />
       </div>
       <div className="mb-5 text-[24px] font-medium">
