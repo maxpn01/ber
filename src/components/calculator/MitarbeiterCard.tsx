@@ -1,4 +1,3 @@
-import { CheckCircle2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Switch } from "@/components/ui/switch";
@@ -74,7 +73,7 @@ export const MitarbeiterCard = ({ index }: Props) => {
       <div className="flex items-center justify-between gap-3">
         <button
           type="button"
-          className="flex min-w-0 flex-1 items-center gap-2 text-left text-[18px] font-medium sm:text-[22px]"
+          className="flex min-w-0 flex-1 items-center gap-1.5 text-left text-[18px] font-medium sm:text-[22px]"
           onClick={() => toggleMitarbeiterOpen(index)}
           aria-expanded={isOpen}
         >
@@ -82,10 +81,9 @@ export const MitarbeiterCard = ({ index }: Props) => {
             {tStr("datenMitarbeiter")}:in {index + 1}
           </span>
           {isFilled && (
-            <CheckCircle2
-              className="h-4 w-4 shrink-0 text-toggle-on"
-              aria-hidden
-            />
+            <span className="flex h-[18px] w-[18px] mt-0.5 shrink-0 items-center justify-center rounded-full bg-toggle-on">
+              <img src="/complete_icon.svg" alt="" className="h-4 w-4" />
+            </span>
           )}
         </button>
         <Switch
