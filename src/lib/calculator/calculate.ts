@@ -19,15 +19,20 @@ import {
   MitarbeiterResult,
   OutputModel,
 } from "./types";
-import { isMitarbeiterBasicComplete } from "./mitarbeiterStatus";
 
-const round0 = (v: number) => Math.round(v);
-const round2 = (v: number) => Math.round(v * 100) / 100;
-const round4 = (v: number) => Math.round(v * 10000) / 10000;
-const round6 = (v: number) => Math.round(v * 1000000) / 1000000;
+const roundAway = (value: number, digits: number) => {
+  const factor = 10 ** digits;
+  const scaled = Number((Math.abs(value) * factor).toFixed(8));
+  const rounded = Math.round(scaled) / factor;
+  return value < 0 ? -rounded : rounded;
+};
+const round0 = (v: number) => roundAway(v, 0);
+const round2 = (v: number) => roundAway(v, 2);
+const round4 = (v: number) => roundAway(v, 4);
+const round6 = (v: number) => roundAway(v, 6);
 const zusatzkostenFuerBeschaeftigungsmonate = (m: InputMitarbeiter) =>
-  (m.zusatzkostenMonatlich || m.zusatzkostenJaehrlich / 12) *
-  m.anzahlBeschaeftigungsmonate;
+  m.zusatzkostenJaehrlich +
+  m.zusatzkostenMonatlich * m.anzahlBeschaeftigungsmonate;
 
 function calcLohnnebenkosten(
   brutto: number,
@@ -60,10 +65,7 @@ function svPauschalierungsgrenzeExceeded(
   let count = 0;
   let total = 0;
   const cappedBrutto = (m: InputMitarbeiter) =>
-    Math.min(
-      isMitarbeiterBasicComplete(m) ? m.bruttogehaltProMonat : 0,
-      SV_GERINGFUEGIGKEITSGRENZE,
-    );
+    Math.min(m.bruttogehaltProMonat, SV_GERINGFUEGIGKEITSGRENZE);
 
   // Mirrors the original C# else-if chain exactly, including its effective
   // behavior of considering only the first marginal employee it encounters.
@@ -97,7 +99,7 @@ function calcMitarbeiter(
   branche: Branche,
   all: InputMitarbeiter[],
 ): MitarbeiterResult {
-  if (!isMitarbeiterBasicComplete(m)) return emptyMitarbeiterResult();
+  if (m.bruttogehaltProMonat <= 0) return emptyMitarbeiterResult();
 
   const typ = m.beschaeftigungsform;
   const monate = m.anzahlBeschaeftigungsmonate;
@@ -412,7 +414,7 @@ function calculateWithShared(
 
   let beAufwand_jahr = ausgAufwand_jahr;
   all.forEach((m) => {
-    if (isMitarbeiterBasicComplete(m)) {
+    if (m.bruttogehaltProMonat > 0) {
       beAufwand_jahr += zusatzkostenFuerBeschaeftigungsmonate(m);
     }
   });

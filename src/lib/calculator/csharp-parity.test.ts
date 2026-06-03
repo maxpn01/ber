@@ -91,7 +91,8 @@ interface ReferenceOutput {
 
 const roundAway = (value: number, digits: number) => {
   const factor = 10 ** digits;
-  const rounded = Math.round(Math.abs(value) * factor) / factor;
+  const scaled = Number((Math.abs(value) * factor).toFixed(8));
+  const rounded = Math.round(scaled) / factor;
   return value < 0 ? -rounded : rounded;
 };
 

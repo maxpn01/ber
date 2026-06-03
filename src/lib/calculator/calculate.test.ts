@@ -290,7 +290,7 @@ describe("calculator", () => {
     expect(r.breakEven.mitarbeiter[0].brutto.jahr).toBeCloseTo(28000, 0);
   });
 
-  it("uses synced Zusatzkosten as one recurring cost instead of double counting", () => {
+  it("adds annual and monthly Zusatzkosten like the original calculator", () => {
     const i = defaultInput("dienstleistung");
     i.umsatz = 100000;
     i.aufwand = 20000;
@@ -305,7 +305,59 @@ describe("calculator", () => {
     const r = calculate(i);
 
     expect(r.fehlermeldung).toBe("");
-    expect(r.breakEven.aufwand.jahr).toBe(21000);
+    expect(r.breakEven.aufwand.jahr).toBe(22200);
+  });
+
+  it("includes payroll costs when monthly gross pay is present but hours are incomplete", () => {
+    const i = defaultInput("dienstleistung");
+    i.umsatz = 100000;
+    i.aufwand = 20000;
+    i.stunden = 1000;
+    i.mitarbeiter1 = {
+      ...defaultMitarbeiterFor("dienstleistung", true),
+      bruttogehaltProMonat: 2200,
+      anzahlWochenstunden: 0,
+      anzahlBeschaeftigungsmonate: 12,
+    };
+
+    const r = calculate(i);
+
+    expect(r.fehlermeldung).toBe("");
+    expect(r.breakEven.personalkosten.jahr).toBe(39951.56);
+    expect(r.breakEven.mitarbeiter[0].arbeitsstunden.jahr).toBe(0);
+  });
+
+  it("matches the original Gewerbe screenshot scenario with employees 1 and 4", () => {
+    const i = defaultInput("gewerbe");
+    i.umsatz = 1_000_000;
+    i.aufwand = 500_000;
+    i.stunden = 25_000;
+    i.wareneinsatz = 50_000;
+    i.mitarbeiter1 = {
+      ...defaultMitarbeiterFor("gewerbe", true),
+      verkaufbareStunden: 70,
+      stundensatz: 60,
+    };
+    i.mitarbeiter4 = {
+      ...defaultMitarbeiterFor("gewerbe", false),
+      active: true,
+      beschaeftigungsform: "geringfuegig",
+      bruttogehaltProMonat: 550,
+      anzahlWochenstunden: 15,
+      anzahlBeschaeftigungsmonate: 12,
+      verkaufbareStunden: 50,
+      stundensatz: 50,
+    };
+
+    const r = calculate(i);
+
+    expect(r.fehlermeldung).toBe("");
+    expect(r.breakEven.personalkosten.jahr).toBe(48397.76);
+    expect(r.breakEven.breakEvenUmsatz.jahr).toBe(1050945.01);
+    expect(r.potenzial.umsatzpotenzialMitarbeiter.jahr).toBe(1085746.25);
+    expect(r.potenzial.umsatzpotenzialBreakEven.jahr).toBe(1050945.01);
+    expect(r.potenzial.stundenMitarbeiter.jahr).toBe(27822);
+    expect(r.potenzial.stundenBreakEven.jahr).toBe(27218);
   });
 
   it("provision branch produces gesamtumsatz when provision > 0", () => {
