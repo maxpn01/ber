@@ -230,7 +230,7 @@ function csharpReference(input: InputModel): ReferenceOutput {
     });
 
     result.breakEven.breakEvenUmsatzText =
-      b === "provision" ? "Break-Even-Provisionsumsatz" : "Break-Even-Umsatz";
+      b === "provision" ? "Mindest-Provisionsumsatz" : "Mindestumsatz";
 
     result.breakEven.gewinn.setYear(result.ausgangssituation.gewinn.jahr);
     result.breakEven.foerderungenGesamt.setYear(

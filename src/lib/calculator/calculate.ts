@@ -559,7 +559,7 @@ function calculateWithShared(
         jahr: round2(gesamtumsatz_jahr),
       },
       breakEvenUmsatzText:
-        b === "provision" ? "Break-Even-Provisionsumsatz" : "Break-Even-Umsatz",
+        b === "provision" ? "Mindest-Provisionsumsatz" : "Mindestumsatz",
       breakEvenUmsatz: {
         monat: round2(beUmsatz_jahr / 12),
         jahr: round2(beUmsatz_jahr),
@@ -661,7 +661,7 @@ function errorOutput(msg: string, b: Branche): OutputModel {
     breakEven: {
       gesamtumsatz: { monat: 0, jahr: 0 },
       breakEvenUmsatzText:
-        b === "provision" ? "Break-Even-Provisionsumsatz" : "Break-Even-Umsatz",
+        b === "provision" ? "Mindest-Provisionsumsatz" : "Mindestumsatz",
       breakEvenUmsatz: { monat: 0, jahr: 0 },
       wareneinsatz: { monat: 0, jahr: 0 },
       aufwand: { monat: 0, jahr: 0 },

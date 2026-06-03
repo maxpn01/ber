@@ -94,7 +94,7 @@ export const text = {
   verkaufbareStundenHelp:
     "Verkaufbare Stunden in %:\nGeben Sie hier den Prozentsatz an, den Ihr/e Mitarbeiter:in mit produktiven Tätigkeiten beschäftigt ist. Beachten Sie bitte, dass Sie die Arbeitszeit für nicht-produktive Tätigkeiten (etwa für Akquisition, Offerterstellung, Büroarbeit, uä) dem/der Kunden:in nicht verrechnen können, weshalb es auch zu einer Reduktion der verkaufbaren Stunden kommt. Die durchschnittlich zur Verfügung stehenden Arbeitsstunden ergeben sich aus den maximal möglichen Leistungsstunden eines/er Mitarbeiters:in gekürzt um die Nicht-Leistungszeiten wie Urlaub, Krankenstand und Feiertage. Bei der Beschäftigungsform „Freier Dienstvertrag“ erfolgt keine Berücksichtigung der Nicht-Leistungszeiten.\n\nStundensatz:\nGeben Sie hier jenen Stundensatz an, mit dem Sie Leistungen des/der Mitarbeiters:in verrechnen möchten. Bedenken Sie dabei, dass in vielen Fällen nicht derselbe Stundensatz verwendet werden kann, den Sie für Ihre eigene Leistungserbringung verrechnen.\nBitte beachten Sie den Stundensatz auch hier netto anzugeben, sofern Sie umsatzsteuerpflichtig sind.",
   potenzielleUmsatzsteigerungHelp:
-    "Geschätzte Umsatzsteigerung in %:\nGeben Sie die Umsatzsteigerung, die Sie durch den Mitarbeiter schätzungsweise erzielen können, ein.",
+    "Geben Sie die Umsatzsteigerung, die Sie durch den/die Mitarbeiter:in schätzungsweise erzielen können ein.",
   zuruecksetzen: "Zurücksetzen",
   loeschen: "Löschen",
 
@@ -107,7 +107,7 @@ export const text = {
     "Anspruch ist gegeben, wenn nachstehende Voraussetzungen erfüllt sind:",
   hinweisLabel: "Hinweis:",
   hinweisEpu:
-    "Die Förderung beträgt rund ein Viertel des laufenden Bruttoentgelts und wird für die Dauer von einem Jahr gewährt. Erfragen Sie gerne weitere Details direkt bei Ihrem/er AMS-Berater:in.",
+    "Die Förderung beträgt ein Viertel des laufenden Bruttoentgelts und wird für die Dauer von einem Jahr gewährt. Erfragen Sie gerne weitere Details direkt bei Ihrem/er AMS-Berater:in.",
   hinweisBonus:
     "Die Förderung beträgt 50 % der Lohnnebenkosten und kann für maximal 3 Jahre beansprucht werden. Mit dem Rechner kann die Förderung für das laufende Jahr berechnet werden.",
   hinweisStartUp:
@@ -161,7 +161,7 @@ export const text = {
   potenzialInputUmsatzsteigerungHelp:
     "Die Eingaben zum Potenzial der Mitarbeiter können in den einzelnen Mitarbeiterdetailmasken im Bereich „Potenzielle Umsatzsteigerung“ erfasst werden.",
   potenzialInkl: "inkl. zzgl Mitarbeiter",
-  breakEven: "Break Even",
+  breakEven: "Mindestumsatz",
   gesamtumsatzpotenzial: "Gesamtumsatzpotenzial",
   gesamtstunden: "Gesamtstunden",
   umsatzInklTitle: "Umsatz Inkl. Neuer Mitarbeiter",
@@ -169,8 +169,8 @@ export const text = {
   jaehrlich: "jährlich",
   jaehrlichHelp:
     "In diesem Bereich finden Sie die detaillierten Mindestumsatz-Ergebnisse inkl. der neuen Mitarbeiter:innen.",
-  breakEvenUmsatz: "Break-Even-Umsatz",
-  breakEvenProvisionsumsatz: "Break-Even-Provisionsumsatz",
+  breakEvenUmsatz: "Mindestumsatz",
+  breakEvenProvisionsumsatz: "Mindest-Provisionsumsatz",
   gesamtumsatz: "Gesamtumsatz",
   personalkosten: "Personalkosten",
   foerderungenGesamt: "Förderungen gesamt",

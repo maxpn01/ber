@@ -820,7 +820,7 @@ describe("Calculator page", () => {
     await user.tab();
 
     expect(
-      await screen.findByText("Break-Even-Provisionsumsatz"),
+      await screen.findByText("Mindest-Provisionsumsatz"),
     ).toBeInTheDocument();
     expect(screen.getAllByText("Provisionsumsatz").length).toBeGreaterThan(0);
   });
