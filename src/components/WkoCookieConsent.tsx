@@ -58,8 +58,6 @@ const initializeCmpCore = () => {
       ? window.tradom
       : "tms.wko.at";
   window.clickEdit?.();
-  window.getBanner?.();
-  window.blockingBanner?.();
 };
 
 const loadScript = (
@@ -107,7 +105,7 @@ export const WkoCookieConsent = () => {
         }
 
         const lang = document.documentElement.lang.slice(0, 2);
-        window.GCM.init(GCM_CONFIG_URL, lang, 1, true);
+        window.GCM.init(GCM_CONFIG_URL, lang, 1, false);
         window.GCM.settings.save();
         window.gtmcid = "GTM-WJCQGGP";
         window.dataLayer = [];
