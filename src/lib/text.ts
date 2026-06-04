@@ -153,18 +153,18 @@ export const text = {
   landingInfoNoticeTitle: "Bitte beachten Sie folgende Hinweise:",
   landingInfoNotice:
     "Sämtliche Beträge sind als Nettobeträge, d.h. ohne Umsatzsteuer einzugeben, wenn Sie umsatzsteuerpflichtig sind. Sofern Sie unter die Kleinunternehmerregelung fallen, geben Sie die Umsätze ohne Umsatzsteuer, die Aufwände inkl. Vorsteuer an.",
-  potenzialTitle: "Potenzial inkl. neuer Mitarbeiter",
+  potenzialTitle: "Potenzial inkl. zusätzlicher Mitarbeiter:innen",
   potenzialHelp:
     "In diesem Bereich ist das Zusatzpotential, das sich durch die Mitarbeiter:innen ergibt, auf einem Blick zusammengefasst. Sie sehen den Mindestumsatz und die Mindeststundenanzahl (= Gesamtstunden, die im Jahr verrechnet werden müssen, um den Mindestumsatz zu erreichen). Darüber hinaus sehen Sie das zusätzliche Umsatzpotenzial, das sich aufgrund der verkaufbaren Stunden der Mitarbeiter:innen ergibt und die zusätzlich verrechenbaren Stunden, die sich aufgrund der Mitarbeiter:innen ergeben.",
   potenzialInputVerkaufbareStundenHelp:
     "Die Eingaben zum Potenzial der Mitarbeiter können in den einzelnen Mitarbeiterdetailmasken im Bereich „Verkaufbare Stunden“ erfasst werden.",
   potenzialInputUmsatzsteigerungHelp:
     "Die Eingaben zum Potenzial der Mitarbeiter können in den einzelnen Mitarbeiterdetailmasken im Bereich „Potenzielle Umsatzsteigerung“ erfasst werden.",
-  potenzialInkl: "inkl. zzgl Mitarbeiter",
+  potenzialInkl: "inkl. zusätzlicher Mitarbeiter:innen",
   breakEven: "Mindestumsatz",
   gesamtumsatzpotenzial: "Gesamtumsatzpotenzial",
   gesamtstunden: "Gesamtstunden",
-  umsatzInklTitle: "Umsatz Inkl. Neuer Mitarbeiter",
+  umsatzInklTitle: "Umsatz inkl. neuer Mitarbeiter:innen",
   monatlich: "monatlich",
   jaehrlich: "jährlich",
   jaehrlichHelp:

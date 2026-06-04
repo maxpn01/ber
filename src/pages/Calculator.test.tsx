@@ -161,7 +161,9 @@ describe("Calculator page", () => {
 
     await waitFor(() => {
       expect(
-        screen.getByText("Potenzial inkl. neuer Mitarbeiter"),
+        screen.getByRole("heading", {
+          name: /Potenzial inkl\. zusätzlicher Mitarbeiter:innen/,
+        }),
       ).toBeInTheDocument();
       expect(
         screen.queryByText(/Was kosten Ihre ersten\s+Mitarbeiter:innen/),
@@ -210,7 +212,9 @@ describe("Calculator page", () => {
 
     await waitFor(() => {
       expect(
-        screen.getByText("Potenzial inkl. neuer Mitarbeiter"),
+        screen.getByRole("heading", {
+          name: /Potenzial inkl\. zusätzlicher Mitarbeiter:innen/,
+        }),
       ).toBeInTheDocument();
       expect(
         screen.getByRole("slider", { name: "Erzielbarer Gewinn" }),
@@ -384,7 +388,9 @@ describe("Calculator page", () => {
 
     await waitFor(() => {
       expect(
-        screen.getByText("Potenzial inkl. neuer Mitarbeiter"),
+        screen.getByRole("heading", {
+          name: /Potenzial inkl\. zusätzlicher Mitarbeiter:innen/,
+        }),
       ).toBeInTheDocument();
       expect(
         screen.getByRole("slider", { name: "Erzielbarer Gewinn" }),
@@ -711,7 +717,9 @@ describe("Calculator page", () => {
       screen.queryByText(/Was kosten Ihre ersten\s+Mitarbeiter:innen/),
     ).not.toBeInTheDocument();
     expect(
-      screen.getByText("Potenzial inkl. neuer Mitarbeiter"),
+      screen.getByRole("heading", {
+        name: /Potenzial inkl\. zusätzlicher Mitarbeiter:innen/,
+      }),
     ).toBeInTheDocument();
     expect(screen.getByText("- Personalkosten")).toBeInTheDocument();
     expect(
@@ -849,7 +857,9 @@ describe("Calculator page", () => {
 
     await waitFor(() => {
       expect(
-        screen.getByText("Potenzial inkl. neuer Mitarbeiter"),
+        screen.getByRole("heading", {
+          name: /Potenzial inkl\. zusätzlicher Mitarbeiter:innen/,
+        }),
       ).toBeInTheDocument();
       expect(screen.queryByText("Gesamtstunden")).not.toBeInTheDocument();
     });

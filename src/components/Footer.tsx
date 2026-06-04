@@ -6,16 +6,7 @@ const footerLinkClass =
 export const Footer = () => {
   return (
     <footer className="no-print mt-12 bg-wko-section">
-      <div className="mx-auto flex max-w-[1200px] flex-col items-center justify-end gap-2 px-4 py-4 text-xs text-muted-foreground sm:flex-row sm:gap-2 sm:px-6">
-        <a
-          href="https://www.wko.at/offenlegung-oesterreich"
-          className={footerLinkClass}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          {tStr("offenlegung")}
-        </a>
-        <span className="hidden sm:inline">|</span>
+      <div className="mx-auto flex max-w-[1200px] flex-row flex-wrap items-center justify-end gap-x-1.5 gap-y-1 px-4 py-4 text-right text-xs leading-relaxed text-muted-foreground sm:gap-x-2 sm:px-6">
         <a
           href="https://www.wko.at/barrierefreiheitserklaerung-breakevenrechner"
           className={footerLinkClass}
@@ -24,7 +15,7 @@ export const Footer = () => {
         >
           {tStr("barrierefreiheit")}
         </a>
-        <span className="hidden sm:inline">|</span>
+        <span>|</span>
         <a
           href="https://www.wko.at/datenschutzerklaerung"
           className={footerLinkClass}
@@ -33,7 +24,7 @@ export const Footer = () => {
         >
           {tStr("datenschutz")}
         </a>
-        <span className="hidden sm:inline">|</span>
+        <span>|</span>
         <a
           href="#"
           id="edit-cookiesettings"
@@ -42,7 +33,7 @@ export const Footer = () => {
         >
           {tStr("cookies")}
         </a>
-        <span className="hidden sm:inline">|</span>
+        <span>|</span>
         <span className="text-[#212121]">© 2026 WKO</span>
       </div>
     </footer>

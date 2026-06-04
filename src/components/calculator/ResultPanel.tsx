@@ -71,12 +71,15 @@ export const ResultPanel = () => {
     <div className="h-full rounded-lg bg-result px-3 py-6 text-[14px] text-result-foreground min-[380px]:px-4 sm:px-8 sm:text-[15px]">
       <section className="mb-8">
         <div className="mb-3 flex flex-wrap items-center justify-between gap-3 min-[430px]:flex-nowrap min-[430px]:gap-4">
-          <h3 className="flex min-w-0 items-start gap-1.5 whitespace-nowrap text-[18px] font-medium leading-tight">
-            {tStr("potenzialTitle")}
-            <HelpIcon
-              text={tStr("potenzialHelp")}
-              className="mt-[6px] h-[12px] w-[12px] shrink-0"
-            />
+          <h3 className="min-w-0 flex-1 text-[18px] font-medium leading-tight">
+            <span>Potenzial inkl. zusätzlicher </span>
+            <span className="inline-flex whitespace-nowrap align-baseline">
+              Mitarbeiter:innen
+              <HelpIcon
+                text={tStr("potenzialHelp")}
+                className="mt-1.5 ml-1 inline-flex h-[12px] w-[12px] align-baseline"
+              />
+            </span>
           </h3>
           <EmployeeIcons
             activeCount={activeMitarbeiterCount}

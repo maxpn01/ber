@@ -46,16 +46,16 @@ export const AppHelpDialog = ({ open, onOpenChange }: AppHelpDialogProps) => {
         ? createPortal(
             <DialogPrimitive.Content
               aria-describedby={undefined}
-              className="relative mb-10 grid w-full gap-5 rounded-lg border-none bg-[#003C56] px-8 py-9 text-white shadow-none outline-none sm:px-11"
+              className="relative mx-auto mb-8 grid w-full max-w-[min(100%,32rem)] gap-5 overflow-hidden rounded-lg border-none bg-[#003C56] px-4 py-5 text-white shadow-none outline-none sm:mb-10 sm:max-w-none sm:px-11 sm:py-9"
             >
-              <DialogTitle className="mb-7 pr-12 text-[22px] font-medium leading-none tracking-normal text-white">
+              <DialogTitle className="mb-4 pr-8 text-[17px] font-medium leading-snug tracking-normal text-white sm:mb-7 sm:pr-12 sm:text-[22px] sm:leading-none">
                 {tStr("appHelpTitle")}
               </DialogTitle>
-              <DialogClose className="absolute right-8 top-7 rounded-full bg-white/15 p-1.5 text-white opacity-100 ring-offset-[#003C56] transition-colors hover:bg-white/25 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2">
-                <X className="h-5 w-5" />
+              <DialogClose className="absolute right-4 top-5 rounded-full bg-white/15 p-1 text-white opacity-100 ring-offset-[#003C56] transition-colors hover:bg-white/25 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 sm:right-8 sm:top-7 sm:p-1.5">
+                <X className="h-4 w-4 sm:h-5 sm:w-5" />
                 <span className="sr-only">Close</span>
               </DialogClose>
-              <div className="space-y-9 pr-2 text-[16px] leading-[24px] text-white/90">
+              <div className="min-w-0 space-y-7 text-[16px] leading-[24px] text-white/90 [overflow-wrap:anywhere] sm:space-y-9 sm:pr-2">
                 {text.appHelpSections.map((section) => (
                   <section key={section.title} className="space-y-3">
                     <h2 className="font-medium leading-none text-white">
