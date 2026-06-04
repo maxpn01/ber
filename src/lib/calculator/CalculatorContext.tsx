@@ -154,7 +154,10 @@ export const CalculatorProvider = ({ children }: { children: ReactNode }) => {
       | "mitarbeiter4";
     setInput((prev) => ({
       ...prev,
-      [key]: { ...defaultMitarbeiterFor(prev.branche, true), active: true },
+      [key]:
+        i === 0
+          ? { ...defaultMitarbeiterFor(prev.branche, true), active: true }
+          : defaultMitarbeiterFor(prev.branche, false),
       erzielbarerGewinn: 0,
     }));
     setSliderValueState(0);

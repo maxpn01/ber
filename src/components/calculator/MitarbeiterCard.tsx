@@ -115,13 +115,18 @@ export const MitarbeiterCard = ({ index }: Props) => {
               onValueChange={(v) => {
                 blurBeschaeftigungsformAfterSelectRef.current = true;
                 const beschaeftigungsform = v as Dienstverhaeltnis;
-                patchMitarbeiter(index, {
-                  beschaeftigungsform,
-                  ...defaultMitarbeiterFieldValuesFor(
-                    input.branche,
-                    beschaeftigungsform,
-                  ),
-                });
+                patchMitarbeiter(
+                  index,
+                  index === 0
+                    ? {
+                        beschaeftigungsform,
+                        ...defaultMitarbeiterFieldValuesFor(
+                          input.branche,
+                          beschaeftigungsform,
+                        ),
+                      }
+                    : { beschaeftigungsform },
+                );
               }}
             >
               <SelectTrigger

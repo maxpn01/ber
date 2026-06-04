@@ -502,11 +502,73 @@ describe("Calculator page", () => {
     await user.click(
       screen.getByRole("button", { name: /Daten Mitarbeiter(?::in)? 2/ }),
     );
-    await user.click(screen.getByRole("button", { name: "Zurücksetzen" }));
+    await user.click(
+      screen.getByRole("textbox", {
+        name: "Daten Mitarbeiter 2: Bruttoentgelt pro Monat",
+      }),
+    );
+    await user.keyboard("2200");
+    await user.tab();
+    await user.click(
+      screen.getByRole("textbox", {
+        name: "Daten Mitarbeiter 2: Anzahl Wochenstunden",
+      }),
+    );
+    await user.keyboard("38,5");
+    await user.tab();
+    await user.click(
+      screen.getByRole("textbox", {
+        name: "Daten Mitarbeiter 2: Anzahl Beschäftigungsmonate",
+      }),
+    );
+    await user.keyboard("12");
+    await user.tab();
 
     expect(
       screen.getByRole("img", {
         name: "2 von 4 Mitarbeitern in der Berechnung enthalten",
+      }),
+    ).toBeInTheDocument();
+  });
+
+  it("does not apply default employee values to additional employees", async () => {
+    const user = userEvent.setup();
+    render(<App />);
+
+    await user.click(
+      screen.getByRole("button", { name: /Daten Mitarbeiter(?::in)? 2/ }),
+    );
+    await user.click(
+      screen.getByRole("combobox", {
+        name: "Daten Mitarbeiter 2: Beschäftigungsform",
+      }),
+    );
+    await user.click(await screen.findByRole("option", { name: "Arbeiter" }));
+
+    expect(
+      (
+        screen.getByRole("textbox", {
+          name: "Daten Mitarbeiter 2: Bruttoentgelt pro Monat",
+        }) as HTMLInputElement
+      ).value,
+    ).toBe("0,00 €");
+    expect(
+      (
+        screen.getByRole("textbox", {
+          name: "Daten Mitarbeiter 2: Anzahl Wochenstunden",
+        }) as HTMLInputElement
+      ).value,
+    ).toBe("0,00");
+    expect(
+      (
+        screen.getByRole("textbox", {
+          name: "Daten Mitarbeiter 2: Anzahl Beschäftigungsmonate",
+        }) as HTMLInputElement
+      ).value,
+    ).toBe("0");
+    expect(
+      screen.getByRole("img", {
+        name: "1 von 4 Mitarbeitern in der Berechnung enthalten",
       }),
     ).toBeInTheDocument();
   });
@@ -601,7 +663,27 @@ describe("Calculator page", () => {
     await user.click(
       screen.getByRole("button", { name: /Daten Mitarbeiter(?::in)? 2/ }),
     );
-    await user.click(screen.getByRole("button", { name: "Zurücksetzen" }));
+    await user.click(
+      screen.getByRole("textbox", {
+        name: "Daten Mitarbeiter 2: Bruttoentgelt pro Monat",
+      }),
+    );
+    await user.keyboard("2200");
+    await user.tab();
+    await user.click(
+      screen.getByRole("textbox", {
+        name: "Daten Mitarbeiter 2: Anzahl Wochenstunden",
+      }),
+    );
+    await user.keyboard("38,5");
+    await user.tab();
+    await user.click(
+      screen.getByRole("textbox", {
+        name: "Daten Mitarbeiter 2: Anzahl Beschäftigungsmonate",
+      }),
+    );
+    await user.keyboard("12");
+    await user.tab();
 
     const epuSwitch = screen.getByRole("switch", {
       name: "EPU Lohnnebenkostenförderung",
