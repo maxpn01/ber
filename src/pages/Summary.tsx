@@ -341,11 +341,7 @@ const Table = ({ children }: { children: React.ReactNode }) => (
 );
 
 const GesamtumsatzpotenzialLabel = () => (
-  <>
-    <span className="whitespace-nowrap">Gesamtumsatz</span>
-    <wbr />
-    <span className="whitespace-nowrap">potenzial</span>
-  </>
+  <span>Gesamtumsatz{"\u00ad"}potenzial</span>
 );
 
 const Row = ({

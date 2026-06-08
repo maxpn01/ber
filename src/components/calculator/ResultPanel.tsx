@@ -487,11 +487,7 @@ const ResultDataRow = ({
 );
 
 const GesamtumsatzpotenzialLabel = () => (
-  <>
-    <span className="whitespace-nowrap">Gesamtumsatz</span>
-    <wbr />
-    <span className="whitespace-nowrap">potenzial</span>
-  </>
+  <span>Gesamtumsatz{"\u00ad"}potenzial</span>
 );
 
 const EmployeeIcons = ({
