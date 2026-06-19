@@ -92,15 +92,22 @@ export const ResultPanel = () => {
             wideSecondColumn
             columns={[
               "",
-              <span className="flex min-w-0 items-center justify-end gap-1">
-                <span>{tStr("potenzialInkl")}</span>
+              <span className="flex min-w-0 items-center justify-end gap-1 whitespace-normal text-[11px] leading-tight min-[380px]:text-[12px] min-[430px]:text-[13px] sm:text-[14px]">
+                <span className="min-w-0">{tStr("potenzialInkl")}</span>
                 <HelpIcon
                   text={potenzialInputHelp}
                   className="shrink-0"
                   contentClassName="text-left"
                 />
               </span>,
-              <span className="font-medium">{tStr("breakEven")}</span>,
+              <span className="inline-flex items-center justify-end gap-1 whitespace-nowrap text-[11px] font-medium min-[380px]:text-[12px] min-[430px]:text-[13px] sm:text-[14px]">
+                {tStr("breakEven")}
+                <HelpIcon
+                  text={tStr("breakEvenHelp")}
+                  className="shrink-0"
+                  contentClassName="text-left font-normal"
+                />
+              </span>,
             ]}
           />
           <ResultDataRow
@@ -417,7 +424,7 @@ const ResultHeaderRow = ({
       className={cn(
         "min-w-0",
         wideSecondColumn
-          ? "col-span-2 flex justify-end whitespace-nowrap text-right"
+          ? "col-span-2 flex justify-end text-right"
           : "invisible sm:block",
       )}
     >

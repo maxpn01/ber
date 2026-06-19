@@ -76,6 +76,9 @@ describe("Calculator page", () => {
     expect(tStr("potenzialInputUmsatzsteigerungHelp")).toContain(
       "Potenzielle Umsatzsteigerung",
     );
+    expect(tStr("breakEvenHelp")).toBe(
+      "Das Gesamtumsatzpotenzial inkl. zusätzlicher Mitarbeiter:innen muss über dem Mindestumsatz liegen, damit sich eine Einstellung rechnet.",
+    );
   });
 
   it("opens field help on click and closes from the close button or outside click", async () => {
@@ -172,6 +175,18 @@ describe("Calculator page", () => {
       expect(slider).toHaveAttribute("aria-valuenow", "80000");
       expect(slider).not.toHaveAttribute("aria-disabled", "true");
     });
+
+    const mindestumsatzHeader = screen.getAllByText("Mindestumsatz")[0];
+    await user.click(
+      within(mindestumsatzHeader.parentElement!).getByRole("button", {
+        name: "Hilfe",
+      }),
+    );
+    expect(
+      screen.getByText(
+        "Das Gesamtumsatzpotenzial inkl. zusätzlicher Mitarbeiter:innen muss über dem Mindestumsatz liegen, damit sich eine Einstellung rechnet.",
+      ),
+    ).toBeInTheDocument();
   });
 
   it("waits for Wareneinsatz before calculating Gewerbe-Handel-Dienstleistung/Handwerk", async () => {

@@ -37,9 +37,9 @@ export const AppHelpDialog = ({ open, onOpenChange }: AppHelpDialogProps) => {
         <button
           type="button"
           aria-label="Allgemeine Hilfe öffnen"
-          className="mt-1 inline-flex h-[20px] w-[20px] items-center justify-center rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 sm:h-[24px] sm:w-[24px]"
+          className="inline-flex h-[14px] w-[14px] items-center justify-center rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 sm:mt-1 sm:h-[16px] sm:w-[16px]"
         >
-          <img src="/title_tooltip_icon.svg" alt="" className="h-full w-full" />
+          <img src="/tooltip_icon.svg" alt="" className="h-full w-full" />
         </button>
       </DialogTrigger>
       {dialogSlot

@@ -290,7 +290,7 @@ describe("calculator", () => {
     expect(r.breakEven.mitarbeiter[0].brutto.jahr).toBeCloseTo(28000, 0);
   });
 
-  it("adds annual and monthly Zusatzkosten like the original calculator", () => {
+  it("uses only annual Zusatzkosten and does not add the synchronized monthly value", () => {
     const i = defaultInput("dienstleistung");
     i.umsatz = 100000;
     i.aufwand = 20000;
@@ -305,7 +305,7 @@ describe("calculator", () => {
     const r = calculate(i);
 
     expect(r.fehlermeldung).toBe("");
-    expect(r.breakEven.aufwand.jahr).toBe(22200);
+    expect(r.breakEven.aufwand.jahr).toBe(21200);
   });
 
   it("includes payroll costs when monthly gross pay is present but hours are incomplete", () => {

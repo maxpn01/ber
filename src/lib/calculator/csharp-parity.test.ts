@@ -250,11 +250,7 @@ function csharpReference(input: InputModel): ReferenceOutput {
     result.breakEven.aufwand.setYear(result.ausgangssituation.aufwand.jahr);
     employees.forEach((employee) => {
       if (employee.bruttogehaltProMonat > 0) {
-        result.breakEven.aufwand.addYear(
-          employee.zusatzkostenJaehrlich +
-            employee.zusatzkostenMonatlich *
-              employee.anzahlBeschaeftigungsmonate,
-        );
+        result.breakEven.aufwand.addYear(employee.zusatzkostenJaehrlich);
       }
     });
 
@@ -414,9 +410,7 @@ function csharpReference(input: InputModel): ReferenceOutput {
           const cost =
             calculatedEmployee.bruttoInklLohnnebenkosten.jahr -
             calculatedEmployee.foerderung.jahr +
-            employee.zusatzkostenJaehrlich +
-            employee.zusatzkostenMonatlich *
-              employee.anzahlBeschaeftigungsmonate;
+            employee.zusatzkostenJaehrlich;
 
           if (employee.verkaufbareStunden !== 0 && employee.stundensatz !== 0) {
             result.potenzial.stundenBreakEven.addYear(

@@ -31,8 +31,7 @@ const round2 = (v: number) => roundAway(v, 2);
 const round4 = (v: number) => roundAway(v, 4);
 const round6 = (v: number) => roundAway(v, 6);
 const zusatzkostenFuerBeschaeftigungsmonate = (m: InputMitarbeiter) =>
-  m.zusatzkostenJaehrlich +
-  m.zusatzkostenMonatlich * m.anzahlBeschaeftigungsmonate;
+  m.zusatzkostenJaehrlich;
 
 function calcLohnnebenkosten(
   brutto: number,
