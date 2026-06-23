@@ -6,41 +6,25 @@
    All colors HSL. Brand red, peach result panel, blue interaction accent, purple subsidy accent. */
 
 @font-face {
-  font-family: "DIN Pro";
-  src: url("/font/dinpro.otf") format("opentype");
+  font-family: "D-DIN";
+  src: url("/font/D-DIN.otf") format("opentype");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: "DIN Pro";
-  src: url("/font/dinpro_italic.otf") format("opentype");
+  font-family: "D-DIN";
+  src: url("/font/D-DIN-Italic.otf") format("opentype");
   font-weight: 400;
   font-style: italic;
   font-display: swap;
 }
 
 @font-face {
-  font-family: "DIN Pro";
-  src: url("/font/dinpro_medium.otf") format("opentype");
-  font-weight: 500;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "DIN Pro";
-  src: url("/font/dinpro_bold.otf") format("opentype");
+  font-family: "D-DIN";
+  src: url("/font/D-DIN-Bold.otf") format("opentype");
   font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "DIN Pro";
-  src: url("/font/dinpro_black.otf") format("opentype");
-  font-weight: 900;
   font-style: normal;
   font-display: swap;
 }
@@ -124,8 +108,7 @@
   body {
     @apply bg-background text-foreground;
     font-family:
-      "DIN Pro",
-      "DINPro",
+      "D-DIN",
       -apple-system,
       BlinkMacSystemFont,
       "Segoe UI",
