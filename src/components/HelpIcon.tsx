@@ -6,6 +6,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { publicAssetUrl } from "@/lib/basePath";
 
 interface Props {
   text: React.ReactNode;
@@ -27,6 +28,9 @@ export const HelpIcon = ({
   align = "center",
 }: Props) => {
   const isTitleIcon = iconSrc === "/title_tooltip_icon.svg";
+  const resolvedIconSrc = iconSrc.startsWith("/")
+    ? publicAssetUrl(iconSrc)
+    : iconSrc;
   const [open, setOpen] = useState(false);
   const rootRef = useRef<HTMLSpanElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
@@ -69,7 +73,7 @@ export const HelpIcon = ({
         className,
       )}
     >
-      <img src={iconSrc} alt="" className="h-full w-full" />
+      <img src={resolvedIconSrc} alt="" className="h-full w-full" />
     </button>
   );
 

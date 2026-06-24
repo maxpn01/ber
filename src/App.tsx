@@ -4,6 +4,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { WkoCookieConsent } from "@/components/WkoCookieConsent";
+import { routerBasename } from "@/lib/basePath";
 import { CalculatorProvider } from "@/lib/calculator/CalculatorContext";
 import Calculator from "./pages/Calculator";
 import NotFound from "./pages/NotFound.tsx";
@@ -17,7 +18,7 @@ const App = () => (
         <WkoCookieConsent />
         <Toaster />
         <Sonner />
-        <BrowserRouter>
+        <BrowserRouter basename={routerBasename}>
           <Routes>
             <Route path="/" element={<Calculator />} />
             <Route path="*" element={<NotFound />} />

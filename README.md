@@ -30,6 +30,16 @@ Build for production:
 bun run build
 ```
 
+Build for a non-root deployment path:
+
+```bash
+VITE_BASE_PATH=/your/base/path/ bun run build
+```
+
+`VITE_BASE_PATH` is used by Vite's `base` setting and by React Router's
+`basename`, so static assets, icons, fonts, and routes resolve correctly when
+the app is deployed below a domain subpath.
+
 ## Docker
 
 The Docker setup builds the Vite/React app with Bun and serves the compiled static files with nginx.
@@ -38,6 +48,12 @@ Build the image:
 
 ```bash
 docker build -t break-even-calculator .
+```
+
+Build the image for a non-root deployment path:
+
+```bash
+docker build --build-arg VITE_BASE_PATH=/your/base/path/ -t break-even-calculator .
 ```
 
 Run the container:

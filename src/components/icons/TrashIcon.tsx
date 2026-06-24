@@ -1,4 +1,5 @@
 import { cn } from "@/lib/utils";
+import { publicAssetUrl } from "@/lib/basePath";
 
 interface TrashIconProps {
   className?: string;
@@ -12,6 +13,10 @@ export const TrashIcon = ({ className }: TrashIconProps) => (
       className,
     )}
   >
-    <img src="/trash_icon.png" alt="" className="h-[17px] w-[15px]" />
+    <img
+      src={publicAssetUrl("/trash_icon.png")}
+      alt=""
+      className="h-[17px] w-[15px]"
+    />
   </span>
 );

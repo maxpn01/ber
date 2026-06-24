@@ -8,6 +8,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { publicAssetUrl } from "@/lib/basePath";
 import { text, tStr } from "@/lib/text";
 
 const accentedPrefixes = [
@@ -39,7 +40,11 @@ export const AppHelpDialog = ({ open, onOpenChange }: AppHelpDialogProps) => {
           aria-label="Allgemeine Hilfe öffnen"
           className="inline-flex h-[14px] w-[14px] items-center justify-center rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 sm:mt-1 sm:h-[16px] sm:w-[16px]"
         >
-          <img src="/tooltip_icon.svg" alt="" className="h-full w-full" />
+          <img
+            src={publicAssetUrl("/tooltip_icon.svg")}
+            alt=""
+            className="h-full w-full"
+          />
         </button>
       </DialogTrigger>
       {dialogSlot

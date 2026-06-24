@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { publicAssetUrl } from "@/lib/basePath";
 
 type HeaderProps = {
   title?: ReactNode;
@@ -17,7 +18,7 @@ export const Header = ({ title }: HeaderProps) => {
             className="rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
           >
             <img
-              src="/wko_logo.png"
+              src={publicAssetUrl("/wko_logo.png")}
               alt="Wirtschaftskammer Österreich"
               className="h-auto w-[120px] min-[380px]:w-[120px] sm:w-[216px]"
             />

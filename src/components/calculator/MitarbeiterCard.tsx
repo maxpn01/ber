@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/select";
 import { HelpIcon } from "@/components/HelpIcon";
 import { NumberInput } from "@/components/NumberInput";
+import { publicAssetUrl } from "@/lib/basePath";
 import {
   useCalculator,
   type MitarbeiterIndex,
@@ -82,7 +83,11 @@ export const MitarbeiterCard = ({ index }: Props) => {
           </span>
           {isFilled && (
             <span className="flex h-[18px] w-[18px] mt-0.5 shrink-0 items-center justify-center rounded-full bg-toggle-on">
-              <img src="/complete_icon.svg" alt="" className="h-4 w-4" />
+              <img
+                src={publicAssetUrl("/complete_icon.svg")}
+                alt=""
+                className="h-4 w-4"
+              />
             </span>
           )}
         </button>
